@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.bridgelabz.mytodomvp.MainActivity">
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextRegFullName"
+        android:hint="Enter full Name"
+        android:textSize="22dp"/>
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextRegEmail"
+        android:hint="Enter Email"
+        android:textSize="22dp"
+        android:layout_below="@+id/editTextRegFullName"
+        android:layout_alignParentEnd="true" />
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextRegMobileNo"
+        android:hint="Enter Mobile N0"
+        android:textSize="22dp"
+        android:layout_below="@+id/editTextRegEmail"
+        android:layout_alignParentStart="true" />
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextRegPass"
+        android:hint="Enter Password"
+        android:textSize="22dp"
+        android:layout_below="@+id/editTextRegMobileNo"
+        android:layout_alignParentStart="true" />
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/registrainButton"
+        android:hint="Registrtion"
+        android:textSize="22dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

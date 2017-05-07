@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "189460969943",
+    "firebase_url": "https://mytodomvp.firebaseio.com",
+    "project_id": "mytodomvp",
+    "storage_bucket": "mytodomvp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189460969943:android:6b0d07b3b612e9f1",
+        "android_client_info": {
+          "package_name": "com.bridgelabz.mytodomvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189460969943-n7r52p9ansbrupqu5hd8ed3fov1nc4aq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDkBDw4FtrfnskP0LURa_yK7nTEoqSzgg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
