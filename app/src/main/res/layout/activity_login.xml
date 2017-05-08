@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/editTextLogEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter email Id"
+        android:textSize="22dp" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/editTextLogPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter password"
+        android:textSize="22dp" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/buttonLogLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="66dp"
+        android:layout_marginRight="66dp"
+        android:layout_marginTop="12dp"
+        android:hint="Login"
+        android:textSize="22dp" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textViewLogCreateAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="0.09"
+        android:gravity="center"
+        android:hint="createAccount"
+        android:textSize="22dp" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebookLoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp" />
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/googleSignInButton"
+        android:layout_marginTop="22dp"/>
+
+
+</LinearLayout>

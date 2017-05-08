@@ -9,5 +9,5 @@ public interface RegistrationActivityInterface  extends View.OnClickListener{
     void registrationSuccess(String message);
     void registraionFailure(String message);
     void showProgressDailogue(String message);
-    void hideProgressDialogue(String message);
+    void hideProgressDialogue();
 }

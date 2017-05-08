@@ -75,7 +75,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     }
 
     @Override
-    public void hideProgressDialogue(String message) {
+    public void hideProgressDialogue() {
        if(mProgressDialog!=null)
            mProgressDialog.hide();
     }
@@ -83,7 +83,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     @Override
     public void onClick(View view) {
 
-        Intent intent = new Intent(this, LoginActivity.class);
         switch (view.getId()) {
             case R.id.registrainButton:
                 userModel = new UserModel();
@@ -92,9 +91,13 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
                 userModel.setMobile(mobileEditText.getText().toString());
                 userModel.setPassword(passwordEditText.getText().toString());
 
-                if (validationRegistration(userModel)) {
+                if (validationRegistration(userModel))
+                {
                     presenter.getRegister(userModel);
+                    Intent intent = new Intent(this, LoginActivity.class);
+
                     startActivity(intent);
+                    finish();
                 }
                 break;
         }

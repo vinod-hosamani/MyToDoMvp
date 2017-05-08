@@ -23,26 +23,26 @@ public class RegistrationPresenter implements RegistrationPresenterInterface {
 
     @Override
     public void getRegister(UserModel model) {
-
+    interactor.getRegisterResponse(model);
     }
 
     @Override
     public void registerSuccess(String message) {
-
+    viewInterface.registrationSuccess(message);
     }
 
     @Override
     public void registerFailure(String message) {
-
+     viewInterface.registraionFailure(message);
     }
 
     @Override
     public void showProgressDialogue(String message) {
-
+    viewInterface.showProgressDailogue(message);
     }
 
     @Override
     public void hideProgressDialogue() {
-
+     viewInterface.hideProgressDialogue();
     }
 }
