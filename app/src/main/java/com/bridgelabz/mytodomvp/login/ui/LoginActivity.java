@@ -49,8 +49,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
 
     SessionManagement session;
 
-    public static GoogleSignInOptions googleSignInOptions;
-    public static GoogleApiClient googleApiClient;
+    public  GoogleSignInOptions googleSignInOptions;
+    public  GoogleApiClient googleApiClient;
 
     boolean isFbLogin;
     boolean isGoogleLogin;

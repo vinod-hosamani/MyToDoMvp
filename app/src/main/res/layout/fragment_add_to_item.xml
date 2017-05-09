@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextToDoTitle"
+        android:hint="add Title"
+        android:textSize="22dp"
+        />
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextToDoDescription"
+        android:hint="description"
+        android:textSize="22dp"/>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textViewReminder"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:focusable="false"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="save"
+        android:textSize="22dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginRight="77dp"
+        android:layout_marginTop="9dp"/>
+
+</LinearLayout>
