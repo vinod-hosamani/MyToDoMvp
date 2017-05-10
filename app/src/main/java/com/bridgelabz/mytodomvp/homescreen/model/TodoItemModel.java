@@ -9,9 +9,9 @@ public class TodoItemModel  {
     private String note;
     private String reminderDate;
     private String startDate;
-    private String isArchived;
+    private boolean isArchived;
 
-    public String getIsArchived() {
+    public boolean getIsArchived() {
         return isArchived;
     }
 
@@ -35,7 +35,7 @@ public class TodoItemModel  {
         return title;
     }
 
-    public void setIsArchived(String isArchived) {
+    public void setIsArchived(boolean isArchived) {
         this.isArchived = isArchived;
     }
 

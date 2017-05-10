@@ -26,8 +26,10 @@ import android.widget.Toast;
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.adapter.TodoItemAdapter;
 import com.bridgelabz.mytodomvp.base.BaseActivity;
+import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.HomeScreenPresenter;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.AddToDoFragment;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
@@ -36,6 +38,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -281,7 +284,21 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     }
 
     @Override
-    public void onItemClick(int pos) {
+    public void onItemClick(int pos)
+
+    {
+
+        addTodoFab.setVisibility(View.INVISIBLE);
+        TodoItemModel model=todoItemAdapter.getItemModel(pos);
+
+        Bundle arguments=new Bundle();
+        arguments.putString(Constant.key_title,model.getTitle());
+        arguments.putString(Constant.key_note,model.getNote());
+        arguments.putString(Constant.key_reminder,model.getReminderDate());
+        arguments.putString(Constant.key_note_id, String.valueOf(model.getNoteId()));
+        arguments.putString(Constant.key_startDate,model.getStartDate());
+
+        AddToDoFragment fragment=new AddToDoFragment(this);
 
     }
 
@@ -291,8 +308,22 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     }
 
     @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
+    public boolean onQueryTextChange(String searchText)
+    {
+        searchText=searchText.toLowerCase();
+        List<TodoItemModel> noteList=new ArrayList<>();
+        for(TodoItemModel model:allData)
+        {
+            if(model.getTitle().toLowerCase().contains(searchText))
+            {
+                noteList.add(model);
+            }
+        }
+        todoItemAdapter.setFilter(noteList)
+        return true;
+    }
+    public void updateAdapter(int pos, TodoItemModel model) {
+        todoItemAdapter.updateItem(pos, model);
     }
 
 
