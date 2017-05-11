@@ -333,7 +333,13 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         switch (view.getId()) {
             case R.id.fab_add_todo:
                 addTodoFab.setVisibility(View.INVISIBLE);
+<<<<<<< HEAD
                 //addTodoTask();
+=======
+/*
+                addTodoTask();
+*/
+>>>>>>> 58efffe0220d04c2206f011a41c5564a6656a260
                 break;
 
             case R.id.imageViewUserProfile:
