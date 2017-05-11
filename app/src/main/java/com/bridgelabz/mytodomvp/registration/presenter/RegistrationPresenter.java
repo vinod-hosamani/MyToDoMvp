@@ -10,39 +10,45 @@ import com.bridgelabz.mytodomvp.registration.ui.RegistrationActivityInterface;
 /**
  * Created by bridgeit on 7/5/17.
  */
-public class RegistrationPresenter implements RegistrationPresenterInterface {
-    RegistrationActivityInterface viewInterface;
-    RegistrationInteractorInterface interactor;
+public class RegistrationPresenter implements RegistrationPresenterInterface
+{
+    RegistrationActivityInterface registrationActivityInterface;
+    RegistrationInteractorInterface registrationInteractorInterface;
 
-    public RegistrationPresenter(Context context, RegistrationActivityInterface viewInterface) {
-        this.viewInterface=viewInterface;
-
-
-        interactor=new RegistrationInteractor(context,this);
+    public RegistrationPresenter(Context context, RegistrationActivityInterface registrationActivityInterface)
+    {
+        this.registrationActivityInterface=registrationActivityInterface;
+        registrationInteractorInterface=new RegistrationInteractor(context,this);
     }
 
     @Override
-    public void getRegister(UserModel model) {
-    interactor.getRegisterResponse(model);
+    public void getRegister(UserModel model)
+    {
+        registrationInteractorInterface.getRegisterResponse(model);
     }
 
     @Override
-    public void registerSuccess(String message) {
-    viewInterface.registrationSuccess(message);
+    public void registerSuccess(String message)
+    {
+        registrationActivityInterface.registrationSuccess(message);
     }
 
     @Override
-    public void registerFailure(String message) {
-     viewInterface.registraionFailure(message);
+    public void registerFailure(String message)
+    {
+        registrationActivityInterface.registraionFailure(message);
     }
 
     @Override
-    public void showProgressDialogue(String message) {
-    viewInterface.showProgressDailogue(message);
+    public void showProgressDialogue(String message)
+    {
+        registrationActivityInterface.showProgressDailogue(message);
     }
 
     @Override
-    public void hideProgressDialogue() {
-     viewInterface.hideProgressDialogue();
+    public void hideProgressDialogue()
+    {
+        registrationActivityInterface.hideProgressDialogue();
+
     }
 }

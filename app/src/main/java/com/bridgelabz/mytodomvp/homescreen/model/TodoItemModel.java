@@ -34,6 +34,10 @@ public class TodoItemModel  {
     public String getTitle() {
         return title;
     }
+    public boolean isArchieved() {
+        return isArchived;
+    }
+
 
     public void setIsArchived(boolean isArchived) {
         this.isArchived = isArchived;

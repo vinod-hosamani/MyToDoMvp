@@ -12,23 +12,23 @@ import org.json.JSONObject;
 /**
  * Created by bridgeit on 8/5/17.
  */
-public interface LoginPresenterInterface {
-    void getLoginResponseFromFireBase(String email,String password);
+public interface LoginPresenterInterface
+{
+
 
     void loginSuccess(UserModel model);
     void loginFailure(String message);
     void showProgressDailog(String message);
     void hideProgressDialog();
 
-    void getLoginResponseFromFacebook(CallbackManager callbackManager, LoginButton loginButton);
+    void getLoginResponseFromFireBase(String email,String password);
 
+    void getLoginResponseFromFacebook(CallbackManager callbackManager, LoginButton loginButton);
+    void fbLoginSuccess(JSONObject jsonObject, String userId, String message) throws JSONException;
     void fbLoginFailure(String message);
 
-    void fbLoginSuccess(JSONObject jsonObject,String userId,String message) throws JSONException;
 
     void handleGoogleSignInResult(GoogleSignInResult result);
-
     void googleLoginSuccess(GoogleSignInAccount account,String userId,String message);
-
     void googleLoginFailure(String message);
 }

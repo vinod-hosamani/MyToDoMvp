@@ -57,7 +57,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
@@ -80,7 +81,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     }
 
     @Override
-    public void loginSuccess(UserModel model) {
+    public void loginSuccess(UserModel model)
+    {
       loginToSharedPreference(model);
     }
 
@@ -93,7 +95,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
 
     @Override
     public void showPogressDailog(String message) {
-     if(!isFinishing()){
+     if(!isFinishing())
+     {
          progressDialog=new ProgressDialog(this);
          progressDialog.setMessage(message);
          progressDialog.show();
@@ -101,7 +104,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     }
 
     @Override
-    public void hideProgressDailog() {
+    public void hideProgressDailog()
+    {
      if(!isFinishing() && progressDialog!=null){
          progressDialog.dismiss();
      }
@@ -109,10 +113,12 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
 
     CallbackManager callbackManager;
     @Override
-    public void fbLoginSuccess(JSONObject jsonObject, String userId, String message) throws JSONException {
-       isFbLogin=true;
+    public void fbLoginSuccess(JSONObject jsonObject, String userId, String message)throws JSONException
+    {
+        isFbLogin=true;
         UserModel model=new UserModel();
-        if(!jsonObject.getString("email").equals("")){
+        if(!jsonObject.getString("email").equals(""))
+        {
             model.setEmail(jsonObject.getString("email"));
         }
         Toast.makeText(this,jsonObject.getString("email"),Toast.LENGTH_SHORT).show();
@@ -128,13 +134,15 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     }
 
     @Override
-    public void fbLoginFailure(String message) {
+    public void fbLoginFailure(String message)
+    {
 
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void googleLoginSuccess(GoogleSignInAccount account, String userId, String message) {
+    public void googleLoginSuccess(GoogleSignInAccount account, String userId, String message)
+    {
      Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         isGoogleLogin=true;
 
@@ -152,14 +160,16 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     }
 
     @Override
-    public void googleLoginFailure(String message) {
+    public void googleLoginFailure(String message)
+    {
      Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onClick(View view) {
-
-        switch (view.getId()){
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
             case R.id.textViewLogCreateAccount:
                 Intent intent=new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
@@ -181,7 +191,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
 
     }
 
-    private void googleSignIn(){
+    private void googleSignIn()
+    {
         Intent signInIntent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent,Constant.google_sign_in_req_code);
     }
@@ -197,8 +208,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     }
 
     @Override
-    public void initView() {
-
+    public void initView()
+    {
         session=new SessionManagement(this);
         presenter=new LoginPresenter(this,this);
         createAccount=(AppCompatTextView)findViewById(R.id.textViewLogCreateAccount);
@@ -224,7 +235,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode,resultCode,data);
 

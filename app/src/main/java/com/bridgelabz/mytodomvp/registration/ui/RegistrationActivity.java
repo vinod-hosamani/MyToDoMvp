@@ -22,7 +22,7 @@ import com.bridgelabz.mytodomvp.registration.presenter.RegistrationPresenter;
 public class RegistrationActivity extends BaseActivity implements RegistrationActivityInterface {
 
     UserModel userModel;
-    RegistrationPresenter presenter;
+    RegistrationPresenter registrationPresenter;
 
     AppCompatEditText nameEditText;
     AppCompatEditText emailEditText;
@@ -32,7 +32,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
 
     @Override
     public void initView() {
-        presenter = new RegistrationPresenter(this, this);
+        registrationPresenter = new RegistrationPresenter(this, this);
 
         nameEditText = (AppCompatEditText) findViewById(R.id.editTextRegFullName);
         emailEditText = (AppCompatEditText) findViewById(R.id.editTextRegEmail);
@@ -45,7 +45,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         initView();
@@ -53,20 +54,23 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
 
 
     @Override
-    public void registrationSuccess(String message) {
+    public void registrationSuccess(String message)
+    {
       if(!isFinishing())
           Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void registraionFailure(String message) {
+    public void registraionFailure(String message)
+    {
     if(!isFinishing())
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
     ProgressDialog mProgressDialog;
 
     @Override
-    public void showProgressDailogue(String message) {
+    public void showProgressDailogue(String message)
+    {
         mProgressDialog=new ProgressDialog(this);
         mProgressDialog.setMessage(message);
         mProgressDialog.setCancelable(false);
@@ -75,7 +79,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     }
 
     @Override
-    public void hideProgressDialogue() {
+    public void hideProgressDialogue()
+    {
        if(mProgressDialog!=null)
            mProgressDialog.hide();
     }
@@ -83,7 +88,8 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()) {
+        switch (view.getId())
+        {
             case R.id.registrainButton:
                 userModel = new UserModel();
                 userModel.setFullname(nameEditText.getText().toString());
@@ -93,7 +99,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
 
                 if (validationRegistration(userModel))
                 {
-                    presenter.getRegister(userModel);
+                    registrationPresenter.getRegister(userModel);
                     Intent intent = new Intent(this, LoginActivity.class);
 
                     startActivity(intent);
@@ -104,31 +110,40 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
 
     }
 
-    private boolean validationRegistration(UserModel userModel) {
+    private boolean validationRegistration(UserModel userModel)
+    {
 
         boolean flag = true, toast = true;
         String mobilePattern = Constant.mobilepattern;
         String emailPattern = Constant.email_pattern;
-        int passwordlen = userModel.getPassword().length();
-        if (userModel.getFullname().length() == 0 || userModel.getMobile().length() == 0
-                || userModel.getEmail().length() == 0 || userModel.getPassword().length() == 0) {
 
+        int passwordlen = userModel.getPassword().length();
+
+        if (userModel.getFullname().length() == 0 || userModel.getMobile().length() == 0
+                || userModel.getEmail().length() == 0 || userModel.getPassword().length() == 0)
+        {
             Toast.makeText(getApplicationContext(), "plese enter all the field", Toast.LENGTH_SHORT).show();
             flag = flag && false;
 
-        } else {
+        }
+        else
+        {
 
-            if (userModel.getFullname().length() > 25) {
+            if (userModel.getFullname().length() > 25)
+            {
                 Toast.makeText(getApplicationContext(), "enter correct name", Toast.LENGTH_SHORT).show();
                 flag = flag && false;
             }
 
-            if (userModel.getEmail().matches(emailPattern)) {
+            if (userModel.getEmail().matches(emailPattern))
+            {
                 //Toast.makeText(getApplicationContext(),"valid email address",Toast.LENGTH_SHORT).show();
                 flag = flag && true;
             }
-            if (toast) {
-                if (!userModel.getEmail().matches(emailPattern)) {
+            if (toast)
+            {
+                if (!userModel.getEmail().matches(emailPattern))
+                {
                     emailEditText.requestFocus();
                     Toast.makeText(getApplicationContext(), "enter correct email id", Toast.LENGTH_SHORT).show();
                     toast = false;
@@ -136,15 +151,18 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
                 }
             }
 
-            if (userModel.getMobile().matches(mobilePattern)) {
+            if (userModel.getMobile().matches(mobilePattern))
+            {
                 /*Toast.makeText(getApplicationContext(), "phone number is valid", Toast.LENGTH_SHORT).show();
                 Log.v("Mobile Number Display",mobileno.getText().toString());
                 Log.v("flag",b.toString());*/
                 flag = flag && true;
             }
 
-            if (toast) {
-                if (!userModel.getMobile().matches(mobilePattern)) {
+            if (toast)
+            {
+                if (!userModel.getMobile().matches(mobilePattern))
+                {
                     //Log.v("flag",b.toString());
                     //Log.v("Mobile Number Display",mobileno.getText().toString());
                     mobileEditText.requestFocus();
@@ -154,8 +172,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
                 }
             }
 
-            if (toast) {
-                if (passwordlen < 8) {
+            if (toast)
+            {
+                if (passwordlen < 8)
+                {
                     passwordEditText.requestFocus();
                     Toast.makeText(getApplicationContext(), "invalid password", Toast.LENGTH_SHORT).show();
                     flag = flag && false;

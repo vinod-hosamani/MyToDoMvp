@@ -3,4 +3,9 @@
     <string name="facebook_app_id">1327189300649910</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">
         android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="okButton">okButton</string>
+    <string name="cancleButton">cancelButton</string>
+    <string name="cancel_message">cancelMessge</string>
+    <string name="navigatinOpne">navigationOpne</string>
+    <string name="navigationClose">navigationclose</string>
 </resources>

@@ -11,7 +11,8 @@ import org.json.JSONObject;
 /**
  * Created by bridgeit on 8/5/17.
  */
-public interface LoginActivityInterface extends View.OnClickListener {
+public interface LoginActivityInterface extends View.OnClickListener
+{
     void loginSuccess(UserModel model);
     void loginFailure(String message);
     void showPogressDailog(String message);
@@ -19,6 +20,7 @@ public interface LoginActivityInterface extends View.OnClickListener {
 
     void fbLoginSuccess(JSONObject jsonObject,String userId,String message) throws JSONException;
     void fbLoginFailure(String message);
+
     void  googleLoginSuccess(GoogleSignInAccount account,String userId,String message);
     void googleLoginFailure(String message);
 }

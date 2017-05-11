@@ -8,6 +8,7 @@ import com.bridgelabz.mytodomvp.registration.model.UserModel;
 public interface RegistrationPresenterInterface
 {
     void getRegister(UserModel model);
+
     void registerSuccess(String message);
     void registerFailure(String message);
     void showProgressDialogue(String message);

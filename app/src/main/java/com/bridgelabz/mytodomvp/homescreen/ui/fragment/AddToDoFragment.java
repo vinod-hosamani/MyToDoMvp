@@ -2,6 +2,7 @@ package com.bridgelabz.mytodomvp.homescreen.ui.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -45,12 +46,30 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     TodoItemModel model;
 
 
-    public AddToDoFragment(HomeScreenActivity context,AddTodoPresenter todopresenter)
+    /*public AddToDoFragment(HomeScreenActivity context,AddTodoPresenter todopresenter)
     {
         this.homeScreenActivity=context;
         presenter = new AddTodoPresenter(context, this);
         session = new SessionManagement(context);
     }
+*//*
+    public AddToDoFragment(HomeScreenActivity context,AddTodoPresenter todopresenter) {
+        this.homeScreenActivity=context;
+        presenter = new AddTodoPresenter(context, this);
+        session = new SessionManagement(context);
+    }*/
+
+    public AddToDoFragment(HomeScreenActivity  context)
+    {
+        this.homeScreenActivity=context;
+        presenter = new AddTodoPresenter(context, this);
+        session = new SessionManagement(context);
+    }
+
+   /* public AddToDoFragment(HomeScreenActivity homeScreenActivity)
+    {
+    }*/
+
     public void  initView(View view)
     {
         editTextTitle=(AppCompatEditText)view.findViewById(R.id.editTextToDoTitle);
@@ -84,32 +103,44 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     @Override
     public void addTodoSuccess(String message)
     {
-        Toast.makeText()
+        Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void addTodoFailure(String message) {
+        Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
 
     }
 
+    ProgressDialog progressDialog;
     @Override
     public void showProgressDailogue(String message) {
+        if(!homeScreenActivity.isFinishing())
+        {
+            progressDialog=new ProgressDialog(homeScreenActivity);
+            progressDialog.setMessage(message);
+            progressDialog.show();
+        }
 
     }
 
     @Override
     public void hideProgressDialogue() {
-
+     if(!homeScreenActivity.isFinishing() && progressDialog!=null)
+     {
+         progressDialog.dismiss();
+     }
     }
 
     @Override
     public void updateSuccess(String message) {
-
+Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void updateFailure(String message) {
-
+Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -126,10 +157,10 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         }
 
     }
- public void upadateAdapter(int pos,TodoItemModel model)
+/* public void upadateAdapter(int pos,TodoItemModel model)
  {
 
- }
+ }*/
 
     public void editTodoItem(int position)
     {

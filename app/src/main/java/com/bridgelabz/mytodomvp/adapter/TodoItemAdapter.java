@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
+import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,13 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         this.context=context;
         this.onLongClickListener=onLongClickListener;
     }
+
+    public TodoItemAdapter(HomeScreenActivity homeScreenActivity, ArchiveFragment archiveFragment)
+    {
+    }
+
+
+
     public void setTodoList(List<TodoItemModel> noteList){
         todoList.clear();
         notifyDataSetChanged();
@@ -51,7 +60,8 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     }
 
     @Override
-    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
         View view= LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.recycler_todo_item_list,parent,false);
         return new TaskViewHolder(view);
@@ -60,15 +70,18 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
 
 
     @Override
-    public void onBindViewHolder(TaskViewHolder holder, final int position) {
+    public void onBindViewHolder(TaskViewHolder holder, final int position)
+    {
 
         final TodoItemModel todoItemModel=todoList.get(position);
         holder.title.setText(todoItemModel.getTitle());
         holder.note.setText(todoItemModel.getNote());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 if(noteClickListener!=null)
                     noteClickListener.onItemClick(position);
             }
@@ -78,7 +91,8 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public boolean onLongClick(View view)
+            {
                // onLongClickListener.onLongClick(todoItemModel);
 
                 return true;
@@ -88,15 +102,18 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return todoList.size();
     }
-    public void addItem(TodoItemModel model){
+    public void addItem(TodoItemModel model)
+    {
         todoList.add(model);
         notifyItemInserted(todoList.size());
     }
 
-    public void removeItem(int pos){
+    public void removeItem(int pos)
+    {
         model = todoList.get(pos);
         /*database.deleteTodo(model);*/
 
@@ -105,28 +122,33 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         notifyItemRangeChanged(pos, todoList.size());
     }
 
-    public void updateItem(int pos, TodoItemModel model){
+    public void updateItem(int pos, TodoItemModel model)
+    {
         todoList.set(pos, model);
         notifyDataSetChanged();
     }
 
 
-    public class TaskViewHolder extends RecyclerView.ViewHolder {
+    public class TaskViewHolder extends RecyclerView.ViewHolder
+    {
 
 
         public AppCompatTextView title,note;
-        public TaskViewHolder(View view) {
+        public TaskViewHolder(View view)
+        {
             super(view);
             title = (AppCompatTextView) view.findViewById(R.id.todo_title);
             note = (AppCompatTextView) view.findViewById(R.id.todo_note);
         }
     }
 
-    public TodoItemModel getItemModel(int pos){
+    public TodoItemModel getItemModel(int pos)
+    {
         return todoList.get(pos);
     }
 
-    public TodoItemModel getItemModelByNoteId(int noteId){
+    public TodoItemModel getItemModelByNoteId(int noteId)
+    {
         TodoItemModel model = null;
         for (TodoItemModel itemModel:
                 todoList) {
@@ -141,11 +163,13 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     {
      void onItemClick(int pos);
     }
-    public List<TodoItemModel> getAllDataList() {
+    public List<TodoItemModel> getAllDataList()
+    {
         return todoList;
     }
 
-    public interface OnLongClickListener{
+    public interface OnLongClickListener
+    {
         void onLongClick(TodoItemModel itemModel);
     }
 }

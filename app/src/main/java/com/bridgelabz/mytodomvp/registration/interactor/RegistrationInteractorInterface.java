@@ -5,6 +5,7 @@ import com.bridgelabz.mytodomvp.registration.model.UserModel;
 /**
  * Created by bridgeit on 7/5/17.
  */
-public interface RegistrationInteractorInterface {
+public interface RegistrationInteractorInterface
+{
     void getRegisterResponse(UserModel model);
 }

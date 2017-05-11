@@ -5,7 +5,8 @@ import android.view.View;
 /**
  * Created by bridgeit on 7/5/17.
  */
-public interface RegistrationActivityInterface  extends View.OnClickListener{
+public interface RegistrationActivityInterface  extends View.OnClickListener
+{
     void registrationSuccess(String message);
     void registraionFailure(String message);
     void showProgressDailogue(String message);

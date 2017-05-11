@@ -10,12 +10,15 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +33,9 @@ import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.HomeScreenPresenter;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.AddToDoFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
+import com.bridgelabz.mytodomvp.util.SwipeAction;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -57,9 +62,11 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public boolean isList;
     RecyclerView toDoItemRecycler;
     public Menu menu;
-    //public swipeAction;
+   // public swipeAction;
+    SwipeAction swipeAction;
     ItemTouchHelper itemTouchHelper;
-   // ArchievedFragment archievedFragment;
+   // ArchieveFragment archievedFragment;
+    ArchiveFragment archiveFragment;
     ProgressDialog progressDialog;
     /*Drawer layout variables*/
     AppCompatTextView txtUsername;
@@ -193,55 +200,115 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     }
 
     @Override
-    public void initView() {
+    public void initView()
+    {
+         addTodoFab=(FloatingActionButton)findViewById(R.id.fab_add_todo);
+        addTodoFab.setOnClickListener(this);
+        addTodoFab.setVisibility(View.VISIBLE);
+
+        isList=true;
+        toDoItemRecycler=(RecyclerView)findViewById(R.id.recycler_todo_Item);
+        todoItemAdapter=new TodoItemAdapter(this,this);
+        session=new SessionManagement(this);
+        presenter=new HomeScreenPresenter(this,this);
+
+        mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
+        toDoItemRecycler.setAdapter(todoItemAdapter);
+        swipeAction=new SwipeAction(0,SwipeAction.left |SwipeAction.right,todoItemAdapter,this);
+        itemTouchHelper=new ItemTouchHelper(swipeAction);
+        itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
+
+
+        /*ddrawer part*/
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(
+                this,drawerLayout,toolbar,R.string.navigatinOpne,R.string.navigationClose);
+         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+
+        NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+
+        txtUsername=(AppCompatTextView)header.findViewById(R.id.textViewUsername);
+        txtUserEmail=(AppCompatTextView)header.findViewById(R.id.textViewUserEmail);
+        imageViewUserProfile=(CircleImageView)header.findViewById(R.id.imageViewUserProfile);
 
     }
    /* public void addTodoTask() {
-        AddTodoFragment addTodoFragment = new AddTodoFragment(this);
+        AddToDoFragment addTodoFragment = new AddToDoFragment(this);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.todo_item_fragment, addTodoFragment, "todoList")
+                .replace(R.id.todo_item_fragment,addTodoFragment,"todoList")
                 .addToBackStack(null)
                 .commit();
-    }*/
-
+    }
+*/
+   /*public void addTodoTask() {
+       AddToDoFragment addTodoFragment = new AddToDoFragment(this);
+       getSupportFragmentManager().beginTransaction()
+               .replace(R.id.todo_item_fragment, addTodoFragment,"todoList")
+               .addToBackStack(null)
+               .commit();
+   }*/
     @Override
     public void getNoteSuccess(List<TodoItemModel> noteList) {
-
+        List<TodoItemModel> nonArchvieList=new ArrayList<>();
+        for(TodoItemModel model:noteList)
+            if(model.isArchieved())
+            {
+                nonArchvieList.add(model);
+            }
+       todoItemAdapter.setTodoList(nonArchvieList);
     }
 
     @Override
-    public void getNoteFailure(String message) {
-
+    public void getNoteFailure(String message)
+    {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showProgressDialogue(String message) {
-
+      if(!isFinishing())
+      {
+          progressDialog=new ProgressDialog(this);
+          progressDialog.setMessage(message);
+          progressDialog.show();
+      }
     }
 
     @Override
     public void hideProgressDialogu() {
+    if(!isFinishing() && progressDialog!=null)
+    {
+        progressDialog.dismiss();
+    }
+    }
+
+    @Override
+    public void deleteTodoModelFailure(String message) {
+      Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void deleteTodoModelSuccess(String message) {
+    Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void moveToArchiveFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public void deleteTodoModelFailure() {
-
-    }
-
-    @Override
-    public void deleteTodoModelSuccess() {
-
-    }
-
-    @Override
-    public void moveToArchiveFailure() {
-
-    }
-
-    @Override
-    public void moveToArchiveSuccess() {
-
+    public void moveToArchiveSuccess(String message) {
+     Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     private void toggle() {
@@ -266,7 +333,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         switch (view.getId()) {
             case R.id.fab_add_todo:
                 addTodoFab.setVisibility(View.INVISIBLE);
-                addTodoTask();
+                //addTodoTask();
                 break;
 
             case R.id.imageViewUserProfile:
@@ -301,7 +368,8 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
+    public boolean onQueryTextSubmit(String query)
+    {
         return false;
     }
 
@@ -317,12 +385,21 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 noteList.add(model);
             }
         }
-        todoItemAdapter.setFilter(noteList)
+        todoItemAdapter.setFilter(noteList);
         return true;
     }
     public void updateAdapter(int pos, TodoItemModel model) {
         todoItemAdapter.updateItem(pos, model);
     }
 
+ /* public void addTodoTask()
+  {
+      AddToDoFragment addToDoFragment=new AddToDoFragment(this);
+      getSupportFragmentManager().beginTransaction()
+              .replace(R.id.todo_item_fragment, addToDoFragment, "todoList")
+              .addToBackStack(null)
+              .commit();
+
+  }*/
 
 }

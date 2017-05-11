@@ -17,69 +17,81 @@ import org.json.JSONObject;
 /**
  * Created by bridgeit on 8/5/17.
  */
-public class LoginPresenter implements LoginPresenterInterface {
-
+public class LoginPresenter implements LoginPresenterInterface
+{
     LoginActivityInterface viewAnInterface;
     LoginInteractorInterface interactor;
 
 
-    public LoginPresenter(Context context,LoginActivityInterface viewAnInterface){
+    public LoginPresenter(Context context,LoginActivityInterface viewAnInterface)
+    {
         this.viewAnInterface=viewAnInterface;
         interactor=new LoginInteractor(context,this);
     }
     @Override
-    public void getLoginResponseFromFireBase(String email, String password) {
+    public void getLoginResponseFromFireBase(String email, String password)
+    {
        interactor.getLoginResponseFromFirebase(email, password);
 
     }
 
     @Override
-    public void loginSuccess(UserModel model) {
+    public void loginSuccess(UserModel model)
+    {
      viewAnInterface.loginSuccess(model);
     }
 
     @Override
-    public void loginFailure(String message) {
+    public void loginFailure(String message)
+    {
      viewAnInterface.loginFailure(message);
     }
 
     @Override
-    public void showProgressDailog(String message) {
+    public void showProgressDailog(String message)
+    {
     viewAnInterface.showPogressDailog(message);
     }
 
     @Override
-    public void hideProgressDialog() {
+    public void hideProgressDialog()
+    {
     viewAnInterface.hideProgressDailog();
     }
 
     @Override
-    public void getLoginResponseFromFacebook(CallbackManager callbackManager, LoginButton loginButton) {
+    public void getLoginResponseFromFacebook(CallbackManager callbackManager, LoginButton loginButton)
+    {
      interactor.getLoginResposeFromFaceBook(callbackManager,loginButton);
     }
 
     @Override
-    public void fbLoginFailure(String message) {
+    public void fbLoginFailure(String message)
+    {
     viewAnInterface.fbLoginFailure(message);
     }
 
     @Override
-    public void fbLoginSuccess(JSONObject jsonObject, String userId, String message) throws JSONException {
+    public void fbLoginSuccess(JSONObject jsonObject, String userId, String message) throws JSONException
+    {
     viewAnInterface.fbLoginSuccess(jsonObject,userId,message);
     }
 
     @Override
-    public void handleGoogleSignInResult(GoogleSignInResult result) {
+    public void handleGoogleSignInResult(GoogleSignInResult result)
+    {
       interactor.handleGoogleSignInResult(result);
     }
 
     @Override
-    public void googleLoginSuccess(GoogleSignInAccount account, String userId, String message) {
+    public void googleLoginSuccess(GoogleSignInAccount account, String userId, String message)
+    {
      viewAnInterface.googleLoginSuccess(account,userId,message);
     }
 
     @Override
-    public void googleLoginFailure(String message) {
+    public void googleLoginFailure(String message)
+    {
     viewAnInterface.googleLoginFailure(message);
     }
 }

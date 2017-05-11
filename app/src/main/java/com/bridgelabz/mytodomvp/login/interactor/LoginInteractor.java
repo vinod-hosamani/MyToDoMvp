@@ -50,25 +50,28 @@ public class LoginInteractor implements LoginInteractorInterface {
 /*
     using firebaseobjects
 */
-    FirebaseAuth userAuth;
-    FirebaseDatabase database;
+    FirebaseAuth firebaseAuth;
+    FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private String userId;
 
 
-    public LoginInteractor(Context context,LoginPresenterInterface presenterInterface){
+    public LoginInteractor(Context context,LoginPresenterInterface presenterInterface)
+    {
         this.context=context;
         this.presenterInterface=presenterInterface;
-        userAuth=FirebaseAuth.getInstance();
+        firebaseAuth=FirebaseAuth.getInstance();
 
     }
     @Override
-    public void getLoginResponseFromFirebase(String email, String password) {
+    public void getLoginResponseFromFirebase(String email, String password)
+    {
      presenterInterface.showProgressDailog("loading please wait..");
         if(Connectivity.isNetworkConnected(context)){
 
-            userAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                    {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                           if(task.isSuccessful()){
@@ -121,12 +124,12 @@ public class LoginInteractor implements LoginInteractorInterface {
 
                 AuthCredential credential= GoogleAuthProvider.getCredential(account.getIdToken(),null);
 
-                userAuth.signInWithCredential(credential)
+                firebaseAuth.signInWithCredential(credential)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
-                                    String userId=userAuth.getCurrentUser().getUid();
+                                    String userId=firebaseAuth.getCurrentUser().getUid();
                                     presenterInterface.googleLoginSuccess(account,userId,"you have logged in your google account");
 
                                 }
@@ -146,8 +149,8 @@ public class LoginInteractor implements LoginInteractorInterface {
 
     public void getUserData(String userId)
     {
-        database=FirebaseDatabase.getInstance();
-        databaseReference=database.getReference(Constant.key_firebase_user);
+        firebaseDatabase=FirebaseDatabase.getInstance();
+        databaseReference=firebaseDatabase.getReference(Constant.key_firebase_user);
         databaseReference.child(userId)
         .addValueEventListener(new ValueEventListener() {
             @Override
@@ -172,7 +175,7 @@ private void handleFacebookAccessToken(final AccessToken token){
     Log.d(TAG,"handleFacebookAccessToken "+token);
 
     AuthCredential credential= FacebookAuthProvider.getCredential(token.getToken());
-    userAuth.signInWithCredential(credential)
+    firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -183,7 +186,7 @@ private void handleFacebookAccessToken(final AccessToken token){
                                 new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
-                                       String userId=userAuth.getCurrentUser().getUid();
+                                       String userId=firebaseAuth.getCurrentUser().getUid();
                                         try{
                                             presenterInterface.fbLoginSuccess(object,userId,"loginwith fb successfull");
                                         }

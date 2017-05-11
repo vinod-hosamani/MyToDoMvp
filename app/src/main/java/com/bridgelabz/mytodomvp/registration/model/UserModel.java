@@ -3,7 +3,8 @@ package com.bridgelabz.mytodomvp.registration.model;
 /**
  * Created by bridgeit on 7/5/17.
  */
-public class UserModel {
+public class UserModel
+{
     private String id;
     private String mobile;
     private String password;

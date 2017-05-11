@@ -17,8 +17,8 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by bridgeit on 8/5/17.
  */
-public class SessionManagement {
-
+public class SessionManagement
+{
     static SharedPreferences userDataPref;
     static Editor userEditor;
     static Context context;
@@ -57,20 +57,24 @@ public class SessionManagement {
         return user;
     }
 
-    public boolean isLoggedIn(){
+    public boolean isLoggedIn()
+    {
         return userDataPref.getBoolean(Constant.key_is_login,false);
 
     }
 
-    public boolean isFbLoggedIn(){
+    public boolean isFbLoggedIn()
+    {
         return userDataPref.getBoolean(Constant.key_check_fb_login,false);
     }
-    public boolean isGoogleLoggedIn(){
+    public boolean isGoogleLoggedIn()
+    {
         return userDataPref.getBoolean(Constant.key_check_google_login,false);
     }
 
 
-    public void logoutUser(){
+    public void logoutUser()
+    {
         userEditor.remove(Constant.key_id);
         userEditor.remove(Constant.key_email);
         userEditor.remove(Constant.key_fullname);
