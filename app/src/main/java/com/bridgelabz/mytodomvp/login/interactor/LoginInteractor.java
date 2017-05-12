@@ -73,12 +73,14 @@ public class LoginInteractor implements LoginInteractorInterface {
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                     {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                        public void onComplete(@NonNull Task<AuthResult> task)
+                        {
                           if(task.isSuccessful()){
                               userId=task.getResult().getUser().getUid();
                               getUserData(userId);
                           }
-                            else {
+                            else
+                          {
                               presenterInterface.loginFailure("invalid email ro password");
                               presenterInterface.hideProgressDialog();
                           }
@@ -98,15 +100,15 @@ public class LoginInteractor implements LoginInteractorInterface {
         }
 
         @Override
-        public void onCancel() {
+        public void onCancel()
+        {
          Log.i(TAG,"onCancle ");
             presenterInterface.fbLoginFailure("you have cancelled the login process");
         }
 
         @Override
-        public void onError(FacebookException error) {
-
-
+        public void onError(FacebookException error)
+        {
             Log.i(TAG,"onErrror"+error);
             presenterInterface.fbLoginFailure(error.toString());
         }
@@ -114,7 +116,8 @@ public class LoginInteractor implements LoginInteractorInterface {
     }
 
     @Override
-    public void handleGoogleSignInResult(GoogleSignInResult result) {
+    public void handleGoogleSignInResult(GoogleSignInResult result)
+    {
      presenterInterface.showProgressDailog("loading......");
         if(Connectivity.isNetworkConnected(context))
         {
@@ -125,10 +128,13 @@ public class LoginInteractor implements LoginInteractorInterface {
                 AuthCredential credential= GoogleAuthProvider.getCredential(account.getIdToken(),null);
 
                 firebaseAuth.signInWithCredential(credential)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                        {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
+                            public void onComplete(@NonNull Task<AuthResult> task)
+                            {
+                                if(task.isSuccessful())
+                                {
                                     String userId=firebaseAuth.getCurrentUser().getUid();
                                     presenterInterface.googleLoginSuccess(account,userId,"you have logged in your google account");
 
@@ -140,7 +146,8 @@ public class LoginInteractor implements LoginInteractorInterface {
                             }
                         });
             }
-            else {
+            else
+            {
                 presenterInterface.googleLoginFailure("no internet connection");
             }
             presenterInterface.hideProgressDialog();
@@ -152,9 +159,11 @@ public class LoginInteractor implements LoginInteractorInterface {
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference(Constant.key_firebase_user);
         databaseReference.child(userId)
-        .addValueEventListener(new ValueEventListener() {
+        .addValueEventListener(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 model=dataSnapshot.getValue(UserModel.class);
                 presenterInterface.loginSuccess(model);
                 presenterInterface.hideProgressDialog();
@@ -162,7 +171,8 @@ public class LoginInteractor implements LoginInteractorInterface {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(DatabaseError error)
+            {
 
                 presenterInterface.loginFailure(error.getMessage());
                 presenterInterface.hideProgressDialog();
@@ -170,22 +180,25 @@ public class LoginInteractor implements LoginInteractorInterface {
         });
     }
 
-private void handleFacebookAccessToken(final AccessToken token){
-
+private void handleFacebookAccessToken(final AccessToken token)
+{
     Log.d(TAG,"handleFacebookAccessToken "+token);
-
     AuthCredential credential= FacebookAuthProvider.getCredential(token.getToken());
     firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>()
+            {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                public void onComplete(@NonNull Task<AuthResult> task)
+                {
                     if(task.isSuccessful())
                     {
                         Log.d(TAG,"signInWithCredentials:success");
                         GraphRequest request=GraphRequest.newMeRequest(token,
-                                new GraphRequest.GraphJSONObjectCallback() {
+                                new GraphRequest.GraphJSONObjectCallback()
+                                {
                                     @Override
-                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                    public void onCompleted(JSONObject object, GraphResponse response)
+                                    {
                                        String userId=firebaseAuth.getCurrentUser().getUid();
                                         try{
                                             presenterInterface.fbLoginSuccess(object,userId,"loginwith fb successfull");
@@ -203,7 +216,8 @@ private void handleFacebookAccessToken(final AccessToken token){
                         request.setParameters(parameters);
                         request.executeAsync();
                     }
-                    else {
+                    else
+                    {
                         presenterInterface.fbLoginFailure("cannot sign in ");
                     }
                 }

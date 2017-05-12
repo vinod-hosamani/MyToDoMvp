@@ -49,8 +49,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
 
     SessionManagement session;
 
-    public  GoogleSignInOptions googleSignInOptions;
-    public  GoogleApiClient googleApiClient;
+    public GoogleSignInOptions googleSignInOptions;
+    public GoogleApiClient googleApiClient;
 
     boolean isFbLogin;
     boolean isGoogleLogin;
@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
         setContentView(R.layout.activity_login);
         initView();
 
-        callbackManager=CallbackManager.Factory.create();
+        callbackManager= CallbackManager.Factory.create();
 
        /* for google login*/
         googleSignInOptions=new GoogleSignInOptions
@@ -215,7 +215,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
         createAccount=(AppCompatTextView)findViewById(R.id.textViewLogCreateAccount);
         loginButton=(AppCompatButton)findViewById(R.id.buttonLogLogin);
 
-       // facebookLoginBtn=(LoginButton)findViewById(R.id.facebookLoginButton);
+        facebookLoginBtn=(LoginButton)findViewById(R.id.facebookLoginButton);
         emailEditText=(AppCompatEditText)findViewById(R.id.editTextLogEmail);
         passwordEditText=(AppCompatEditText)findViewById(R.id.editTextLogPass);
 
@@ -229,7 +229,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
 
       /*  google sign in button*/
 
-      //  googleSignInBtn=(SignInButton)findViewById(R.id.googleSignInButton);
+        googleSignInBtn=(SignInButton)findViewById(R.id.googleSignInButton);
         googleSignInBtn.setOnClickListener(this);
 
     }

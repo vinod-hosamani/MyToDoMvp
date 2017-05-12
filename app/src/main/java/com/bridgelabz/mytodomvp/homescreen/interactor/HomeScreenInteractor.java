@@ -2,6 +2,7 @@ package com.bridgelabz.mytodomvp.homescreen.interactor;
 
 import android.content.Context;
 
+import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.HomeScreenPresenter;
@@ -38,7 +39,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface {
     }
     @Override
     public void getTodoNoteFromServer( final String userId) {
-presenter.showProgressDailogue("loading");
+     presenter.showProgressDailogue("loading");
         if(Connectivity.isNetworkConnected(context))
         {
             todoDataReference.addValueEventListener(new ValueEventListener() {
@@ -60,15 +61,22 @@ presenter.showProgressDailogue("loading");
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
+                presenter.getNoteFailure("some error");
+                    presenter.hideProgressDailogue();
                 }
             });
+        }
+        else
+        {
+            presenter.getNoteFailure(context.getString(R.string.no_internet));
+            presenter.hideProgressDailogue();
         }
 
     }
 
     @Override
-    public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos) {
+    public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
+    {
 
     }
 

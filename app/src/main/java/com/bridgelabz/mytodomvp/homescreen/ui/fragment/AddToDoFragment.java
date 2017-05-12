@@ -1,14 +1,15 @@
 package com.bridgelabz.mytodomvp.homescreen.ui.fragment;
 
 import android.app.DatePickerDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -25,6 +26,8 @@ import com.bridgelabz.mytodomvp.session.SessionManagement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+//import android.app.Fragment;
 
 /**
  * Created by bridgeit on 9/5/17.
@@ -82,8 +85,9 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,  @Nullable ViewGroup container, Bundle savedInstanceState) {
-         super.onCreateView(inflater, container, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater,  @Nullable ViewGroup container, Bundle savedInstanceState)
+    {
+        super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true);
 
         View view=inflater.inflate(R.layout.fragment_add_to_item,container,false);
@@ -107,14 +111,16 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     }
 
     @Override
-    public void addTodoFailure(String message) {
+    public void addTodoFailure(String message)
+    {
         Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
 
     }
 
     ProgressDialog progressDialog;
     @Override
-    public void showProgressDailogue(String message) {
+    public void showProgressDailogue(String message)
+    {
         if(!homeScreenActivity.isFinishing())
         {
             progressDialog=new ProgressDialog(homeScreenActivity);
@@ -125,7 +131,8 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     }
 
     @Override
-    public void hideProgressDialogue() {
+    public void hideProgressDialogue()
+    {
      if(!homeScreenActivity.isFinishing() && progressDialog!=null)
      {
          progressDialog.dismiss();
@@ -133,19 +140,21 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     }
 
     @Override
-    public void updateSuccess(String message) {
-Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
+    public void updateSuccess(String message)
+    {
+      Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
-    public void updateFailure(String message) {
-Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
+    public void updateFailure(String message)
+    {
+      Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onClick(View view) {
-
+    public void onClick(View view)
+    {
         switch (view.getId())
         {
             case R.id.btnsave:
@@ -197,6 +206,8 @@ public void savaDataAdapter()
     presenter.getResponseForAddTodoToServer(model,userModel.getId());
 
 
+
+
     homeScreenActivity.addTodoFab.setVisibility(View.VISIBLE);
     homeScreenActivity.getSupportFragmentManager().popBackStackImmediate();
 }
@@ -205,10 +216,11 @@ public void savaDataAdapter()
     private void updateLabe()
     {
         String myFormat="MMMM dd,yyyy";
-        SimpleDateFormat sdf=new SimpleDateFormat();
+        SimpleDateFormat sdf=new SimpleDateFormat(myFormat);
         textViewReminder.setText(sdf.format(myCalender.getTime()));
     }
-    DatePickerDialog.OnDateSetListener date= new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog.OnDateSetListener date= new DatePickerDialog.OnDateSetListener()
+    {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth)
         {
@@ -219,4 +231,19 @@ public void savaDataAdapter()
 
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.add_remainder)
+        {
+            new DatePickerDialog(homeScreenActivity,date,myCalender.get(Calendar.YEAR),myCalender.get(Calendar.MONTH),
+            myCalender.get(Calendar.DAY_OF_MONTH)).show();
+            return  true;
+        }
+        else if(item.getItemId()==R.id.action_logout)
+        {
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

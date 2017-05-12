@@ -8,4 +8,6 @@
     <string name="cancel_message">cancelMessge</string>
     <string name="navigatinOpne">navigationOpne</string>
     <string name="navigationClose">navigationclose</string>
+    <string name="image_pick_error">imagePickError</string>
+    <string name="no_internet" >not internet conntion</string>
 </resources>

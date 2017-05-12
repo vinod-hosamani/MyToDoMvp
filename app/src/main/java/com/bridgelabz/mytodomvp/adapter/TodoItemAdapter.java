@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
-import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
-import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,28 +23,36 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     TodoItemModel model;
     OnNoteClickListener noteClickListener;
     //DatabaseHandler database;
-    View.OnLongClickListener onLongClickListener;
+    OnLongClickListener onLongClickListener;
 
     public TodoItemAdapter(Context context,OnNoteClickListener noteClickListener)
     {
-        if(todoList==null){
+        if(todoList==null)
+        {
             this.todoList=new ArrayList<>();
         }
         this.noteClickListener=noteClickListener;
         this.context=context;
     }
-    public TodoItemAdapter(Context context, View.OnLongClickListener onLongClickListener){
+   /* public TodoItemAdapter(Context context,OnLongClickListener onLongClickListener)
+    {
         this.context=context;
+        //this.onLongClickListener=onLongClickListener;
         this.onLongClickListener=onLongClickListener;
-    }
+    }*/
+   public TodoItemAdapter(Context context, OnLongClickListener onLongClickListener) {
+       this.context = context;
+       this.onLongClickListener = onLongClickListener;
+   }
 
-    public TodoItemAdapter(HomeScreenActivity homeScreenActivity, ArchiveFragment archiveFragment)
+   /* public TodoItemAdapter(HomeScreenActivity homeScreenActivity, ArchiveFragment archiveFragment)
     {
     }
+*/
 
 
-
-    public void setTodoList(List<TodoItemModel> noteList){
+    public void setTodoList(List<TodoItemModel> noteList)
+    {
         todoList.clear();
         notifyDataSetChanged();
         todoList.addAll(noteList);
@@ -93,7 +99,7 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
             @Override
             public boolean onLongClick(View view)
             {
-               // onLongClickListener.onLongClick(todoItemModel);
+                onLongClickListener.onLongClick(todoItemModel);
 
                 return true;
             }

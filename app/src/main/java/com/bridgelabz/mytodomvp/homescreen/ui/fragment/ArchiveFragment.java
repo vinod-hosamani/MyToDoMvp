@@ -1,10 +1,11 @@
 package com.bridgelabz.mytodomvp.homescreen.ui.fragment;
 
-import android.app.Fragment;
+
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -63,6 +64,7 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
             if(model.isArchieved())
                 archiveList.add(model);
         }
+        totoItemAdapter.setTodoList(archiveList);
 
     }
 

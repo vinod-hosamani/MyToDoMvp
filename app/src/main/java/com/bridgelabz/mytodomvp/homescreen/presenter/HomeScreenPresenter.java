@@ -25,62 +25,63 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface {
 
     }
     @Override
-    public void getTodoNoteFromServer(String userId) {
-
+    public void getTodoNoteFromServer(String userId)
+    {
+      interactor.getTodoNoteFromServer(userId);
     }
 
     @Override
     public void getNoteSuccess(List<TodoItemModel> noteList) {
-
+    viewInterface.getNoteSuccess(noteList);
     }
 
     @Override
     public void getNoteFailure(String message) {
-
+viewInterface.getNoteFailure(message);
     }
 
     @Override
     public void showProgressDailogue(String message) {
-
+   viewInterface.showProgressDialogue(message);
     }
 
     @Override
     public void hideProgressDailogue() {
-
+  viewInterface.hideProgressDialogu();
     }
 
     @Override
     public void deleteTodoModelFailure(String message) {
-
+viewInterface.deleteTodoModelFailure(message);
     }
 
     @Override
     public void deleteTodoModelSuccess(String message) {
-
+viewInterface.deleteTodoModelSuccess(message);
     }
 
     @Override
     public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos) {
-
+interactor.deleteTodoModel(tempList,itemModel,pos);
     }
 
     @Override
     public void moveToArchive(TodoItemModel itemModel) {
-
+interactor.motoToArchive(itemModel);
     }
 
     @Override
     public void moveToFailure(String message) {
-
+viewInterface.moveToArchiveFailure(message);
     }
 
     @Override
     public void moveToSuccess(String message) {
-
+viewInterface.moveToArchiveSuccess(message);
     }
 
     @Override
     public void moveToNotes(TodoItemModel itemModel) {
-
+interactor.moveToNotes(itemModel);
     }
 }

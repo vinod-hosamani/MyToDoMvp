@@ -18,7 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * Created by bridgeit on 10/5/17.
  */
-public class AddTodoInteractor implements AddTodoInteractorInterface {
+public class AddTodoInteractor implements AddTodoInteractorInterface
+{
 
     Context context;
     AddTodoPresenterInterface presenterInterface;
@@ -42,25 +43,31 @@ public class AddTodoInteractor implements AddTodoInteractorInterface {
         if(Connectivity.isNetworkConnected(context))
         {
             itemModel=model;
-            databaseReference.addValueEventListener(new ValueEventListener() {
+            databaseReference.addValueEventListener(new ValueEventListener()
+            {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(model!=null)
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    if(itemModel!=null)
                     {
                         int index=(int)dataSnapshot.child(userId).child(model.getStartDate()).getChildrenCount();
                         getIndex(index,userId,itemModel);
+
                         itemModel=null;
+
                     }
                 }
 
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(DatabaseError databaseError)
+                {
 
                 }
             });
         }
-        else {
+        else
+        {
             presenterInterface.addTodoFailure("no internet connection");
             presenterInterface.hideProgressDialogue();
         }
@@ -76,7 +83,8 @@ public class AddTodoInteractor implements AddTodoInteractorInterface {
             presenterInterface.addTodoSuccess("notes added successfully");
             presenterInterface.hideProgressDialogue();
         }
-        else {
+        else
+        {
             presenterInterface.addTodoFailure("notes to do failed");
             presenterInterface.hideProgressDialogue();
         }
@@ -86,11 +94,10 @@ public class AddTodoInteractor implements AddTodoInteractorInterface {
     public void getResponseForUpdateTodoToServer(TodoItemModel model, String userId)
     {
        presenterInterface.showProgressDialogue("plese wait updating");
-        if(Connectivity.isNetworkConnected(context)){
+        if(Connectivity.isNetworkConnected(context))
+        {
             databaseReference.child(userId).child(model.getStartDate()).child(String.valueOf(model.getNoteId())).setValue(model);
-        presenterInterface.updateSuccess("updateSuccess");
-
-
+            presenterInterface.updateSuccess("updateSuccess");
         }
         else
         {

@@ -29,6 +29,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     AppCompatEditText mobileEditText;
     AppCompatEditText passwordEditText;
     AppCompatButton registrationButton;
+    AppCompatButton log;
 
     @Override
     public void initView() {
@@ -39,8 +40,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
         mobileEditText = (AppCompatEditText) findViewById(R.id.editTextRegMobileNo);
         passwordEditText = (AppCompatEditText) findViewById(R.id.editTextRegPass);
         registrationButton = (AppCompatButton) findViewById(R.id.registrainButton);
+        log=(AppCompatButton)findViewById(R.id.directLogin);
 
         registrationButton.setOnClickListener(this);
+        log.setOnClickListener(this);
 
     }
 
@@ -106,6 +109,11 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
                     finish();
                 }
                 break;
+            case R.id.directLogin:
+                Intent intent=new Intent(this,LoginActivity.class);
+                startActivity(intent);
+                finish();
+
         }
 
     }

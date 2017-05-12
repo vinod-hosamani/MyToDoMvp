@@ -46,12 +46,14 @@ public class AddTodoPresenter implements AddTodoPresenterInterface {
     }
 
     @Override
-    public void showProgressDialogue(String message) {
-viewInterface.showProgressDailogue(message);
+    public void showProgressDialogue(String message)
+    {
+      viewInterface.showProgressDailogue(message);
     }
 
     @Override
-    public void hideProgressDialogue() {
+    public void hideProgressDialogue()
+    {
         viewInterface.hideProgressDialogue();
 
     }
@@ -63,12 +65,14 @@ viewInterface.showProgressDailogue(message);
     }
 
     @Override
-    public void updateSuccess(String message) {
+    public void updateSuccess(String message)
+    {
      viewInterface.updateSuccess(message);
     }
 
     @Override
-    public void updateFailure(String message) {
+    public void updateFailure(String message)
+    {
      viewInterface.updateFailure(message);
     }
 }

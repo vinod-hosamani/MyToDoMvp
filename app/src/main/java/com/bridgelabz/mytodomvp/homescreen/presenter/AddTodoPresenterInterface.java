@@ -7,13 +7,17 @@ import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
  */
 public interface AddTodoPresenterInterface
 {
-    void getResponseForAddTodoToServer(TodoItemModel model,String userId);
+
+
     void addTodoSuccess(String message);
     void addTodoFailure(String message);
     void showProgressDialogue(String message);
     void hideProgressDialogue();
-    void getResponseForUpdateTodoToServer(TodoItemModel model,String userId);
     void updateSuccess(String message);
     void updateFailure(String message);
+
+    void getResponseForUpdateTodoToServer(TodoItemModel model,String userId);
+    void getResponseForAddTodoToServer(TodoItemModel model,String userId);
+
 
 }
