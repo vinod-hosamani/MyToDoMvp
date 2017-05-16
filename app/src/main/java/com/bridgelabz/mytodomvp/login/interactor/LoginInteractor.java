@@ -94,7 +94,8 @@ public class LoginInteractor implements LoginInteractorInterface {
     public void getLoginResposeFromFaceBook(CallbackManager callbackManager, LoginButton loginButton) {
     loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
         @Override
-        public void onSuccess(LoginResult loginResult) {
+        public void onSuccess(LoginResult loginResult)
+        {
             Log.i(TAG,"onsuccess"+loginResult);
             handleFacebookAccessToken(loginResult.getAccessToken());
         }

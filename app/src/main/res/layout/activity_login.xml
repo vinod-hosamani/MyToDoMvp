@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:background="#56b18e"
+    android:weightSum="1"
+    android:padding="20dp"
+    >
+    <android.support.v7.widget.AppCompatImageButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logImageButton"
+        android:src="@drawable/images"/>
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/editTextLogEmail"
@@ -45,10 +54,14 @@
         android:id="@+id/facebookLoginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="77dp"
+        android:layout_marginRight="77dp"
         android:layout_marginTop="22dp" />
 
     <com.google.android.gms.common.SignInButton
         android:layout_width="match_parent"
+        android:layout_marginLeft="77dp"
+        android:layout_marginRight="77dp"
         android:layout_height="wrap_content"
         android:id="@+id/googleSignInButton"
         android:layout_marginTop="22dp"/>

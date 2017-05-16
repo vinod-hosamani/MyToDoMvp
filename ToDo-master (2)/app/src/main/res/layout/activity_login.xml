@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_marginLeft="@dimen/dimen_16"
+        android:layout_marginRight="@dimen/dimen_16"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_100"
+            android:src="@drawable/todologo" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgLogo"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="@string/txtEmail"
+            android:textColor="@color/white" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/editViewEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtEmailLogin"
+            android:layout_marginTop="@dimen/dimen_10" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtPassLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editViewEmailLogin"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="@string/txtPass"
+            android:textColor="@color/white" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/editViewPassLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtPassLogin"
+            android:layout_marginTop="@dimen/dimen_10" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtForget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editViewPassLogin"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="@string/txtForget" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtForget"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="@string/btnLogin" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btnLogin"
+            android:layout_alignBottom="@+id/btnLogin"
+            android:layout_toEndOf="@+id/txtForget"
+            android:layout_toRightOf="@+id/txtForget"
+            android:text="@string/txtCreateAcc" />
+        
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/fb_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_marginBottom="@dimen/dimen_30"
+            android:layout_below="@id/txtCreateAccount" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/fb_login_button"
+            android:layout_toEndOf="@+id/fb_login_button"
+            android:layout_toRightOf="@+id/fb_login_button"
+            android:layout_marginLeft="@dimen/dimen_30" />
+
+    </RelativeLayout>
+</ScrollView>

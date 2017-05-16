@@ -31,6 +31,27 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     AppCompatButton registrationButton;
     AppCompatButton log;
 
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration);
+        initView();
+
+        mProgressDialog=new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
+
+    }
+
+
+    @Override
+    public void registrationSuccess(String message)
+    {
+      if(!isFinishing())
+          Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void initView() {
         registrationPresenter = new RegistrationPresenter(this, this);
@@ -46,23 +67,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
         log.setOnClickListener(this);
 
     }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
-        initView();
-    }
-
-
-    @Override
-    public void registrationSuccess(String message)
-    {
-      if(!isFinishing())
-          Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void registraionFailure(String message)
     {
@@ -74,10 +78,10 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     @Override
     public void showProgressDailogue(String message)
     {
-        mProgressDialog=new ProgressDialog(this);
-        mProgressDialog.setMessage(message);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
+        if(mProgressDialog!=null && !mProgressDialog.isShowing()) {
+            mProgressDialog.setMessage(message);
+            mProgressDialog.show();
+        }
 
     }
 

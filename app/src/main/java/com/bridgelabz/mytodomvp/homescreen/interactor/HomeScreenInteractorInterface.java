@@ -1,5 +1,7 @@
 package com.bridgelabz.mytodomvp.homescreen.interactor;
 
+import android.net.Uri;
+
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 
 import java.util.List;
@@ -14,4 +16,5 @@ public interface HomeScreenInteractorInterface
     void deleteTodoModel(List<TodoItemModel> tempList,TodoItemModel itemModel,int pos);
     void motoToArchive(TodoItemModel itemModel);
     void moveToNotes(TodoItemModel itemModel);
+    void uploadProfilePic(String currentUserId, Uri selectedImage);
 }

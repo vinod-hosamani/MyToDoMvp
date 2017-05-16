@@ -233,7 +233,8 @@ public void savaDataAdapter()
     };
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         if(item.getItemId()==R.id.add_remainder)
         {
             new DatePickerDialog(homeScreenActivity,date,myCalender.get(Calendar.YEAR),myCalender.get(Calendar.MONTH),

@@ -29,6 +29,10 @@ public class Constant {
     public static final String key_fb_user = "email";
     public static final String key_fb_name = "name";
     public static final String key_fb_id = "id";
+    public static String note_title = "Notes";
+    public static String update_fragment_title = "Update Note";
+    public static String reminder_title = "Reminders";
+    public static String archieve_title = "Archieves";
     public static final String key_check_fb_login = "isFbLogin";
     public static final int google_sign_in_req_code = 999;
     public static final String key_check_google_login = "isGoogleLogin" ;
@@ -36,4 +40,6 @@ public class Constant {
     public static final String key_note_id = "noteId";
     public static final String key_startDate = "startDate";
     public static final String key_firebase_archive = "archievedData";
+    public static String key_pro_pic= "pro_pic";
+    public static String add_note_title = "Add Notes";
 }

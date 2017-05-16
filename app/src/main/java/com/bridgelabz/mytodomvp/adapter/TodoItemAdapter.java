@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
+import com.bridgelabz.mytodomvp.util.DatabaseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,34 +23,88 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     Context context;
     TodoItemModel model;
     OnNoteClickListener noteClickListener;
-    //DatabaseHandler database;
+    DatabaseHandler database;
     OnLongClickListener onLongClickListener;
 
     public TodoItemAdapter(Context context,OnNoteClickListener noteClickListener)
     {
         if(todoList==null)
         {
+            database=DatabaseHandler.getInstance(context);
             this.todoList=new ArrayList<>();
         }
         this.noteClickListener=noteClickListener;
         this.context=context;
     }
-   /* public TodoItemAdapter(Context context,OnLongClickListener onLongClickListener)
-    {
-        this.context=context;
-        //this.onLongClickListener=onLongClickListener;
-        this.onLongClickListener=onLongClickListener;
-    }*/
-   public TodoItemAdapter(Context context, OnLongClickListener onLongClickListener) {
-       this.context = context;
-       this.onLongClickListener = onLongClickListener;
-   }
 
-   /* public TodoItemAdapter(HomeScreenActivity homeScreenActivity, ArchiveFragment archiveFragment)
-    {
+
+    public TodoItemAdapter(Context context, OnLongClickListener onLongClickListener) {
+        this.context = context;
+        this.onLongClickListener = onLongClickListener;
     }
-*/
 
+    public TodoItemAdapter(Context context) {
+        this.context=context;
+    }
+
+    @Override
+    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
+        View view= LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.recycler_todo_item_list,parent,false);
+        return new TaskViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(TaskViewHolder holder, final int position)
+    {
+
+        final TodoItemModel todoItemModel = todoList.get(position);
+        holder.title.setText(todoItemModel.getTitle());
+        holder.note.setText(todoItemModel.getNote());
+
+        if(!todoItemModel.getReminderDate().equals(""))
+        {
+            holder.reminderDate.setText(todoItemModel.getReminderDate());
+        }
+        else
+        {
+            holder.reminderDate.setText("");
+        }
+
+        if (noteClickListener != null)
+        {
+            holder.itemView.setOnClickListener(new View.OnClickListener()
+                                               {
+                                                   @Override
+                                                   public void onClick(View view)
+                                                   {
+                                                       if (noteClickListener != null)
+                                                           noteClickListener.onItemClick(position);
+                                                   }
+                                               }
+            );
+        }
+
+        if(onLongClickListener != null)
+        {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View view)
+                {
+                    onLongClickListener.onLongClick(todoItemModel);
+                    return true;
+                }
+            });
+        }
+    }
+
+    @Override
+    public int getItemCount()
+    {
+        return todoList.size();
+    }
 
     public void setTodoList(List<TodoItemModel> noteList)
     {
@@ -65,53 +120,11 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         notifyDataSetChanged();
     }
 
-    @Override
-    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        View view= LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.recycler_todo_item_list,parent,false);
-        return new TaskViewHolder(view);
-    }
 
 
 
-    @Override
-    public void onBindViewHolder(TaskViewHolder holder, final int position)
-    {
-
-        final TodoItemModel todoItemModel=todoList.get(position);
-        holder.title.setText(todoItemModel.getTitle());
-        holder.note.setText(todoItemModel.getNote());
-
-        holder.itemView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                if(noteClickListener!=null)
-                    noteClickListener.onItemClick(position);
-            }
-        });
 
 
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view)
-            {
-                onLongClickListener.onLongClick(todoItemModel);
-
-                return true;
-            }
-        });
-
-    }
-
-    @Override
-    public int getItemCount()
-    {
-        return todoList.size();
-    }
     public void addItem(TodoItemModel model)
     {
         todoList.add(model);
@@ -139,12 +152,13 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     {
 
 
-        public AppCompatTextView title,note;
+        public AppCompatTextView title,note,reminderDate;
         public TaskViewHolder(View view)
         {
             super(view);
             title = (AppCompatTextView) view.findViewById(R.id.todo_title);
             note = (AppCompatTextView) view.findViewById(R.id.todo_note);
+            reminderDate = (AppCompatTextView) view.findViewById(R.id.todo_reminder);
         }
     }
 
@@ -153,26 +167,29 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         return todoList.get(pos);
     }
 
-    public TodoItemModel getItemModelByNoteId(int noteId)
+ /*   public TodoItemModel getItemModelByNoteId(int noteId)
     {
         TodoItemModel model = null;
         for (TodoItemModel itemModel:
-                todoList) {
-            if(itemModel.getNoteId() == noteId){
+                todoList)
+        {
+            if(itemModel.getNoteId() == noteId)
+            {
                 model = itemModel;
             }
         }
         return model;
-    }
+    }*/
+ public List<TodoItemModel> getAllDataList()
+ {
+     return todoList;
+ }
 
     public interface OnNoteClickListener
     {
      void onItemClick(int pos);
     }
-    public List<TodoItemModel> getAllDataList()
-    {
-        return todoList;
-    }
+
 
     public interface OnLongClickListener
     {

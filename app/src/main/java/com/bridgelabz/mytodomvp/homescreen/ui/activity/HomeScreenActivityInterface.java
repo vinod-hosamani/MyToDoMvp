@@ -1,5 +1,6 @@
 package com.bridgelabz.mytodomvp.homescreen.ui.activity;
 
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
@@ -24,6 +25,8 @@ public interface HomeScreenActivityInterface extends NavigationView.OnNavigation
     void deleteTodoModelSuccess(String message);
     void moveToArchiveFailure(String message);
     void moveToArchiveSuccess(String message);
+    void uploadSuccess(Uri downloadUrl);
 
+    void uploadFailure(String message);
 
 }

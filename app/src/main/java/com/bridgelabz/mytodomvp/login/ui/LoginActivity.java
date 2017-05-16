@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,126 +36,158 @@ import org.json.JSONObject;
  */
 public class LoginActivity extends BaseActivity implements LoginActivityInterface {
 
-    LoginPresenter presenter;
-
+    private static final String TAG = "LoginActivity";
+    public GoogleSignInOptions googleSignInOptions;
+    public GoogleApiClient googleApiClient;
+    //UI WIDGETS DECLARATIONS
     AppCompatEditText emailEditText;
     AppCompatEditText passwordEditText;
     AppCompatButton loginButton;
     AppCompatTextView createAccount;
-
     LoginButton facebookLoginBtn;
     SignInButton googleSignInBtn;
-
-    String email,password;
-
-    SessionManagement session;
-
-    public GoogleSignInOptions googleSignInOptions;
-    public GoogleApiClient googleApiClient;
-
+    //VARIABLES
+    String email, password;
     boolean isFbLogin;
     boolean isGoogleLogin;
-
+    //OTHER CLASASSDECLARATION
+    ProgressDialog progressDialog;
+    SessionManagement session;
+    LoginPresenter presenter;
+    CallbackManager callbackManager;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //view initialization
         initView();
 
-        callbackManager= CallbackManager.Factory.create();
+        callbackManager = CallbackManager.Factory.create();
 
        /* for google login*/
-        googleSignInOptions=new GoogleSignInOptions
+        googleSignInOptions = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .build();
 
-        googleApiClient=new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API,googleSignInOptions)
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .build();
+    }
 
+    @Override
+    public void initView() {
+        session = new SessionManagement(this);
+        presenter = new LoginPresenter(this, this);
+        createAccount = (AppCompatTextView) findViewById(R.id.textViewLogCreateAccount);
+        loginButton = (AppCompatButton) findViewById(R.id.buttonLogLogin);
+
+        facebookLoginBtn = (LoginButton) findViewById(R.id.facebookLoginButton);
+        emailEditText = (AppCompatEditText) findViewById(R.id.editTextLogEmail);
+        passwordEditText = (AppCompatEditText) findViewById(R.id.editTextLogPass);
+
+        createAccount.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
+
+        /*facebook login button*/
+
+        facebookLoginBtn.setReadPermissions("public_profile", "email");
+        facebookLoginBtn.setOnClickListener(this);
+
+      /*  google sign in button*/
+
+        googleSignInBtn = (SignInButton) findViewById(R.id.googleSignInButton);
+        googleSignInBtn.setOnClickListener(this);
 
     }
 
     @Override
     public void loginSuccess(UserModel model)
     {
-      loginToSharedPreference(model);
+        loginToSharedPreference(model);
     }
 
     @Override
-    public void loginFailure(String message) {
-     Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    public void loginFailure(String message)
+    {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    ProgressDialog progressDialog;
-
     @Override
-    public void showPogressDailog(String message) {
-     if(!isFinishing())
-     {
-         progressDialog=new ProgressDialog(this);
-         progressDialog.setMessage(message);
-         progressDialog.show();
-     }
+    public void showPogressDailog(String message)
+    {
+        if (!isFinishing())
+        {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(message);
+            progressDialog.show();
+        }
     }
 
     @Override
     public void hideProgressDailog()
     {
-     if(!isFinishing() && progressDialog!=null){
-         progressDialog.dismiss();
-     }
+        if (!isFinishing() && progressDialog != null)
+        {
+            progressDialog.dismiss();
+        }
     }
 
-    CallbackManager callbackManager;
     @Override
-    public void fbLoginSuccess(JSONObject jsonObject, String userId, String message)throws JSONException
+    public void fbLoginSuccess(JSONObject jsonObject, String userId, String message)
     {
-        isFbLogin=true;
-        UserModel model=new UserModel();
-        if(!jsonObject.getString("email").equals(""))
+        try
         {
-            model.setEmail(jsonObject.getString("email"));
-        }
-        Toast.makeText(this,jsonObject.getString("email"),Toast.LENGTH_SHORT).show();
-        model.setFullname(jsonObject.getString(Constant.key_fb_name));
-        model.setMobile(jsonObject.getString(Constant.key_fb_id));
-        model.setId(userId);
-        model.setPassword("");
-        session.put(model,isFbLogin,isGoogleLogin);
+            isFbLogin = true;
+            UserModel model = new UserModel();
 
-        Intent intent=new Intent(this,HomeScreenActivity.class);
-        startActivity(intent);
-        finish();
+            if (jsonObject.has("email")) {
+                if (!jsonObject.getString("email").equals("")) {
+                    model.setEmail(jsonObject.getString("email"));
+                }
+                Toast.makeText(this, jsonObject.getString("email"), Toast.LENGTH_SHORT).show();
+            }
+            model.setFullname(jsonObject.getString(Constant.key_fb_name));
+            model.setMobile(jsonObject.getString(Constant.key_fb_id));
+            model.setId(userId);
+            model.setPassword("");
+            session.put(model, isFbLogin, isGoogleLogin);
+
+            Intent intent = new Intent(this, HomeScreenActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        catch (JSONException e)
+        {
+            Log.i(TAG, "fbLoginSuccess: " + e.getMessage());
+        }
     }
 
     @Override
     public void fbLoginFailure(String message)
     {
-
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void googleLoginSuccess(GoogleSignInAccount account, String userId, String message)
     {
-     Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        isGoogleLogin=true;
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        isGoogleLogin = true;
 
-        UserModel model=new UserModel();
+        UserModel model = new UserModel();
         model.setId(userId);
         model.setFullname(account.getDisplayName());
         model.setEmail(account.getEmail());
         model.setPassword("");
         model.setMobile(account.getPhotoUrl().toString());
-        session.put(model,isFbLogin,isGoogleLogin);
+        session.put(model, isFbLogin, isGoogleLogin);
 
-        Intent intent=new Intent(this,HomeScreenActivity.class);
+        Intent intent = new Intent(this, HomeScreenActivity.class);
         startActivity(intent);
         finish();
     }
@@ -162,7 +195,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     @Override
     public void googleLoginFailure(String message)
     {
-     Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -171,18 +204,18 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
         switch (view.getId())
         {
             case R.id.textViewLogCreateAccount:
-                Intent intent=new Intent(LoginActivity.this, RegistrationActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.buttonLogLogin:
-                email=emailEditText.getText().toString();
-                password=passwordEditText.getText().toString();
-                presenter.getLoginResponseFromFireBase(email,password);
+                email = emailEditText.getText().toString();
+                password = passwordEditText.getText().toString();
+                presenter.getLoginResponseFromFireBase(email, password);
                 break;
 
             case R.id.facebookLoginButton:
-                presenter.getLoginResponseFromFacebook(callbackManager,facebookLoginBtn);
+                presenter.getLoginResponseFromFacebook(callbackManager, facebookLoginBtn);
                 break;
             case R.id.googleSignInButton:
                 googleSignIn();
@@ -193,56 +226,28 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
 
     private void googleSignIn()
     {
-        Intent signInIntent=Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(signInIntent,Constant.google_sign_in_req_code);
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(signInIntent, Constant.google_sign_in_req_code);
     }
 
     public void loginToSharedPreference(UserModel model)
     {
-        isFbLogin=false;
-        isGoogleLogin=false;
-        session.put(model,isFbLogin,isGoogleLogin);
-        Intent intent=new Intent(this,HomeScreenActivity.class);
+        isFbLogin = false;
+        isGoogleLogin = false;
+        session.put(model, isFbLogin, isGoogleLogin);
+        Intent intent = new Intent(this, HomeScreenActivity.class);
         startActivity(intent);
         finish();
     }
-
-    @Override
-    public void initView()
-    {
-        session=new SessionManagement(this);
-        presenter=new LoginPresenter(this,this);
-        createAccount=(AppCompatTextView)findViewById(R.id.textViewLogCreateAccount);
-        loginButton=(AppCompatButton)findViewById(R.id.buttonLogLogin);
-
-        facebookLoginBtn=(LoginButton)findViewById(R.id.facebookLoginButton);
-        emailEditText=(AppCompatEditText)findViewById(R.id.editTextLogEmail);
-        passwordEditText=(AppCompatEditText)findViewById(R.id.editTextLogPass);
-
-        createAccount.setOnClickListener(this);
-        loginButton.setOnClickListener(this);
-
-        /*facebook login button*/
-
-        facebookLoginBtn.setReadPermissions("public_profile","email");
-        facebookLoginBtn.setOnClickListener(this);
-
-      /*  google sign in button*/
-
-        googleSignInBtn=(SignInButton)findViewById(R.id.googleSignInButton);
-        googleSignInBtn.setOnClickListener(this);
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==Constant.google_sign_in_req_code)
+        if (requestCode == Constant.google_sign_in_req_code)
         {
-            GoogleSignInResult result=Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             presenter.handleGoogleSignInResult(result);
         }
     }

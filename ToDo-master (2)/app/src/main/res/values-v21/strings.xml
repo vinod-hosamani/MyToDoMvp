@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="register_success">registered successfully</string>
+    <string name="date_choose">Add reminder</string>
+    <string name="fb_login_process">please wait...Connecting with fb</string>
+    <string name="fb_login_error">can not sign in</string>
+    <string name="delete_todo_item_loading">deleting...</string>
+</resources>

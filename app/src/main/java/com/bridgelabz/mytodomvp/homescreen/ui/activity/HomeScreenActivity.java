@@ -34,6 +34,8 @@ import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.HomeScreenPresenter;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.AddToDoFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ReminderFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TodoNotesFragment;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
 import com.bridgelabz.mytodomvp.util.SwipeAction;
 import com.bumptech.glide.Glide;
@@ -42,8 +44,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,7 +56,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by bridgeit on 8/5/17.
  */
-public class HomeScreenActivity extends BaseActivity implements HomeScreenActivityInterface {
+public class HomeScreenActivity extends BaseActivity
+        implements HomeScreenActivityInterface {
 
     private static final int result_load_img=1;
     public FloatingActionButton addTodoFab;
@@ -69,7 +72,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     SwipeAction swipeAction;
     ItemTouchHelper itemTouchHelper;
     ArchiveFragment archievedFragment;
-    ArchiveFragment archiveFragment;
+   // ArchiveFragment archiveFragment;
     ProgressDialog progressDialog;
     /*Drawer layout variables*/
     AppCompatTextView txtUsername;
@@ -77,6 +80,11 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     CircleImageView imageViewUserProfile;
     /*Fb login*/
     String fbProfileUrl;
+
+    String currentUserId;
+    ArchiveFragment archiveFragment;
+    ReminderFragment reminderFragment;
+    TodoNotesFragment todoNotesFragment;
 
     List<TodoItemModel> allData;
     public GoogleSignInOptions googleSignInOptions;
@@ -88,10 +96,16 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         initView();
-        presenter.getTodoNoteFromServer(session.getUserDetails().getId());
-        allData=todoItemAdapter.getAllDataList();
+       // presenter.getTodoNoteFromServer(session.getUserDetails().getId());
+        //allData=todoItemAdapter.getAllDataList();
          /*ddrawer part*/
-
+        todoNotesFragment = new TodoNotesFragment(this);
+        setTitle(Constant.note_title);
+        addTodoFab.setVisibility(View.VISIBLE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.todo_item_fragment, todoNotesFragment, "todoNoteList")
+                .addToBackStack(null)
+                .commit();
 
         if(session.isFbLoggedIn()){
             fbProfileUrl="https://graph.facebook.com/" + session.getUserDetails().getMobile() + "/picture?type=large";
@@ -121,13 +135,66 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         {
             txtUsername.setText(session.getUserDetails().getFullname());
             txtUserEmail.setText(session.getUserDetails().getEmail());
+           // imageViewUserProfile.setOnClickListener(this);
+            Uri profileUrl = session.getProfilUrl();
+
+            if(!profileUrl.toString().equals(""))
+            {
+                Glide.with(this).load(profileUrl).into(imageViewUserProfile);
+            }
+            else {
+                imageViewUserProfile.setImageResource(R.drawable.images);
+            }
             imageViewUserProfile.setOnClickListener(this);
+
         }
 
 
         //allData=todoItemAdapter.getAll
     }
+    @Override
+    public void initView()
+    {
+        setTitle(Constant.note_title);
+        addTodoFab=(FloatingActionButton)findViewById(R.id.fab_add_todo);
+        addTodoFab.setOnClickListener(this);
+        addTodoFab.setVisibility(View.VISIBLE);
 
+        isList=true;
+
+        toDoItemRecycler=(RecyclerView)findViewById(R.id.recycler_todo_Item);
+        todoItemAdapter=new TodoItemAdapter(this,this);
+        session=new SessionManagement(this);
+        presenter=new HomeScreenPresenter(this,this);
+
+        mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
+        toDoItemRecycler.setAdapter(todoItemAdapter);
+        swipeAction=new SwipeAction(0,SwipeAction.left |SwipeAction.right,todoItemAdapter,this);
+        itemTouchHelper=new ItemTouchHelper(swipeAction);
+        itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
+
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,
+                toolbar,R.string.navigatinOpne,R.string.navigationClose);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+
+        NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+
+        txtUsername=(AppCompatTextView)header.findViewById(R.id.textViewUsername);
+        txtUserEmail=(AppCompatTextView)header.findViewById(R.id.textViewUserEmail);
+        imageViewUserProfile=(CircleImageView)header.findViewById(R.id.imageViewUserProfile);
+
+        currentUserId=session.getUserDetails().getId();
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer=(DrawerLayout)findViewById(R.id.drawer_layout);
@@ -139,6 +206,8 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
             super.onBackPressed();
             addTodoFab.setVisibility(View.VISIBLE);
         }
+        getSupportFragmentManager().popBackStack();
+        setTitle(Constant.note_title);
 
     }
 
@@ -158,6 +227,8 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
 
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -202,54 +273,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void initView()
-    {
-         addTodoFab=(FloatingActionButton)findViewById(R.id.fab_add_todo);
-        addTodoFab.setOnClickListener(this);
-        addTodoFab.setVisibility(View.VISIBLE);
 
-        isList=true;
-
-        toDoItemRecycler=(RecyclerView)findViewById(R.id.recycler_todo_Item);
-        todoItemAdapter=new TodoItemAdapter(this,this);
-        session=new SessionManagement(this);
-        presenter=new HomeScreenPresenter(this,this);
-
-        mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
-        toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
-        toDoItemRecycler.setAdapter(todoItemAdapter);
-        swipeAction=new SwipeAction(0,SwipeAction.left |SwipeAction.right,todoItemAdapter,this);
-        itemTouchHelper=new ItemTouchHelper(swipeAction);
-        itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
-
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,
-                toolbar,R.string.navigatinOpne,R.string.navigationClose);
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-
-        NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View header = navigationView.getHeaderView(0);
-
-        txtUsername=(AppCompatTextView)header.findViewById(R.id.textViewUsername);
-        txtUserEmail=(AppCompatTextView)header.findViewById(R.id.textViewUserEmail);
-        imageViewUserProfile=(CircleImageView)header.findViewById(R.id.imageViewUserProfile);
-
-    }
-   public void addTodoTask()
-   {
-        AddToDoFragment addTodoFragment = new AddToDoFragment(this);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.todo_item_fragment,addTodoFragment,"todoList")
-                .addToBackStack(null)
-                .commit();
-    }
 
    /*public void addTodoTask() {
        AddToDoFragment addTodoFragment = new AddToDoFragment(this);
@@ -260,14 +284,14 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
    }*/
     @Override
     public void getNoteSuccess(List<TodoItemModel> noteList)
-    {
+    {/*
         List<TodoItemModel> nonArchvieList=new ArrayList<>();
         for(TodoItemModel model:noteList)
             if(!model.isArchieved())
             {
                 nonArchvieList.add(model);
             }
-       todoItemAdapter.setTodoList(nonArchvieList);
+       todoItemAdapter.setTodoList(nonArchvieList);*/
     }
 
     @Override
@@ -327,6 +351,18 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
      Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void uploadSuccess(Uri downloadUrl) {
+        Glide.with(this).load(downloadUrl).into(imageViewUserProfile);
+        session.setProfilePic(downloadUrl);
+    }
+
+    @Override
+    public void uploadFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+    }
+
     private void toggle()
     {
         MenuItem item = menu.findItem(R.id.action_toggle);
@@ -345,6 +381,62 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
             isList = true;
         }
     }
+
+
+
+
+
+  @SuppressWarnings("StatementWithEmptyBody")
+  @Override
+  public boolean onNavigationItemSelected(MenuItem item)
+  {
+      // Handle navigation view item clicks here.
+      int id = item.getItemId();
+      archievedFragment = new ArchiveFragment(this);
+      reminderFragment = new ReminderFragment(this);
+      if (id == R.id.nav_notes)
+      {
+
+          setTitle(Constant.note_title);
+
+          addTodoFab.setVisibility(View.VISIBLE);
+
+          getSupportFragmentManager().beginTransaction()
+                  .replace(R.id.todo_item_fragment, archievedFragment, "archievedList")
+                  .addToBackStack(null)
+                  .commit();
+
+      }
+      else if (id == R.id.nav_archieved)
+      {
+
+          setTitle(Constant.archieve_title);
+
+          addTodoFab.setVisibility(View.INVISIBLE);
+
+          getSupportFragmentManager().beginTransaction()
+                  .replace(R.id.todo_item_fragment, archievedFragment, "archievedList")
+                  .addToBackStack(null)
+                  .commit();
+
+      }
+      else if (id == R.id.nav_reminder)
+      {
+
+          setTitle(Constant.reminder_title);
+
+          addTodoFab.setVisibility(View.INVISIBLE);
+
+          getSupportFragmentManager().beginTransaction()
+                  .replace(R.id.todo_item_fragment, reminderFragment, "reminderList")
+                  .addToBackStack(null)
+                  .commit();
+      }
+
+      DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+      drawer.closeDrawer(GravityCompat.START);
+      return true;
+  }
     @Override
     public void onClick(View view)
     {
@@ -361,7 +453,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 startActivityForResult(galleryIntent, result_load_img);
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -369,57 +460,37 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         try {
             if (requestCode == result_load_img && resultCode == RESULT_OK && data != null) {
                 Uri selectedImage = data.getData();
-                Glide.with(this).load(selectedImage).into(imageViewUserProfile);
-            } else {
+                //Glide.with(this).load(selectedImage).into(imageViewUserProfile);
+                CropImage.activity(selectedImage).start(this);
+
+            } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+            {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if(resultCode ==  RESULT_OK)
+                {
+                    Uri cropedImage = result.getUri();
+                    presenter.uploadProfilePic(currentUserId, cropedImage);
+                }
+                else
+                {
+                    Toast.makeText(this, result.getError().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
                 Toast.makeText(this, R.string.image_pick_error, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    public void addTodoTask()
     {
-        int id = item.getItemId();
-        archievedFragment = new ArchiveFragment(this);
-        if (id == R.id.nav_notes) {
-           /* addTodoFab.setVisibility(View.VISIBLE);
-            presenter.getTodoNoteFromServer(session.getUserDetails().getId());*/
-/*
-            addTodoFab.setVisibility(View.VISIBLE);
-            presenter.getTodoNoteFromServer(session.getUserDetails().getId());
-*/
-
-            Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
-            startActivity(intent);
-/*            getSupportFragmentManager().popBackStackImmediate();*/
-
-        }
-        else if (id == R.id.nav_archieved) {
-
-            addTodoFab.setVisibility(View.INVISIBLE);
-            archievedFragment = new ArchiveFragment(this);
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.todo_item_fragment, archievedFragment, "archievedList")
-                    .addToBackStack(null)
-                    .commit();
-
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        setTitle(Constant.add_note_title);
+        AddToDoFragment addTodoFragment = new AddToDoFragment(this);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.todo_item_fragment,addTodoFragment,"todoList")
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -427,7 +498,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
 
     {
 
-        addTodoFab.setVisibility(View.INVISIBLE);
+        /*addTodoFab.setVisibility(View.INVISIBLE);
         TodoItemModel model=todoItemAdapter.getItemModel(pos);
 
         Bundle arguments=new Bundle();
@@ -441,17 +512,18 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         AddToDoFragment.add=false;
         AddToDoFragment.editposition=pos;
         fragment.setArguments(arguments);
-       /* getSupportFragmentManager().beginTransaction()
+       *//* getSupportFragmentManager().beginTransaction()
                 .replace(R.id.todo_item_fragment,fragment,"editTOdo")
                 .addToBackStack(null)
-                .commit();*/
+                .commit();*//*
+        setTitle(Constant.update_fragment_title);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.todo_item_fragment, fragment, "editTodo")
                 .addToBackStack(null)
                 .commit();
 
         todoItemAdapter.notifyDataSetChanged();
-
+*/
     }
 
     @Override
@@ -463,7 +535,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     @Override
     public boolean onQueryTextChange(String searchText)
     {
-        searchText=searchText.toLowerCase();
+        /*searchText=searchText.toLowerCase();
         List<TodoItemModel> noteList=new ArrayList<>();
         for(TodoItemModel model:allData)
         {
@@ -472,7 +544,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 noteList.add(model);
             }
         }
-        todoItemAdapter.setFilter(noteList);
+        todoItemAdapter.setFilter(noteList);*/
         return true;
     }
     public void updateAdapter(int pos, TodoItemModel model)

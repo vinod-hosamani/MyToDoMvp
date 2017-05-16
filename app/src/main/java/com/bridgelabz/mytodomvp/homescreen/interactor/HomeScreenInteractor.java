@@ -1,21 +1,31 @@
 package com.bridgelabz.mytodomvp.homescreen.interactor;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.HomeScreenPresenter;
+import com.bridgelabz.mytodomvp.homescreen.presenter.HomeScreenPresenterInterface;
 import com.bridgelabz.mytodomvp.util.Connectivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by bridgeit on 9/5/17.
@@ -23,12 +33,14 @@ import java.util.List;
 public class HomeScreenInteractor implements HomeScreenInteractorInterface {
 
     Context context;
-    HomeScreenPresenter presenter;
+    HomeScreenPresenterInterface presenter;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference todoDataReference;
 
 
+    FirebaseStorage firebaseStorage;
+    StorageReference profilePicReference;
 
     public HomeScreenInteractor(Context context, HomeScreenPresenter presenter)
     {
@@ -36,6 +48,9 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface {
         this.presenter=presenter;
         firebaseDatabase=FirebaseDatabase.getInstance();
         todoDataReference=firebaseDatabase.getReference(Constant.key_firebase_todo);
+
+        firebaseStorage = FirebaseStorage.getInstance();
+        profilePicReference = firebaseStorage.getReference();
     }
     @Override
     public void getTodoNoteFromServer( final String userId) {
@@ -77,16 +92,113 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface {
     @Override
     public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
     {
+      presenter.showProgressDailogue("deleting plese wait");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String useId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+            int delete=0;
+            for(TodoItemModel model:tempList)
+            {
+                todoDataReference.child(useId).child(model.getStartDate())
+                        .child(String.valueOf(model.getNoteId())).setValue(model);
+                delete=model.getNoteId()+1;
+            }
+            if(delete!=0)
+            {
+                todoDataReference.child(useId).child(itemModel.getStartDate())
+                        .child(String.valueOf(delete))
+                .removeValue();
+            }
+            else
+            {
+                todoDataReference.child(useId).child(itemModel.getStartDate())
+                        .child(String.valueOf(itemModel.getNoteId()))
+                        .removeValue();
+            }
+            presenter.deleteTodoModelSuccess(context.getString(R.string.delete_todo_item_success));
+        }
+        else {
+            presenter.deleteTodoModelFailure(context.getString(R.string.no_internet));
+        }
 
+        presenter.hideProgressDailogue();
+        }
+
+
+    @Override
+    public void motoToArchive(TodoItemModel itemModel)
+    {
+             presenter.showProgressDailogue("moving to archive");
+            if(Connectivity.isNetworkConnected(context))
+            {
+                String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                todoDataReference.child(userId).child(itemModel.getStartDate())
+                        .child(String.valueOf(itemModel.getNoteId()))
+                        .child("arhvied").setValue(true);
+                presenter.moveToSuccess("moved to archive");
+                presenter.hideProgressDailogue();
+            }
+        else
+            {
+                presenter.moveToFailure("not internet connetion");
+            }
+        presenter.hideProgressDailogue();
     }
 
     @Override
-    public void motoToArchive(TodoItemModel itemModel) {
-
+    public void moveToNotes(TodoItemModel itemModel)
+    {
+    presenter.showProgressDailogue("moving  to note");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("archived").setValue(false);
+            presenter.moveToSuccess("moved to note success fuyll");
+            presenter.hideProgressDailogue();
+        }
+        else {
+            presenter.moveToFailure("no interne connetion");
+        }
+        presenter.hideProgressDailogue();
     }
 
     @Override
-    public void moveToNotes(TodoItemModel itemModel) {
+    public void uploadProfilePic(final String currentUserId, Uri selectedImage)
+    {
+        presenter.showProgressDailogue("upload_pro_pic");
+        if(Connectivity.isNetworkConnected(context)) {
+            UploadTask task = profilePicReference.child(currentUserId)
+                    .child("profilePic.jpeg").putFile(selectedImage);
+
+            task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadUri = taskSnapshot.getDownloadUrl();
+
+                    DatabaseReference userDatabase = firebaseDatabase
+                            .getReference(Constant.key_firebase_user);
+
+                    userDatabase.child(currentUserId).child("imageUrl")
+                            .setValue(downloadUri.toString());
+
+                    presenter.uploadSuccess(downloadUri);
+                    presenter.hideProgressDailogue();
+                }
+            });
+
+            task.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    presenter.uploadFailure(e.getMessage());
+                    presenter.hideProgressDailogue();
+                }
+            });
+        }else {
+            presenter.uploadFailure(context.getString(R.string.no_internet));
+            presenter.hideProgressDailogue();
+        }
 
     }
 }

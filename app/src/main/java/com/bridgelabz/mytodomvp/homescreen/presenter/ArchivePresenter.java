@@ -25,27 +25,32 @@ public class ArchivePresenter implements ArchivePresenterInterface{
         interactor=new ArchiveInteractor(context,this);
     }
     @Override
-    public void getNoteList(String userId) {
+    public void getNoteList(String userId)
+    {
       interactor.getNoteList(userId);
     }
 
     @Override
-    public void getNoteListSuccess(List<TodoItemModel> noteList) {
+    public void getNoteListSuccess(List<TodoItemModel> noteList)
+    {
      viewInterface.getNoteListSuccess(noteList);
     }
 
     @Override
-    public void getNoteListFailure(String message) {
+    public void getNoteListFailure(String message)
+    {
      viewInterface.getNoteListFailure(message);
     }
 
     @Override
-    public void showProgressDialogue(String message) {
+    public void showProgressDialogue(String message)
+    {
      viewInterface.showProgressDialougeu(message);
     }
 
     @Override
-    public void hidePregressDialogu() {
+    public void hidePregressDialogu()
+    {
         viewInterface.hideProgressDialogue();
 
     }

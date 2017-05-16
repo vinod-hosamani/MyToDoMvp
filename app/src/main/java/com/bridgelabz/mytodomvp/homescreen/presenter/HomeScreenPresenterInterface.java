@@ -1,5 +1,7 @@
 package com.bridgelabz.mytodomvp.homescreen.presenter;
 
+import android.net.Uri;
+
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 
 import java.util.List;
@@ -24,4 +26,10 @@ public interface HomeScreenPresenterInterface
     void moveToFailure(String message);
     void moveToSuccess(String message);
     void moveToNotes(TodoItemModel itemModel);
+
+    void uploadProfilePic(String currentUserId, Uri selectedImage);
+
+    void uploadSuccess(Uri selectedImage);
+
+    void uploadFailure(String message);
 }

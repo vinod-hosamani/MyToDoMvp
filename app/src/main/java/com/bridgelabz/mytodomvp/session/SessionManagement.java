@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 
 import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.login.ui.LoginActivity;
@@ -45,6 +46,15 @@ public class SessionManagement
         userEditor.putBoolean(Constant.key_is_login,true);
         userEditor.commit();
 
+    }
+
+    public void setProfilePic(Uri downloadUri){
+        userEditor.putString(Constant.key_pro_pic,downloadUri.toString());
+        userEditor.commit();
+    }
+
+    public Uri getProfilUrl(){
+        return Uri.parse(userDataPref.getString(Constant.key_pro_pic,Constant.empty_value));
     }
     public UserModel getUserDetails()
     {

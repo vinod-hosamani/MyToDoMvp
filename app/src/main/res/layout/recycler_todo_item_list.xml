@@ -12,7 +12,7 @@
           android:layout_marginTop="11dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        app:cardBackgroundColor="#f6f4f7"
+        app:cardBackgroundColor="#faf9fa"
         app:cardCornerRadius="7dp">
 
         <LinearLayout
@@ -24,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/todo_title"
+                android:maxLines="1"
                 android:textSize="19dp"
                 android:textStyle="bold"/>
 
@@ -33,6 +34,14 @@
                 android:id="@+id/todo_note"
                 android:textSize="19dp"
                 android:layout_marginTop="10dp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/todo_reminder"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>

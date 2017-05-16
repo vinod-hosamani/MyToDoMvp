@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">ToDo</string>
+    <string name="url">https://www.todo.com</string>
+    <string name="txtEmail">Email</string>
+    <string name="txtPass">Password</string>
+    <string name="btnLogin">Login</string>
+    <string name="btnRegistration">Register</string>
+    <string name="txtForget">Forget Password?</string>
+    <string name="txtCreateAcc">create an Account</string>
+    <string name="txtFullname">Fullname</string>
+    <string name="txtMobile">Mobile(Only 10 digit number)</string>
+    <string name="txtAlreadyAccount">Already have an account?(click here to Login)</string>
+    <string name="btnLogout">Logout</string>
+    <string name="txtTodoTitle">Title</string>
+    <string name="txtTodoItem">Enter note</string>
+    <string name="btnSave">Save</string>
+
+    <!-- Navigation drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_photos">Photos</string>
+    <string name="nav_movies">Movies</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_about_us">About Us</string>
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Notes</item>
+        <item>Archieve</item>
+        <item>Reminders</item>
+    </string-array>
+
+    <string name="action_clear_all">Clear All</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_mark_all_read">Mark All as Read</string>
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="invalid_name">please enter valid full name</string>
+    <string name="empty_field">you have to fill all required feild</string>
+    <string name="invalid_email">enter valid email id</string>
+    <string name="invalid_number">enter valid mobile number</string>
+    <string name="invalid_pass">password length must be  greater than 8 letters</string>
+    <string name="register_success">registered successfully</string>
+    <string name="register_failed">registration failed</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="register_progress_dialog">Registering in progress...</string>
+    <string name="login_progress_dialog">logging in...</string>
+    <string name="invalid_login_details">invalid email or password</string>
+    <string name="date_choose">Add reminder</string>
+    <string name="note_saving">note is saving</string>
+    <string name="addTodo_success">note saved</string>
+    <string name="addTodo_failure">note couldn\'t saved, you are not logged in</string>
+    <string name="loading">loading...</string>
+    <string name="some_error">Something is wrong...</string>
+    <string name="image_pick_error">you didn\'t pick a image</string>
+
+    <string name="facebook_app_id">211538322681631</string>
+    <string name="fb_login_cancel">you cancel the login process</string>
+    <string name="fb_login_process">please wait...Connecting with fb</string>
+    <string name="fb_login_success">login with fb successfully</string>
+    <string name="fb_login_error">can not sign in</string>
+    <string name="google_login_success">you have logged in to your google account</string>
+    <string name="google_login_error">you couldn\'t logged in to google account</string>
+    <string name="delete_todo_item_loading">deleting...</string>
+    <string name="delete_todo_item_success">you have been deleted your note</string>
+    <string name="update_btn_text">Update</string>
+    <string name="updating">updating</string>
+    <string name="update_success">data updated...</string>
+    <string name="update_failure">can not update data</string>
+    <string name="moving_to_archieve">moving to archieve</string>
+    <string name="moving_to_archieve_fail">moving to archieve failed</string>
+    <string name="moving_to_archieve_success">moved to archieved</string>
+    <string name="archieve">Archieved</string>
+    <string name="notes">Notes</string>
+    <string name="moving_to_note_fail">moving to noted failed</string>
+    <string name="moving_to_note_success">moved to Notes successfully</string>
+    <string name="moving_to_note">moving to note</string>
+    <string name="ask_move_to_note_message">Do you want to add this in Notes?</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">CANCEL</string>
+    <string name="cancel_message">you have canceled to move</string>
+    <string name="search_title">Search by Title</string>
+    <string name="search_hint">Search</string>
+    <string name="date_formate">MMMM dd, yyyy</string>
+    <string name="upload_pro_pic">setting up your profile pic</string>
+</resources>

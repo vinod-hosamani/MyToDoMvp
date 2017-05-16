@@ -5,7 +5,8 @@ import android.view.View;
 /**
  * Created by bridgeit on 9/5/17.
  */
-public interface AddToDoFragmentInterface extends View.OnClickListener {
+public interface AddToDoFragmentInterface extends View.OnClickListener
+{
 
     void addTodoSuccess(String message);
     void addTodoFailure(String message);

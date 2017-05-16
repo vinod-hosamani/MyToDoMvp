@@ -47,6 +47,7 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
     public void initView(View view)
     {
         archiveRecyclerView=(RecyclerView)view.findViewById(R.id.recycler_archvied_list);
+        homeScreenActivity.setTitle("archive");
         setHasOptionsMenu(true);
 
         totoItemAdapter=new TodoItemAdapter(homeScreenActivity,this);
@@ -56,7 +57,8 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
 
     }
     @Override
-    public void getNoteListSuccess(List<TodoItemModel> noteList) {
+    public void getNoteListSuccess(List<TodoItemModel> noteList)
+    {
         List<TodoItemModel> archiveList=new ArrayList<>();
 
         for(TodoItemModel model:noteList)
@@ -69,12 +71,14 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
     }
 
     @Override
-    public void getNoteListFailure(String message) {
+    public void getNoteListFailure(String message)
+    {
         Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
     ProgressDialog progressDialog;
     @Override
-    public void showProgressDialougeu(String message) {
+    public void showProgressDialougeu(String message)
+    {
      progressDialog=new ProgressDialog(homeScreenActivity);
         if(!homeScreenActivity.isFinishing())
         {
@@ -84,17 +88,19 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
     }
 
     @Override
-    public void hideProgressDialogue() {
-if(homeScreenActivity.isFinishing() && progressDialog!=null){
-    progressDialog.dismiss();
-}
+    public void hideProgressDialogue()
+    {
+     if(!homeScreenActivity.isFinishing() && progressDialog!=null){
+      progressDialog.dismiss();
+     }
     }
 
     @Override
-    public void onLongClick( final  TodoItemModel itemModel) {
+    public void onLongClick( final  TodoItemModel itemModel)
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(homeScreenActivity);
-        builder.setTitle("moving to notes");
-        builder.setMessage("ask move to note message");
+        builder.setTitle(homeScreenActivity.getString(R.string.moingToNotes));
+        builder.setMessage(homeScreenActivity.getString(R.string.askMoveToNoteMessage));
         builder.setPositiveButton(homeScreenActivity.getString(R.string.okButton), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -102,19 +108,22 @@ if(homeScreenActivity.isFinishing() && progressDialog!=null){
             }
         });
 
-        builder.setNegativeButton(homeScreenActivity.getString(R.string.cancleButton), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(homeScreenActivity.getString(R.string.cancleButton),
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-           Toast.makeText(homeScreenActivity,homeScreenActivity.getString(R.string.cancel_message),Toast.LENGTH_SHORT).show();
+           Toast.makeText(homeScreenActivity,homeScreenActivity.getString(R.string.cancel_message),
+                   Toast.LENGTH_SHORT).show();
             }
         });
 
-
+     builder.show();
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         super.onCreateView(inflater, container, savedInstanceState);
         View view=inflater.inflate(R.layout.fragment_archived_list,container,false);
         initView( view);

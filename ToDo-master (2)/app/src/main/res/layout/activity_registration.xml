@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_marginLeft="@dimen/dimen_16"
+        android:layout_marginRight="@dimen/dimen_16">
+        <!-- logo -->
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/todologo"
+            android:id="@+id/imgLogo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_100" />
+
+
+        <!--Fullname text-->
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/txtFullname"
+            android:layout_below="@id/imgLogo"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:id="@+id/txtFullname" />
+
+        <!--Fullname edit-->
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtFullname"
+            android:id="@+id/editViewFullName"
+            android:layout_marginTop="@dimen/dimen_10"/>
+
+        <!--Email text-->
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/txtEmail"
+            android:layout_below="@id/editViewFullName"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:id="@+id/txtEmail" />
+
+        <!--Email Edit-->
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtEmail"
+            android:id="@+id/editViewEmail"
+            android:layout_marginTop="@dimen/dimen_10"/>
+
+        <!--Mobile Text-->
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/txtMobile"
+            android:layout_below="@id/editViewEmail"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:id="@+id/txtMobile" />
+
+        <!--Mobile Edit-->
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtMobile"
+            android:id="@+id/editViewMobile"
+            android:layout_marginTop="@dimen/dimen_10"/>
+
+        <!--Password text-->
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/txtPass"
+            android:layout_below="@id/editViewMobile"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:id="@+id/txtPass"/>
+
+        <!--Password Edit-->
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtPass"
+            android:id="@+id/editViewPass"
+            android:layout_marginTop="@dimen/dimen_10"/>
+
+        <!--Registration Btn-->
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnRegistration"
+            android:id="@+id/btnRegistration"
+            android:layout_below="@id/editViewPass"
+            android:layout_marginTop="@dimen/dimen_10"/>
+
+        <!--Already Account-->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtAlreadyAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txtAlreadyAccount"
+            android:layout_below="@id/btnRegistration"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="@dimen/dimen_50"/>
+
+    </RelativeLayout>
+</ScrollView>
