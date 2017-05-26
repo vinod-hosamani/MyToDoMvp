@@ -172,7 +172,8 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface {
             UploadTask task = profilePicReference.child(currentUserId)
                     .child("profilePic.jpeg").putFile(selectedImage);
 
-            task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+            {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();

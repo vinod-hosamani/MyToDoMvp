@@ -2,13 +2,19 @@ package com.bridgelabz.mytodomvp.homescreen.ui.fragment;
 
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -29,7 +35,8 @@ import java.util.List;
 /**
  * Created by bridgeit on 15/5/17.
  */
-public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInterface {
+public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInterface
+{
     HomeScreenActivity homeScreenActivity;
     TodoNotesPresenterInterface presenter;
     SessionManagement session;
@@ -41,8 +48,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
     SwipeAction swipeAction;
     ItemTouchHelper itemTouchHelper;
 
-
-
     public TodoNotesFragment(HomeScreenActivity homeScreenActivity)
     {
         this.homeScreenActivity=homeScreenActivity;
@@ -51,29 +56,33 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         View view=inflater.inflate(R.layout.content_homescreen,container,false);
         initView(view);
+        setHasOptionsMenu(true);
         presenter.getTodoNoteFromServer(session.getUserDetails().getId());
         allData=todoItemAdapter.getAllDataList();
         return view;
     }
-private void initView(View view)
-{
-    isList=true;
-    toDoItemRecycler=(RecyclerView)view.findViewById(R.id.recycler_todo_Item);
-    todoItemAdapter=new TodoItemAdapter(homeScreenActivity,this);
 
-    session=new SessionManagement(homeScreenActivity);
-    presenter=new TodoNotesPresenter(homeScreenActivity,this);
+    private void initView(View view)
+     {
 
-    mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
-    toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
-    toDoItemRecycler.setAdapter(todoItemAdapter);
-    swipeAction=new SwipeAction(0,SwipeAction.left | SwipeAction.right,todoItemAdapter,homeScreenActivity);
-    itemTouchHelper=new ItemTouchHelper(swipeAction);
-    itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
-}
+         isList=true;
+         toDoItemRecycler=(RecyclerView)view.findViewById(R.id.recycler_todo_Item);
+         todoItemAdapter=new TodoItemAdapter(homeScreenActivity,this);
+
+         session=new SessionManagement(homeScreenActivity);
+         presenter=new TodoNotesPresenter(homeScreenActivity,this);
+
+         mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+         toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
+         toDoItemRecycler.setAdapter(todoItemAdapter);
+         swipeAction=new SwipeAction(0,SwipeAction.left | SwipeAction.right,todoItemAdapter,homeScreenActivity);
+         itemTouchHelper=new ItemTouchHelper(swipeAction);
+         itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
+     }
     @Override
     public void getNoteSuccess(List<TodoItemModel> noteList)
     {
@@ -89,13 +98,15 @@ private void initView(View view)
     }
 
     @Override
-    public void getNoteFailure( String message) {
+    public void getNoteFailure( String message)
+    {
         Toast.makeText(homeScreenActivity,message, Toast.LENGTH_SHORT).show();
     }
 
     ProgressDialog progressDialog;
     @Override
-    public void progressDialog(String message) {
+    public void progressDialog(String message)
+    {
         if(!homeScreenActivity.isFinishing())
         {
             progressDialog=new ProgressDialog(homeScreenActivity);
@@ -115,27 +126,32 @@ private void initView(View view)
     }
 
     @Override
-    public void deleteTodoModelFailure(String message) {
+    public void deleteTodoModelFailure(String message)
+    {
         Toast.makeText(homeScreenActivity,message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void delteTodoModelSuccess(String messsage) {
-  Toast.makeText(homeScreenActivity,messsage,Toast.LENGTH_SHORT).show();
+    public void delteTodoModelSuccess(String messsage)
+    {
+        Toast.makeText(homeScreenActivity,messsage,Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void moveToArchvieFailure(String message) {
-    Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
+    public void moveToArchvieFailure(String message)
+    {
+        Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void moveToArchvieSuccess(String message) {
-   Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
+    public void moveToArchvieSuccess(String message)
+    {
+        Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
 
     }
 
@@ -149,7 +165,6 @@ private void initView(View view)
         argument.putString(Constant.key_title,model.getTitle());
         argument.putString(Constant.key_note,model.getNote());
         argument.putString(Constant.key_reminder,model.getReminderDate());
-       // argument.putString(Constant.key_note_id,model.getNoteId());
         argument.putString(Constant.key_note_id, String.valueOf(model.getNoteId()));
         argument.putString(Constant.key_startDate,model.getStartDate());
 
@@ -157,6 +172,7 @@ private void initView(View view)
         AddToDoFragment.add=false;
         AddToDoFragment.editposition=pos;
         fragment.setArguments(argument);
+
         homeScreenActivity.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.todo_item_fragment,fragment,"editTodo")
                 .addToBackStack(null)
@@ -166,7 +182,8 @@ private void initView(View view)
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
+    public boolean onQueryTextSubmit(String query)
+    {
         return false;
     }
 
@@ -184,5 +201,54 @@ private void initView(View view)
         }
         todoItemAdapter.setFilter(noteList);
         return  true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == R.id.action_toggle)
+        {
+            toggle(item);
+            return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void toggle(MenuItem item)
+    {
+        MenuItem items = item;
+        if (isList)
+        {
+            mstaggeredGridLayoutManager.setSpanCount(2);
+            items.setIcon(R.drawable.ic_action_list);
+            items.setTitle("Show as list");
+            isList = false;
+        }
+        else
+        {
+            mstaggeredGridLayoutManager.setSpanCount(1);
+            items.setIcon(R.drawable.ic_action_grid);
+            items.setTitle("Show as grid");
+            isList = true;
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+            menu.clear();
+            inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.menu_toolbar,menu);
+            // this.menu=menu;
+
+            SearchManager searchManager=(SearchManager)getActivity().getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView=(SearchView)menu.findItem(R.id.search).getActionView();
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+            searchView.setIconifiedByDefault(false);
+            searchView.setOnQueryTextListener(this);
+            super.onCreateOptionsMenu(menu, inflater);
     }
 }

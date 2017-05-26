@@ -20,7 +20,8 @@ import java.util.List;
 /**
  * Created by bridgeit on 15/5/17.
  */
-public class ReminderInteractor implements ReminderInteractorInterface {
+public class ReminderInteractor implements ReminderInteractorInterface
+{
     Context context;
     ReminderPresenterIterface presenter;
     DatabaseReference databaseReference;
@@ -35,18 +36,22 @@ public class ReminderInteractor implements ReminderInteractorInterface {
 
 
     @Override
-    public void getTodayReminderList(String userId) {
+    public void getTodayReminderList(String userId)
+    {
         presenter.showProgressDilogu("loading");
         if(Connectivity.isNetworkConnected(context))
         {
             databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
                     List<TodoItemModel> noteList = new ArrayList<>();
                     GenericTypeIndicator<ArrayList<TodoItemModel>> t = new
-                            GenericTypeIndicator<ArrayList<TodoItemModel>>() {
+                            GenericTypeIndicator<ArrayList<TodoItemModel>>()
+                            {
                             };
-                    for (DataSnapshot obj : dataSnapshot.getChildren()) {
+                    for (DataSnapshot obj : dataSnapshot.getChildren())
+                    {
                         List<TodoItemModel> li;
                         li = obj.getValue(t);
                         noteList.addAll(li);
@@ -56,8 +61,9 @@ public class ReminderInteractor implements ReminderInteractorInterface {
 
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    presenter.getTodayReminderFailure("some Erro");
+                public void onCancelled(DatabaseError databaseError)
+                {
+                    presenter.getTodayReminderFailure("some Error");
                 }
             });
         }

@@ -1,9 +1,16 @@
 package com.bridgelabz.mytodomvp.util;
 
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -15,7 +22,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static DatabaseHandler dbh;
 
-    private DatabaseHandler(Context context) {
+    private DatabaseHandler(Context context)
+    {
         super(context, db_name, null, db_version);
     }
 
@@ -27,7 +35,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db)
+    {
         String create_todo_tbl = "create table "+tbl_name+"(" +
                 ""+key_title+" int primary key, "+key_note+" text)";
 
@@ -43,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-   /* public void addTodo(TodoItemModel model){
+    public void addTodo(TodoItemModel model){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues content = new ContentValues();
@@ -55,8 +64,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public TodoItemModel getTodo(String title){
-
+    public TodoItemModel getTodo(String title)
+    {
         String select_todo = "select * from "+tbl_name+" where "+key_title+" = '"+title+"'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(select_todo, null);
@@ -115,5 +124,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
         // return count
         return cursor.getCount();
-    }*/
+    }
 }

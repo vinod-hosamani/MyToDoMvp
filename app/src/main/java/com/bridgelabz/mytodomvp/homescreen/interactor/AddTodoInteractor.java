@@ -52,13 +52,9 @@ public class AddTodoInteractor implements AddTodoInteractorInterface
                     {
                         int index=(int)dataSnapshot.child(userId).child(model.getStartDate()).getChildrenCount();
                         getIndex(index,userId,itemModel);
-
                         itemModel=null;
-
                     }
                 }
-
-
                 @Override
                 public void onCancelled(DatabaseError databaseError)
                 {
@@ -85,7 +81,7 @@ public class AddTodoInteractor implements AddTodoInteractorInterface
         }
         else
         {
-            presenterInterface.addTodoFailure("notes to do failed");
+            presenterInterface.addTodoFailure("notes todo failed");
             presenterInterface.hideProgressDialogue();
         }
     }
@@ -93,16 +89,16 @@ public class AddTodoInteractor implements AddTodoInteractorInterface
     @Override
     public void getResponseForUpdateTodoToServer(TodoItemModel model, String userId)
     {
-       presenterInterface.showProgressDialogue("plese wait updating");
+       presenterInterface.showProgressDialogue("please wait updating");
         if(Connectivity.isNetworkConnected(context))
         {
-            databaseReference.child(userId).child(model.getStartDate()).child(String.valueOf(model.getNoteId())).setValue(model);
-            presenterInterface.updateSuccess("updateSuccess");
+            databaseReference.child(userId).child(model.getStartDate())
+                    .child(String.valueOf(model.getNoteId())).setValue(model);
+            presenterInterface.updateSuccess("update Success");
         }
         else
         {
-            presenterInterface.updateFailure("noted failed to update");
-
+            presenterInterface.updateFailure("notes failed to update");
         }
         presenterInterface.hideProgressDialogue();
     }

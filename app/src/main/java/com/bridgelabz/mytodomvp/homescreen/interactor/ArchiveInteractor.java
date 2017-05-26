@@ -20,13 +20,14 @@ import java.util.List;
 /**
  * Created by bridgeit on 11/5/17.
  */
-public class ArchiveInteractor implements ArchiveInteractorInterfacce {
-
+public class ArchiveInteractor implements ArchiveInteractorInterfacce
+{
     Context context;
     ArchivePresenterInterface presenter;
     private DatabaseReference toDoDataaReference;
 
-    public ArchiveInteractor(Context context, ArchivePresenter presenter){
+    public ArchiveInteractor(Context context, ArchivePresenter presenter)
+    {
         this.context=context;
         this.presenter=presenter;
         toDoDataaReference= FirebaseDatabase.getInstance().getReference(Constant.key_firebase_todo);
@@ -35,17 +36,20 @@ public class ArchiveInteractor implements ArchiveInteractorInterfacce {
     public void getNoteList( final  String userId)
     {
         presenter.showProgressDialogue("plese wait loading ");
-        if (Connectivity.isNetworkConnected(context)) {
-
+        if (Connectivity.isNetworkConnected(context))
+        {
             toDoDataaReference.addValueEventListener(new ValueEventListener()
             {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
                     final List<TodoItemModel> noteList = new ArrayList<>();
-                    GenericTypeIndicator<ArrayList<TodoItemModel>> t = new GenericTypeIndicator<ArrayList<TodoItemModel>>() {
+                    GenericTypeIndicator<ArrayList<TodoItemModel>> t = new
+                            GenericTypeIndicator<ArrayList<TodoItemModel>>()
+                    {
                     };
-                    for (DataSnapshot obj : dataSnapshot.child(userId).getChildren()) {
+                    for (DataSnapshot obj : dataSnapshot.child(userId).getChildren())
+                    {
                         List<TodoItemModel> li;
                         li = obj.getValue(t);
                         noteList.addAll(li);
@@ -55,12 +59,15 @@ public class ArchiveInteractor implements ArchiveInteractorInterfacce {
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(DatabaseError databaseError)
+                {
                     presenter.getNoteListFailure("error");
                     presenter.hidePregressDialogu();
                 }
             });
-        } else {
+        }
+        else
+        {
             presenter.getNoteListFailure("no internet connctoin");
             presenter.hidePregressDialogu();
         }

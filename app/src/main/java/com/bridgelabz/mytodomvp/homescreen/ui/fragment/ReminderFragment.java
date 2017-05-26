@@ -141,7 +141,8 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
 
     private void toggle()
     {
-    MenuItem item=menu.findItem(R.id.action_toggle);
+       MenuItem item=menu.findItem(R.id.action_toggle);
+
         if(isList)
         {
             staggeredGridLayoutManager.setSpanCount(2);

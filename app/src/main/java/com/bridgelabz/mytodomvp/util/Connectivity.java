@@ -11,10 +11,8 @@ public class Connectivity
 {
     public static boolean isNetworkConnected(Context context)
     {
-        ConnectivityManager conn=(ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager conn=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info=conn.getActiveNetworkInfo();
-
         return info !=null && info.isConnected();
     }
 }

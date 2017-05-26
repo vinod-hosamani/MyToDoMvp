@@ -98,7 +98,7 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
             editTextTitle.setText(arguments.getString(Constant.key_title));
             editTextNotes.setText(arguments.getString(Constant.key_note));
             textViewReminder.setText(arguments.getString(Constant.key_reminder));
-            buttonSave.setText("updating");
+            buttonSave.setText("update");
         }
         return view;
 
@@ -237,7 +237,8 @@ public void savaDataAdapter()
     {
         if(item.getItemId()==R.id.add_remainder)
         {
-            new DatePickerDialog(homeScreenActivity,date,myCalender.get(Calendar.YEAR),myCalender.get(Calendar.MONTH),
+            new DatePickerDialog(homeScreenActivity,date,myCalender.get(Calendar.YEAR)
+                    ,myCalender.get(Calendar.MONTH),
             myCalender.get(Calendar.DAY_OF_MONTH)).show();
             return  true;
         }

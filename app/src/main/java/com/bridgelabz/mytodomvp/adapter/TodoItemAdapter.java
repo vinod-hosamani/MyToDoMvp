@@ -38,12 +38,14 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     }
 
 
-    public TodoItemAdapter(Context context, OnLongClickListener onLongClickListener) {
+    public TodoItemAdapter(Context context, OnLongClickListener onLongClickListener)
+    {
         this.context = context;
         this.onLongClickListener = onLongClickListener;
     }
 
-    public TodoItemAdapter(Context context) {
+    public TodoItemAdapter(Context context)
+    {
         this.context=context;
     }
 
@@ -58,7 +60,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     @Override
     public void onBindViewHolder(TaskViewHolder holder, final int position)
     {
-
         final TodoItemModel todoItemModel = todoList.get(position);
         holder.title.setText(todoItemModel.getTitle());
         holder.note.setText(todoItemModel.getNote());
@@ -75,15 +76,14 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         if (noteClickListener != null)
         {
             holder.itemView.setOnClickListener(new View.OnClickListener()
-                                               {
-                                                   @Override
-                                                   public void onClick(View view)
-                                                   {
-                                                       if (noteClickListener != null)
-                                                           noteClickListener.onItemClick(position);
-                                                   }
-                                               }
-            );
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    if (noteClickListener != null)
+                        noteClickListener.onItemClick(position);
+                }
+            });
         }
 
         if(onLongClickListener != null)
@@ -120,11 +120,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         notifyDataSetChanged();
     }
 
-
-
-
-
-
     public void addItem(TodoItemModel model)
     {
         todoList.add(model);
@@ -150,8 +145,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
 
     public class TaskViewHolder extends RecyclerView.ViewHolder
     {
-
-
         public AppCompatTextView title,note,reminderDate;
         public TaskViewHolder(View view)
         {
@@ -167,11 +160,10 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         return todoList.get(pos);
     }
 
- /*   public TodoItemModel getItemModelByNoteId(int noteId)
+   public TodoItemModel getItemModelByNoteId(int noteId)
     {
         TodoItemModel model = null;
-        for (TodoItemModel itemModel:
-                todoList)
+        for (TodoItemModel itemModel:todoList)
         {
             if(itemModel.getNoteId() == noteId)
             {
@@ -179,7 +171,7 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
             }
         }
         return model;
-    }*/
+    }
  public List<TodoItemModel> getAllDataList()
  {
      return todoList;

@@ -3,13 +3,27 @@ package com.bridgelabz.mytodomvp.homescreen.model;
 /**
  * Created by bridgeit on 9/5/17.
  */
-public class TodoItemModel  {
+public class TodoItemModel
+{
     private int noteId;
     private String title;
     private String note;
     private String reminderDate;
     private String startDate;
     private boolean isArchived;
+
+    public TodoItemModel(boolean isArchived, String note, int noteId, String reminderDate, String startDate, String title) {
+        this.isArchived = isArchived;
+        this.note = note;
+        this.noteId = noteId;
+        this.reminderDate = reminderDate;
+        this.startDate = startDate;
+        this.title = title;
+    }
+
+    public TodoItemModel() {
+
+    }
 
     public boolean getIsArchived() {
         return isArchived;

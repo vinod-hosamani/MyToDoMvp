@@ -15,7 +15,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -46,9 +45,12 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+//import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TodoNotesFragment;
 
 //import com.bridgelabz.mytodomvp.homescreen.ui.fragment.AddToDoFragment;
 
@@ -56,9 +58,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by bridgeit on 8/5/17.
  */
-public class HomeScreenActivity extends BaseActivity
-        implements HomeScreenActivityInterface {
-
+public class HomeScreenActivity extends BaseActivity implements HomeScreenActivityInterface
+{
     private static final int result_load_img=1;
     public FloatingActionButton addTodoFab;
     public TodoItemAdapter todoItemAdapter;
@@ -66,7 +67,7 @@ public class HomeScreenActivity extends BaseActivity
     StaggeredGridLayoutManager mstaggeredGridLayoutManager;
     SessionManagement session;
     public boolean isList;
-    RecyclerView toDoItemRecycler;
+ //   RecyclerView toDoItemRecycler;
     public Menu menu;
    // public swipeAction;
     SwipeAction swipeAction;
@@ -92,12 +93,13 @@ public class HomeScreenActivity extends BaseActivity
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         initView();
-       // presenter.getTodoNoteFromServer(session.getUserDetails().getId());
-        //allData=todoItemAdapter.getAllDataList();
+        presenter.getTodoNoteFromServer(session.getUserDetails().getId());
+        allData=todoItemAdapter.getAllDataList();
          /*ddrawer part*/
         todoNotesFragment = new TodoNotesFragment(this);
         setTitle(Constant.note_title);
@@ -107,7 +109,8 @@ public class HomeScreenActivity extends BaseActivity
                 .addToBackStack(null)
                 .commit();
 
-        if(session.isFbLoggedIn()){
+        if(session.isFbLoggedIn())
+        {
             fbProfileUrl="https://graph.facebook.com/" + session.getUserDetails().getMobile() + "/picture?type=large";
             Glide.with(this).load(fbProfileUrl).into(imageViewUserProfile);
             txtUsername.setText(session.getUserDetails().getFullname());
@@ -135,14 +138,15 @@ public class HomeScreenActivity extends BaseActivity
         {
             txtUsername.setText(session.getUserDetails().getFullname());
             txtUserEmail.setText(session.getUserDetails().getEmail());
-           // imageViewUserProfile.setOnClickListener(this);
+            imageViewUserProfile.setOnClickListener(this);
             Uri profileUrl = session.getProfilUrl();
 
             if(!profileUrl.toString().equals(""))
             {
                 Glide.with(this).load(profileUrl).into(imageViewUserProfile);
             }
-            else {
+            else
+            {
                 imageViewUserProfile.setImageResource(R.drawable.images);
             }
             imageViewUserProfile.setOnClickListener(this);
@@ -162,17 +166,17 @@ public class HomeScreenActivity extends BaseActivity
 
         isList=true;
 
-        toDoItemRecycler=(RecyclerView)findViewById(R.id.recycler_todo_Item);
+        //toDoItemRecycler=(RecyclerView)findViewById(R.id.recycler_todo_Item);
         todoItemAdapter=new TodoItemAdapter(this,this);
         session=new SessionManagement(this);
         presenter=new HomeScreenPresenter(this,this);
 
         mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
-        toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
-        toDoItemRecycler.setAdapter(todoItemAdapter);
+       // toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
+        //toDoItemRecycler.setAdapter(todoItemAdapter);
         swipeAction=new SwipeAction(0,SwipeAction.left |SwipeAction.right,todoItemAdapter,this);
         itemTouchHelper=new ItemTouchHelper(swipeAction);
-        itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
+       // itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
 
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -196,18 +200,25 @@ public class HomeScreenActivity extends BaseActivity
 
     }
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer=(DrawerLayout)findViewById(R.id.drawer_layout);
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if(drawer.isDrawerOpen(GravityCompat.START))
+        {
             drawer.closeDrawer(GravityCompat.START);
             addTodoFab.setVisibility(View.VISIBLE);
         }
-        else{
+        else if(getSupportFragmentManager().getBackStackEntryCount()==1)
+        {
             super.onBackPressed();
+            finish();
             addTodoFab.setVisibility(View.VISIBLE);
         }
-        getSupportFragmentManager().popBackStack();
-        setTitle(Constant.note_title);
+        else {
+            addTodoFab.setVisibility(View.VISIBLE);
+            getSupportFragmentManager().popBackStack();
+        }
+        //setTitle(Constant.note_title);
 
     }
 
@@ -266,7 +277,8 @@ public class HomeScreenActivity extends BaseActivity
             return true;
         }
 
-        if (id == R.id.action_toggle) {
+        if (id == R.id.action_toggle)
+        {
             toggle();
             return false;
         }
@@ -274,24 +286,16 @@ public class HomeScreenActivity extends BaseActivity
     }
 
 
-
-   /*public void addTodoTask() {
-       AddToDoFragment addTodoFragment = new AddToDoFragment(this);
-       getSupportFragmentManager().beginTransaction()
-               .replace(R.id.todo_item_fragment, addTodoFragment,"todoList")
-               .addToBackStack(null)
-               .commit();
-   }*/
     @Override
     public void getNoteSuccess(List<TodoItemModel> noteList)
-    {/*
+    {
         List<TodoItemModel> nonArchvieList=new ArrayList<>();
         for(TodoItemModel model:noteList)
             if(!model.isArchieved())
             {
                 nonArchvieList.add(model);
             }
-       todoItemAdapter.setTodoList(nonArchvieList);*/
+       todoItemAdapter.setTodoList(nonArchvieList);
     }
 
     @Override
@@ -352,13 +356,15 @@ public class HomeScreenActivity extends BaseActivity
     }
 
     @Override
-    public void uploadSuccess(Uri downloadUrl) {
+    public void uploadSuccess(Uri downloadUrl)
+    {
         Glide.with(this).load(downloadUrl).into(imageViewUserProfile);
         session.setProfilePic(downloadUrl);
     }
 
     @Override
-    public void uploadFailure(String message) {
+    public void uploadFailure(String message)
+    {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
     }
@@ -382,27 +388,23 @@ public class HomeScreenActivity extends BaseActivity
         }
     }
 
-
-
-
-
-  @SuppressWarnings("StatementWithEmptyBody")
-  @Override
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
   public boolean onNavigationItemSelected(MenuItem item)
   {
       // Handle navigation view item clicks here.
       int id = item.getItemId();
       archievedFragment = new ArchiveFragment(this);
       reminderFragment = new ReminderFragment(this);
+
       if (id == R.id.nav_notes)
       {
-
           setTitle(Constant.note_title);
 
           addTodoFab.setVisibility(View.VISIBLE);
 
           getSupportFragmentManager().beginTransaction()
-                  .replace(R.id.todo_item_fragment, archievedFragment, "archievedList")
+                  .replace(R.id.todo_item_fragment, archievedFragment, "noteList")
                   .addToBackStack(null)
                   .commit();
 
@@ -454,16 +456,19 @@ public class HomeScreenActivity extends BaseActivity
         }
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
-
-        try {
-            if (requestCode == result_load_img && resultCode == RESULT_OK && data != null) {
+        try
+        {
+            if (requestCode == result_load_img && resultCode == RESULT_OK && data != null)
+            {
                 Uri selectedImage = data.getData();
-                //Glide.with(this).load(selectedImage).into(imageViewUserProfile);
+                Glide.with(this).load(selectedImage).into(imageViewUserProfile);
                 CropImage.activity(selectedImage).start(this);
 
-            } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+            }
+            else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
             {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 if(resultCode ==  RESULT_OK)
@@ -476,29 +481,24 @@ public class HomeScreenActivity extends BaseActivity
                     Toast.makeText(this, result.getError().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-            else {
+            else
+            {
                 Toast.makeText(this, R.string.image_pick_error, Toast.LENGTH_SHORT).show();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-    public void addTodoTask()
-    {
-        setTitle(Constant.add_note_title);
-        AddToDoFragment addTodoFragment = new AddToDoFragment(this);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.todo_item_fragment,addTodoFragment,"todoList")
-                .addToBackStack(null)
-                .commit();
-    }
+
 
     @Override
     public void onItemClick(int pos)
 
     {
 
-        /*addTodoFab.setVisibility(View.INVISIBLE);
+        addTodoFab.setVisibility(View.INVISIBLE);
         TodoItemModel model=todoItemAdapter.getItemModel(pos);
 
         Bundle arguments=new Bundle();
@@ -512,10 +512,10 @@ public class HomeScreenActivity extends BaseActivity
         AddToDoFragment.add=false;
         AddToDoFragment.editposition=pos;
         fragment.setArguments(arguments);
-       *//* getSupportFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.todo_item_fragment,fragment,"editTOdo")
                 .addToBackStack(null)
-                .commit();*//*
+                .commit();
         setTitle(Constant.update_fragment_title);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.todo_item_fragment, fragment, "editTodo")
@@ -523,7 +523,7 @@ public class HomeScreenActivity extends BaseActivity
                 .commit();
 
         todoItemAdapter.notifyDataSetChanged();
-*/
+
     }
 
     @Override
@@ -535,7 +535,7 @@ public class HomeScreenActivity extends BaseActivity
     @Override
     public boolean onQueryTextChange(String searchText)
     {
-        /*searchText=searchText.toLowerCase();
+        searchText=searchText.toLowerCase();
         List<TodoItemModel> noteList=new ArrayList<>();
         for(TodoItemModel model:allData)
         {
@@ -544,7 +544,7 @@ public class HomeScreenActivity extends BaseActivity
                 noteList.add(model);
             }
         }
-        todoItemAdapter.setFilter(noteList);*/
+        todoItemAdapter.setFilter(noteList);
         return true;
     }
     public void updateAdapter(int pos, TodoItemModel model)
@@ -552,7 +552,7 @@ public class HomeScreenActivity extends BaseActivity
         todoItemAdapter.updateItem(pos, model);
     }
 
- /* public void addTodoTask()
+  public void addTodoTask()
   {
       AddToDoFragment addToDoFragment=new AddToDoFragment(this);
       getSupportFragmentManager().beginTransaction()
@@ -560,6 +560,6 @@ public class HomeScreenActivity extends BaseActivity
               .addToBackStack(null)
               .commit();
 
-  }*/
+  }
 
 }

@@ -20,10 +20,10 @@ import java.util.List;
 /**
  * Created by bridgeit on 15/5/17.
  */
-public class TodoNotesInteractor implements TodoNotesInteractorInteraface {
+public class TodoNotesInteractor implements TodoNotesInteractorInteraface
+{
     Context context;
     TodoNotesPresenterInterface presenter;
-
     FirebaseDatabase firebaseDatabase;
     DatabaseReference todoDataReference;
 
@@ -35,11 +35,13 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface {
         todoDataReference=firebaseDatabase.getReference(Constant.key_firebase_todo);
     }
     @Override
-    public void getTodoNoteFromServer( final  String userId) {
+    public void getTodoNoteFromServer( final  String userId)
+    {
         presenter.showProgressDialog("loading");
         if(Connectivity.isNetworkConnected(context))
         {
-            todoDataReference.addValueEventListener(new ValueEventListener() {
+            todoDataReference.addValueEventListener(new ValueEventListener()
+            {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     final List<TodoItemModel> noteList=new ArrayList<>();
@@ -58,7 +60,8 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface {
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(DatabaseError databaseError)
+                {
                     presenter.getNoteFailure("wrong");
                     presenter.hideProgressDilogu();
                 }
@@ -74,7 +77,8 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface {
     }
 
     @Override
-    public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos) {
+    public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
+    {
      presenter.showProgressDialog("deleting ...");
         if(Connectivity.isNetworkConnected(context))
         {
@@ -130,8 +134,9 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface {
     }
 
     @Override
-    public void moveToNotes(TodoItemModel itemModel) {
-  presenter.showProgressDialog("moving to the notes");
+    public void moveToNotes(TodoItemModel itemModel)
+    {
+      presenter.showProgressDialog("moving to the notes");
         if(Connectivity.isNetworkConnected(context))
         {
             String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();

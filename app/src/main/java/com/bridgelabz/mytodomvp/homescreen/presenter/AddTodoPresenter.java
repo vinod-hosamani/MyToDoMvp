@@ -11,8 +11,8 @@ import com.bridgelabz.mytodomvp.homescreen.ui.fragment.AddToDoFragmentInterface;
 /**
  * Created by bridgeit on 10/5/17.
  */
-public class AddTodoPresenter implements AddTodoPresenterInterface {
-
+public class AddTodoPresenter implements AddTodoPresenterInterface
+{
     Context context;
     AddToDoFragmentInterface viewInterface;
     AddTodoInteractorInterface interactor;

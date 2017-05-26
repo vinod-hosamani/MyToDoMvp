@@ -48,12 +48,14 @@ public class SessionManagement
 
     }
 
-    public void setProfilePic(Uri downloadUri){
+    public void setProfilePic(Uri downloadUri)
+    {
         userEditor.putString(Constant.key_pro_pic,downloadUri.toString());
         userEditor.commit();
     }
 
-    public Uri getProfilUrl(){
+    public Uri getProfilUrl()
+    {
         return Uri.parse(userDataPref.getString(Constant.key_pro_pic,Constant.empty_value));
     }
     public UserModel getUserDetails()
