@@ -3,11 +3,9 @@ package com.bridgelabz.mytodomvp.homescreen.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -21,7 +19,7 @@ import android.widget.Toast;
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.adapter.TodoItemAdapter;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
-import com.bridgelabz.mytodomvp.homescreen.presenter.ArchivePresenter;
+import com.bridgelabz.mytodomvp.homescreen.presenter.TrashPresenter;
 import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,31 +27,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by bridgeit on 11/5/17.
+ * Created by bridgeit on 27/5/17.
  */
-public class ArchiveFragment extends Fragment implements ArchiveFragmentInterface
+public class TrashFragment extends Fragment implements TrashFragmentInterface
 {
-
-    public static final String TAG ="ArchiveFragment";
-    private final Context mcontext;
-    RecyclerView archiveRecyclerView;
+    public static final String TAG ="TrashFragment";
+    Context mContext;
+    RecyclerView trashRecyclerview;
     TodoItemAdapter totoItemAdapter;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     HomeScreenActivity homeScreenActivity;
-    ArchivePresenter presenter;
-    List<TodoItemModel> archiovedItemModels=new ArrayList<>();
+    TrashPresenter presenter;
+    //List<TodoItemModel> trashItemModels=new ArrayList<>();
     Menu menu;
+    ProgressDialog progressDialog;
+    List<TodoItemModel> trashItemModels=new ArrayList<>();
 
     @Override
     public void onResume()
     {
         super.onResume();
-        ((HomeScreenActivity)getActivity()).setTitle("Archive");
+        ((HomeScreenActivity)getActivity()).setTitle("trash");
     }
-    public ArchiveFragment(Context context)
+
+
+    public TrashFragment(Context context)
     {
-        this.mcontext=context;
-        presenter=new ArchivePresenter(mcontext,this);
+     this.mContext=context;
+        presenter=new TrashPresenter(mContext,this);
+
     }
 
     @Nullable
@@ -62,22 +64,38 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
     {
         super.onCreateView(inflater, container, savedInstanceState);
         View view=inflater.inflate(R.layout.fragment_archived_list,container,false);
-        initView( view);
+        initView(view);
         setHasOptionsMenu(true);
         String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
         presenter.getNoteList(userId);
         return view;
     }
+
     public void initView(View view)
     {
-        archiveRecyclerView=(RecyclerView)view.findViewById(R.id.recycler_archvied_list);
+        trashRecyclerview=(RecyclerView)view.findViewById(R.id.recycler_archvied_list);
         setHasOptionsMenu(true);
-        totoItemAdapter=new TodoItemAdapter(mcontext,this);
-        archiveRecyclerView.setAdapter(totoItemAdapter);
+        totoItemAdapter=new TodoItemAdapter(mContext,this);
+        trashRecyclerview.setAdapter(totoItemAdapter);
         staggeredGridLayoutManager=new StaggeredGridLayoutManager(1,staggeredGridLayoutManager.VERTICAL);
-        archiveRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        trashRecyclerview.setLayoutManager(staggeredGridLayoutManager);
 
     }
+    @Override
+    public void showProgressDialog(String message)
+    {
+        progressDialog=new ProgressDialog(mContext);
+        progressDialog.setMessage(message);
+        progressDialog.show();
+
+    }
+
+    @Override
+    public void hideProgressDialog()
+    {
+        progressDialog.dismiss();
+    }
+
     @Override
     public void getNoteListSuccess(List<TodoItemModel> noteList)
     {
@@ -87,9 +105,8 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
             if(!model.isArchieved())
                 archiveList.add(model);
         }
-        archiovedItemModels=archiveList;
+        trashItemModels=archiveList;
         totoItemAdapter.setTodoList(archiveList);
-
     }
 
     @Override
@@ -97,54 +114,6 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
     {
         Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
-
-    ProgressDialog progressDialog;
-    @Override
-    public void showProgressDialougeu(String message)
-    {
-        progressDialog=new ProgressDialog(mcontext);
-        progressDialog.setMessage(message);
-        progressDialog.show();
-
-    }
-
-    @Override
-    public void hideProgressDialogue()
-    {
-
-        progressDialog.dismiss();
-
-    }
-
-    @Override
-    public void onLongClick( final  TodoItemModel itemModel)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(homeScreenActivity);
-        builder.setTitle(homeScreenActivity.getString(R.string.moingToNotes));
-        builder.setMessage(homeScreenActivity.getString(R.string.askMoveToNoteMessage));
-        builder.setPositiveButton(homeScreenActivity.getString(R.string.okButton), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-               homeScreenActivity.presenter.moveToNotes(itemModel);
-            }
-        });
-
-        builder.setNegativeButton(homeScreenActivity.getString(R.string.cancleButton),
-                new DialogInterface.OnClickListener()
-                {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-                   Toast.makeText(homeScreenActivity,homeScreenActivity.getString(R.string.cancel_message),
-                   Toast.LENGTH_SHORT).show();
-            }
-        });
-
-     builder.show();
-    }
-
-
 
     @Override
     public void onPrepareOptionsMenu(Menu menu)
@@ -157,6 +126,12 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        /*if(item.getItemId()==R.id.action_toggle);
+        {    toggle();
+            return true;
+        }
+
+      //  return super.onOptionsItemSelected(item);*/
         if(item.getItemId() == R.id.action_toggle)
         {
             Log.d("menu select","onOptionsItemSelected: toggle");
@@ -187,4 +162,5 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
         }
 
     }
+
 }

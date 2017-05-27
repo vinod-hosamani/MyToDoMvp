@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -14,11 +14,5 @@
         android:layout_alignParentTop="true"
         android:clickable="true"
         android:scrollbars="vertical"
-        >
-
-    </android.support.v7.widget.RecyclerView>
-
-
-
-
-</LinearLayout>
+        />
+</FrameLayout>

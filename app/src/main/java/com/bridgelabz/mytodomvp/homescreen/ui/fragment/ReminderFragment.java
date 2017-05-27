@@ -2,6 +2,7 @@ package com.bridgelabz.mytodomvp.homescreen.ui.fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,6 @@ import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.adapter.TodoItemAdapter;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.ReminderPresenter;
-import com.bridgelabz.mytodomvp.homescreen.presenter.ReminderPresenterIterface;
 import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,23 +32,35 @@ import java.util.List;
  */
 public class ReminderFragment extends Fragment implements ReminderFragmentInterface
 {
+
+    public static final String TAG = "ReminderFragment";
+
+    Context mContext;
     RecyclerView archiveRecyclerView;
     TodoItemAdapter todoItemAdapter;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     HomeScreenActivity homeScreenActivity;
-    ReminderPresenterIterface presenter;
+    ReminderPresenter presenter;
 
-    public ReminderFragment(HomeScreenActivity homeScreenActivity)
+
+    @Override
+    public void onResume()
     {
-        this.homeScreenActivity=homeScreenActivity;
-        presenter=new ReminderPresenter(homeScreenActivity,this);
+        super.onResume();
+        ((HomeScreenActivity)getActivity()).setTitle("Reminder");
+    }
+
+    public ReminderFragment(Context context)
+    {
+        this.mContext=context;
+        presenter=new ReminderPresenter(mContext,this);
 
     }
 
     private void initView(View view)
     {
         archiveRecyclerView=(RecyclerView)view.findViewById(R.id.recycler_archvied_list);
-         setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         todoItemAdapter=new TodoItemAdapter(homeScreenActivity);
         archiveRecyclerView.setAdapter(todoItemAdapter);
         staggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
@@ -59,11 +71,9 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-         super.onCreateView(inflater, container, savedInstanceState);
-
+        super.onCreateView(inflater, container, savedInstanceState);
         View view=inflater.inflate(R.layout.fragment_archived_list,container,false);
         initView(view);
-
         setHasOptionsMenu(true);
         String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
         presenter.getTodayReminderList(userId);
@@ -74,37 +84,31 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     @Override
     public void showProgressDialog(String message)
     {
-     progressDialog=new ProgressDialog(homeScreenActivity);
-        if(!homeScreenActivity.isFinishing())
-        {
+            progressDialog=new ProgressDialog(mContext);
             progressDialog.setMessage(message);
             progressDialog.show();
-        }
+
     }
 
     @Override
     public void hideProgrssDialog()
     {
-    if(!homeScreenActivity.isFinishing() && homeScreenActivity!=null)
-    {
         progressDialog.dismiss();
-    }
     }
 
     @Override
     public void getTodayReminderSuccess(List<TodoItemModel> noteList)
     {
         List<TodoItemModel> reminderList=new ArrayList<>();
-        SimpleDateFormat format= new SimpleDateFormat(homeScreenActivity.getString(R.string.date_format));
+        SimpleDateFormat format= new SimpleDateFormat("dd MMM yyyy");
 
         String currentDate=format.format(new Date().getTime());
 
         for(TodoItemModel model: noteList)
         {
-            if(model.getReminderDate().equals(currentDate)&& !model.isArchieved())
+            if(!model.getReminderDate().equals(currentDate)&& !model.isArchieved())
             {
                 reminderList.add(model);
-
             }
         }
         todoItemAdapter.setTodoList(reminderList);
@@ -128,34 +132,37 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())
+        int id = item.getItemId();
+        if (id == R.id.action_toggle)
         {
-            case R.id.action_toggle:
-                toggle();
-                return  true;
+            toggle(item);
+            return false;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private boolean isList=true;
-
-    private void toggle()
+    private void toggle(MenuItem item)
     {
-       MenuItem item=menu.findItem(R.id.action_toggle);
-
-        if(isList)
+        MenuItem items = item;
+        if (isList)
         {
             staggeredGridLayoutManager.setSpanCount(2);
-            item.setIcon(R.drawable.ic_action_list);
-            item.setTitle("show as list");
-            isList=false;
+            items.setIcon(R.drawable.ic_action_list);
+            items.setTitle("Show as list");
+            isList = false;
         }
         else
         {
             staggeredGridLayoutManager.setSpanCount(1);
-            item.setIcon(R.drawable.ic_action_grid);
-            item.setTitle("show as grid");
-            isList=false;
+            items.setIcon(R.drawable.ic_action_grid);
+            items.setTitle("Show as grid");
+            isList = true;
         }
     }
+
+
+
+
+
 }

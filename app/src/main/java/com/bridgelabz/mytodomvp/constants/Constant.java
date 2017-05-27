@@ -42,4 +42,6 @@ public class Constant {
     public static final String key_firebase_archive = "archievedData";
     public static String key_pro_pic= "pro_pic";
     public static String add_note_title = "Add Notes";
+
+    public static String trash_title="Trash";
 }

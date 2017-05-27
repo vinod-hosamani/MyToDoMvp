@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
-import com.bridgelabz.mytodomvp.homescreen.presenter.ArchivePresenter;
-import com.bridgelabz.mytodomvp.homescreen.presenter.ArchivePresenterInterface;
+import com.bridgelabz.mytodomvp.homescreen.presenter.TrashPresenter;
+import com.bridgelabz.mytodomvp.homescreen.presenter.TrashPresenterInterface;
 import com.bridgelabz.mytodomvp.util.Connectivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,37 +19,37 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by bridgeit on 11/5/17.
+ * Created by bridgeit on 27/5/17.
  */
-public class ArchiveInteractor implements ArchiveInteractorInterfacce
+public class TrashInteractor implements TrashInteractorInterface
 {
     Context context;
-    ArchivePresenterInterface presenter;
+    TrashPresenterInterface presenter;
     private DatabaseReference toDoDataaReference;
 
-    public ArchiveInteractor(Context context, ArchivePresenter presenter)
+    public TrashInteractor(Context context, TrashPresenter presenter)
     {
         this.context=context;
         this.presenter=presenter;
         toDoDataaReference= FirebaseDatabase.getInstance().getReference(Constant.key_firebase_todo);
     }
+
+
     @Override
-    public void getNoteList( final  String userId)
+    public void getNoteList(final String userId)
     {
-        presenter.showProgressDialogue("plese wait loading ");
-        if (Connectivity.isNetworkConnected(context))
+        presenter.showProgressDialog("plese wait loading");
+        if(Connectivity.isNetworkConnected(context))
         {
-            toDoDataaReference.addValueEventListener(new ValueEventListener()
-            {
+            toDoDataaReference.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
-                {
-                    final List<TodoItemModel> noteList = new ArrayList<>();
-                    GenericTypeIndicator<ArrayList<TodoItemModel>> t = new
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    final List<TodoItemModel> noteList=new ArrayList<>();
+                    GenericTypeIndicator<ArrayList<TodoItemModel>> t=new
                             GenericTypeIndicator<ArrayList<TodoItemModel>>()
-                    {
-                    };
-                    for (DataSnapshot obj : dataSnapshot.child(userId).getChildren())
+                            {
+                            };
+                    for(DataSnapshot obj:dataSnapshot.child(userId).getChildren())
                     {
                         List<TodoItemModel> li;
                         li = obj.getValue(t);
@@ -57,21 +57,21 @@ public class ArchiveInteractor implements ArchiveInteractorInterfacce
                     }
                     noteList.removeAll(Collections.singleton(null));
                     presenter.getNoteListSuccess(noteList);
-                    presenter.hidePregressDialogu();
+                    presenter.hideProgressDialog();
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError)
-                {
+                public void onCancelled(DatabaseError databaseError) {
                     presenter.getNoteListFailure("error");
-                    presenter.hidePregressDialogu();
+                    presenter.hideProgressDialog();
                 }
             });
         }
         else
         {
-            presenter.getNoteListFailure("no internet connctoin");
-            presenter.hidePregressDialogu();
+            presenter.getNoteListFailure("no internet connection");
+            presenter.hideProgressDialog();
         }
+
     }
 }

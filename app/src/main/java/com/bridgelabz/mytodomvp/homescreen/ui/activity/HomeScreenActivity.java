@@ -35,6 +35,7 @@ import com.bridgelabz.mytodomvp.homescreen.ui.fragment.AddToDoFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ReminderFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TodoNotesFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TrashFragment;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
 import com.bridgelabz.mytodomvp.util.SwipeAction;
 import com.bumptech.glide.Glide;
@@ -83,13 +84,16 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     String fbProfileUrl;
 
     String currentUserId;
-    ArchiveFragment archiveFragment;
+    //ArchiveFragment archiveFragment;
     ReminderFragment reminderFragment;
     TodoNotesFragment todoNotesFragment;
+    TrashFragment trashFragment;
 
     List<TodoItemModel> allData;
     public GoogleSignInOptions googleSignInOptions;
     public GoogleApiClient googleApiClient;
+
+    DrawerLayout drawer;
 
 
     @Override
@@ -101,13 +105,11 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         presenter.getTodoNoteFromServer(session.getUserDetails().getId());
         allData=todoItemAdapter.getAllDataList();
          /*ddrawer part*/
-        todoNotesFragment = new TodoNotesFragment(this);
+
         setTitle(Constant.note_title);
         addTodoFab.setVisibility(View.VISIBLE);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.todo_item_fragment, todoNotesFragment, "todoNoteList")
-                .addToBackStack(null)
-                .commit();
+
+        addToDoFragment();
 
         if(session.isFbLoggedIn())
         {
@@ -163,6 +165,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         addTodoFab=(FloatingActionButton)findViewById(R.id.fab_add_todo);
         addTodoFab.setOnClickListener(this);
         addTodoFab.setVisibility(View.VISIBLE);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         isList=true;
 
@@ -184,7 +187,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,
                 toolbar,R.string.navigatinOpne,R.string.navigationClose);
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
 
@@ -202,7 +205,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     @Override
     public void onBackPressed()
     {
-        DrawerLayout drawer=(DrawerLayout)findViewById(R.id.drawer_layout);
         if(drawer.isDrawerOpen(GravityCompat.START))
         {
             drawer.closeDrawer(GravityCompat.START);
@@ -212,10 +214,9 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         {
             super.onBackPressed();
             finish();
-            addTodoFab.setVisibility(View.VISIBLE);
         }
-        else {
-            addTodoFab.setVisibility(View.VISIBLE);
+        else
+        {
             getSupportFragmentManager().popBackStack();
         }
         //setTitle(Constant.note_title);
@@ -342,11 +343,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    /*@Override
-    public boolean onQueryTextSubmit(String query)
-    {
-        return false;
-    }*/
 
 
     @Override
@@ -394,48 +390,24 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
   {
       // Handle navigation view item clicks here.
       int id = item.getItemId();
-      archievedFragment = new ArchiveFragment(this);
-      reminderFragment = new ReminderFragment(this);
 
-      if (id == R.id.nav_notes)
-      {
-          setTitle(Constant.note_title);
+      switch (item.getItemId()){
 
-          addTodoFab.setVisibility(View.VISIBLE);
+          case R.id.nav_notes :
+              addToDoFragment();
+              break;
+          case  R.id.nav_archieved :
+              addArchive();
+              break;
+          case  R.id.nav_reminder :
+                addReminder();
+              break;
+          case R.id.nav_trash :
+              addTrash();
+              break;
 
-          getSupportFragmentManager().beginTransaction()
-                  .replace(R.id.todo_item_fragment, archievedFragment, "noteList")
-                  .addToBackStack(null)
-                  .commit();
-
-      }
-      else if (id == R.id.nav_archieved)
-      {
-
-          setTitle(Constant.archieve_title);
-
-          addTodoFab.setVisibility(View.INVISIBLE);
-
-          getSupportFragmentManager().beginTransaction()
-                  .replace(R.id.todo_item_fragment, archievedFragment, "archievedList")
-                  .addToBackStack(null)
-                  .commit();
 
       }
-      else if (id == R.id.nav_reminder)
-      {
-
-          setTitle(Constant.reminder_title);
-
-          addTodoFab.setVisibility(View.INVISIBLE);
-
-          getSupportFragmentManager().beginTransaction()
-                  .replace(R.id.todo_item_fragment, reminderFragment, "reminderList")
-                  .addToBackStack(null)
-                  .commit();
-      }
-
-      DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
       drawer.closeDrawer(GravityCompat.START);
       return true;
   }
@@ -513,12 +485,12 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         AddToDoFragment.editposition=pos;
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.todo_item_fragment,fragment,"editTOdo")
+                .replace(R.id.frameContainer,fragment,"editTOdo")
                 .addToBackStack(null)
                 .commit();
         setTitle(Constant.update_fragment_title);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.todo_item_fragment, fragment, "editTodo")
+                .replace(R.id.frameContainer, fragment, "editTodo")
                 .addToBackStack(null)
                 .commit();
 
@@ -556,10 +528,60 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
   {
       AddToDoFragment addToDoFragment=new AddToDoFragment(this);
       getSupportFragmentManager().beginTransaction()
-              .replace(R.id.todo_item_fragment, addToDoFragment, "todoList")
+              .replace(R.id.frameContainer,addToDoFragment, "todoList")
               .addToBackStack(null)
               .commit();
 
   }
 
+    public void addToDoFragment()
+     {
+      setTitle(Constant.note_title);
+      addTodoFab.setVisibility(View.VISIBLE);
+         if(todoNotesFragment == null)
+        todoNotesFragment = new TodoNotesFragment(this);
+
+       getSupportFragmentManager().beginTransaction()
+            .replace(R.id.frameContainer,todoNotesFragment, TodoNotesFragment.TAG)
+            .addToBackStack(null)
+            .commit();
+     }
+    public void addArchive()
+    {
+        setTitle(Constant.archieve_title);
+        addTodoFab.setVisibility(View.INVISIBLE);
+        if(archievedFragment == null)
+            archievedFragment = new ArchiveFragment(this);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameContainer,archievedFragment, "archievedList")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void addReminder()
+    {
+        setTitle(Constant.reminder_title);
+        addTodoFab.setVisibility(View.INVISIBLE);
+        if(reminderFragment==null)
+            reminderFragment = new ReminderFragment(this);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameContainer, reminderFragment, "Reminder")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public  void addTrash()
+    {
+        setTitle(Constant.trash_title);
+        addTodoFab.setVisibility(View.INVISIBLE);
+        if(trashFragment==null)
+            trashFragment = new TrashFragment(this);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameContainer, trashFragment,"Trash")
+                .addToBackStack(null)
+                .commit();
+    }
 }

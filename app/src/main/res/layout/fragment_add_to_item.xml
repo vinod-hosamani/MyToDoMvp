@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="22dp"
-        android:text="setReminder"
+        android:text="setDate"
         android:gravity="center"
         android:textSize="19dp"
         android:layout_marginLeft="80dp"

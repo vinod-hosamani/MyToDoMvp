@@ -28,7 +28,6 @@ import com.bridgelabz.mytodomvp.homescreen.presenter.TodoNotesPresenterInterface
 import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
 import com.bridgelabz.mytodomvp.util.SwipeAction;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +36,9 @@ import java.util.List;
  */
 public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInterface
 {
+
+    public static final String TAG = "TodoNotesFragment";
+
     HomeScreenActivity homeScreenActivity;
     TodoNotesPresenterInterface presenter;
     SessionManagement session;
@@ -47,6 +49,13 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
     StaggeredGridLayoutManager mstaggeredGridLayoutManager;
     SwipeAction swipeAction;
     ItemTouchHelper itemTouchHelper;
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        ((HomeScreenActivity)getActivity()).setTitle("ToDoNotesFragment");
+    }
 
     public TodoNotesFragment(HomeScreenActivity homeScreenActivity)
     {
@@ -174,7 +183,7 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         fragment.setArguments(argument);
 
         homeScreenActivity.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.todo_item_fragment,fragment,"editTodo")
+                .replace(R.id.frameContainer,fragment,"editTodo")
                 .addToBackStack(null)
                 .commit();
         todoItemAdapter.notifyDataSetChanged();

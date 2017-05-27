@@ -49,18 +49,7 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     TodoItemModel model;
 
 
-    /*public AddToDoFragment(HomeScreenActivity context,AddTodoPresenter todopresenter)
-    {
-        this.homeScreenActivity=context;
-        presenter = new AddTodoPresenter(context, this);
-        session = new SessionManagement(context);
-    }
-*//*
-    public AddToDoFragment(HomeScreenActivity context,AddTodoPresenter todopresenter) {
-        this.homeScreenActivity=context;
-        presenter = new AddTodoPresenter(context, this);
-        session = new SessionManagement(context);
-    }*/
+
 
     public AddToDoFragment(HomeScreenActivity  context)
     {
@@ -69,9 +58,6 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         session = new SessionManagement(context);
     }
 
-   /* public AddToDoFragment(HomeScreenActivity homeScreenActivity)
-    {
-    }*/
 
     public void  initView(View view)
     {
@@ -79,7 +65,6 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         editTextNotes=(AppCompatEditText)view.findViewById(R.id.editTextToDoDescription);
         textViewReminder=(AppCompatTextView)view.findViewById(R.id.textViewReminder);
         buttonSave=(AppCompatButton)view.findViewById(R.id.btnsave);
-
         buttonSave.setOnClickListener(this);
     }
 
@@ -114,7 +99,6 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     public void addTodoFailure(String message)
     {
         Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
-
     }
 
     ProgressDialog progressDialog;
@@ -166,10 +150,7 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         }
 
     }
-/* public void upadateAdapter(int pos,TodoItemModel model)
- {
 
- }*/
 
     public void editTodoItem(int position)
     {
@@ -204,10 +185,6 @@ public void savaDataAdapter()
     String currentDate=format.format(date.getTime());
     model.setStartDate(currentDate);
     presenter.getResponseForAddTodoToServer(model,userModel.getId());
-
-
-
-
     homeScreenActivity.addTodoFab.setVisibility(View.VISIBLE);
     homeScreenActivity.getSupportFragmentManager().popBackStackImmediate();
 }
@@ -235,7 +212,7 @@ public void savaDataAdapter()
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if(item.getItemId()==R.id.add_remainder)
+        if(item.getItemId()==R.id.setReminder)
         {
             new DatePickerDialog(homeScreenActivity,date,myCalender.get(Calendar.YEAR)
                     ,myCalender.get(Calendar.MONTH),

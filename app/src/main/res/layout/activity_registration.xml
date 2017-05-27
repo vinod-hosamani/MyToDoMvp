@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:background="#8fe2d3"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.bridgelabz.mytodomvp.MainActivity">
+    tools:mContext="com.bridgelabz.mytodomvp.MainActivity">
 
     <android.support.v7.widget.AppCompatImageButton
         android:layout_width="333dp"

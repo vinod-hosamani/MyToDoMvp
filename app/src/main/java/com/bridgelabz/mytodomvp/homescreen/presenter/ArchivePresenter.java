@@ -5,7 +5,6 @@ import android.content.Context;
 import com.bridgelabz.mytodomvp.homescreen.interactor.ArchiveInteractor;
 import com.bridgelabz.mytodomvp.homescreen.interactor.ArchiveInteractorInterfacce;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
-import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragmentInterface;
 
 import java.util.List;
@@ -15,14 +14,14 @@ import java.util.List;
  */
 public class ArchivePresenter implements ArchivePresenterInterface{
 
-    Context context;
+    Context mContext;
     ArchiveFragmentInterface viewInterface;
     ArchiveInteractorInterfacce interactor;
 
-    public ArchivePresenter(Context context, ArchiveFragment viewInterface){
-        this.context=context;
+    public ArchivePresenter(Context context, ArchiveFragmentInterface viewInterface){
+        this.mContext = context;
         this.viewInterface=viewInterface;
-        interactor=new ArchiveInteractor(context,this);
+        interactor=new ArchiveInteractor(mContext,this);
     }
     @Override
     public void getNoteList(String userId)

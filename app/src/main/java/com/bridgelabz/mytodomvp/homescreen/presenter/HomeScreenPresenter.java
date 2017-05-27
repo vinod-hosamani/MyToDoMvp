@@ -14,13 +14,13 @@ import java.util.List;
  */
 public class HomeScreenPresenter implements HomeScreenPresenterInterface {
 
-  //  Context context;
+  //  Context mContext;
     HomeScreenActivityInterface viewInterface;
     HomeScreenInteractor interactor;
 
 
     public HomeScreenPresenter(Context context,HomeScreenActivityInterface viewInterface){
-       // this.context=context;
+       // this.mContext=mContext;
         this.viewInterface=viewInterface;
         interactor=new HomeScreenInteractor(context,this);
 

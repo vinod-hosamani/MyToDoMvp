@@ -24,18 +24,22 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_homescreen" />
+    <!--<include layout="@layout/content_homescreen" />-->
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fab_add_todo"
-        android:layout_gravity="end|bottom"/>
+        android:layout_gravity="end|bottom"
+        android:layout_margin="10dp"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="#ffffff"
+        />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/todo_item_fragment"
+        android:id="@+id/frameContainer"
         android:layout_marginTop="59dp">
 
     </FrameLayout>

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TrashFragment;
 import com.bridgelabz.mytodomvp.util.DatabaseHandler;
 
 import java.util.ArrayList;
@@ -38,16 +40,27 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     }
 
 
-    public TodoItemAdapter(Context context, OnLongClickListener onLongClickListener)
-    {
-        this.context = context;
-        this.onLongClickListener = onLongClickListener;
-    }
-
     public TodoItemAdapter(Context context)
     {
         this.context=context;
     }
+
+    public TodoItemAdapter(Context mcontext, ArchiveFragment archiveFragment)
+    {
+
+    }
+
+    public TodoItemAdapter(Context mContext, TrashFragment trashFragment)
+    {
+
+
+    }
+
+
+    /*public TodoItemAdapter(HomeScreenActivity homeScreenActivity, TrashFragment trashFragment)
+    {
+
+    }*/
 
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType)

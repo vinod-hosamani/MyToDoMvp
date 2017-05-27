@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_notes"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/notepad"
             android:title="notes" />
         <item
             android:id="@+id/nav_archieved"
@@ -12,22 +12,15 @@
             android:title="archieve" />
         <item
             android:id="@+id/nav_reminder"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Reminder" />
+            android:icon="@drawable/time"
+            android:title="reminder" />
+        <item
+            android:id="@+id/nav_trash"
+            android:icon="@drawable/garbage"
+            android:title="trash" />
 
     </group>
 
-    <!--<item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>-->
+
 
 </menu>

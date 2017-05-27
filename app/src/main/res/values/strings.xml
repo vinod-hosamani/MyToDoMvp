@@ -14,5 +14,5 @@
     <string name="moveing">moving to notes</string>
     <string name="moingToNotes">moingToNotes</string>
     <string name="askMoveToNoteMessage">askMoveToNoteMessage</string>
-    <string name="date_format">date_format</string>
+    <string name="date_format">dd MMM yyyy</string>
 </resources>
