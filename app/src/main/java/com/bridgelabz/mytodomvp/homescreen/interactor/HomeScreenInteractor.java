@@ -68,7 +68,6 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
                         List<TodoItemModel> li;
                         li = obj.getValue(t);
                         noteList.addAll(li);
-
                     }
                     presenter.getNoteSuccess(noteList);
                     presenter.hideProgressDailogue();
@@ -118,12 +117,13 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             }
             presenter.deleteTodoModelSuccess(context.getString(R.string.delete_todo_item_success));
         }
-        else {
+        else
+        {
             presenter.deleteTodoModelFailure(context.getString(R.string.no_internet));
         }
 
         presenter.hideProgressDailogue();
-        }
+    }
 
 
     @Override
@@ -135,7 +135,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
                 String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
                 todoDataReference.child(userId).child(itemModel.getStartDate())
                         .child(String.valueOf(itemModel.getNoteId()))
-                        .child("arhvied").setValue(true);
+                        .child("isArchived").setValue(true);
                 presenter.moveToSuccess("moved to archive");
                 presenter.hideProgressDailogue();
             }
@@ -143,6 +143,46 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             {
                 presenter.moveToFailure("no internet connetion");
             }
+        presenter.hideProgressDailogue();
+    }
+
+    @Override
+    public void moveToTrash(TodoItemModel itemModel)
+    {
+        presenter.showProgressDailogue("moving to trash");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            itemModel.setDeleted(true);
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .setValue(itemModel);
+            presenter.moveToTrashSuccess("moved to trash");
+            presenter.hideProgressDailogue();
+        }
+        else
+        {
+            presenter.moveToTrashFailure("no internet connetion");
+        }
+        presenter.hideProgressDailogue();
+
+    }
+    public void moveToReminder(TodoItemModel itemModel)
+    {
+        presenter.showProgressDailogue("moving to Reminder");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("isReminder").setValue(true);
+            presenter.moveToReminderSuccess("moved to reminder");
+            presenter.hideProgressDailogue();
+        }
+        else
+        {
+            presenter.moveToReminderFailure("no internet connetion");
+        }
         presenter.hideProgressDailogue();
     }
 
@@ -155,12 +195,32 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
             todoDataReference.child(userId).child(itemModel.getStartDate())
                     .child(String.valueOf(itemModel.getNoteId()))
-                    .child("archived").setValue(false);
+                    .child("isArchived").setValue(false);
             presenter.moveToSuccess("moved to notes successfuyll");
             presenter.hideProgressDailogue();
         }
-        else {
+        else
+        {
             presenter.moveToFailure("no internet connetion");
+        }
+        presenter.hideProgressDailogue();
+    }
+
+    public void moveToNotesFromTrash(TodoItemModel itemModel)
+    {
+        presenter.showProgressDailogue("moving  to note");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("deleted").setValue(false);
+            presenter.moveToTrashSuccess("moved to notes successfuyll");
+            presenter.hideProgressDailogue();
+        }
+        else
+        {
+            presenter.moveToTrashFailure("no internet connetion");
         }
         presenter.hideProgressDailogue();
     }

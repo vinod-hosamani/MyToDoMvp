@@ -84,7 +84,7 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
         List<TodoItemModel> archiveList=new ArrayList<>();
         for(TodoItemModel model:noteList)
         {
-            if(!model.isArchieved())
+            if(model.isArchieved())
                 archiveList.add(model);
         }
         archiovedItemModels=archiveList;
@@ -107,11 +107,9 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
         progressDialog.show();
 
     }
-
     @Override
     public void hideProgressDialogue()
     {
-
         progressDialog.dismiss();
 
     }
@@ -122,7 +120,8 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
         AlertDialog.Builder builder = new AlertDialog.Builder(homeScreenActivity);
         builder.setTitle(homeScreenActivity.getString(R.string.moingToNotes));
         builder.setMessage(homeScreenActivity.getString(R.string.askMoveToNoteMessage));
-        builder.setPositiveButton(homeScreenActivity.getString(R.string.okButton), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(homeScreenActivity.getString(R.string.okButton),
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
@@ -143,9 +142,6 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
 
      builder.show();
     }
-
-
-
     @Override
     public void onPrepareOptionsMenu(Menu menu)
     {

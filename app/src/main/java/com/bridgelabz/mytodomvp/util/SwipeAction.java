@@ -20,6 +20,7 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback {
 
     public static final int left = ItemTouchHelper.LEFT;
     public static  final int right=ItemTouchHelper.RIGHT;
+    public static  int setReminder;
 
     TodoItemAdapter todoAdapter;
     HomeScreenActivity activity;
@@ -46,16 +47,15 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback {
         switch (direction)
         {
             case left:
-                deleteItem(position);
+                moveToTrash(position);
                 break;
             case right:
                 movoToArchieved(position);
                 break;
-
         }
-
-
     }
+
+
     private void deleteItem(int pos)
     {
         TodoItemModel itemModel=todoAdapter.getItemModel(pos);
@@ -80,6 +80,12 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback {
     }
 
 
+
+    private void moveToAgainNotesFromTrash(TodoItemModel itemModel)
+    {
+        activity.presenter.moveToNotesFromTrash(itemModel);
+    }
+
     private void movoToArchieved(int pos)
     {
         final TodoItemModel itemModel=  todoAdapter.getItemModel(pos);
@@ -88,7 +94,8 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback {
         Snackbar snackbar=Snackbar.make(activity.getCurrentFocus(),"note is arvhieved",Snackbar.LENGTH_LONG).setAction("unod",
         new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 moveToAgainNotes(itemModel);
                 Snackbar s=Snackbar.make(activity.getCurrentFocus(),"undodone",Snackbar.LENGTH_SHORT);
                 s.show();
@@ -96,4 +103,27 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback {
         });
         snackbar.show();
     }
+
+    private void moveToTrash(int pos)
+    {
+        final  TodoItemModel itemModel=todoAdapter.getItemModel(pos);
+        activity.presenter.moveToTrash(itemModel);
+
+        Snackbar snackbar=Snackbar.make(activity.getCurrentFocus(),"note is trashed",Snackbar.LENGTH_LONG).setAction("unco",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        moveToAgainNotesFromTrash(itemModel);
+                        Snackbar s=Snackbar.make(activity.getCurrentFocus(),"undodone",Snackbar.LENGTH_SHORT);
+                        s.show();
+                    }
+                });
+        snackbar.show();
+    }
+    private  void moveToReminder(int pos)
+    {
+        final TodoItemModel itemModel=todoAdapter.getItemModel(pos);
+        activity.presenter.moveToReminder(itemModel);
+    }
+
 }

@@ -55,13 +55,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
 
 
     }
-
-
-    /*public TodoItemAdapter(HomeScreenActivity homeScreenActivity, TrashFragment trashFragment)
-    {
-
-    }*/
-
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {

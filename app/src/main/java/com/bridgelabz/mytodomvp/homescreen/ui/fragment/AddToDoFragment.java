@@ -48,9 +48,6 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     public static int editposition;
     TodoItemModel model;
 
-
-
-
     public AddToDoFragment(HomeScreenActivity  context)
     {
         this.homeScreenActivity=context;
@@ -179,6 +176,7 @@ public void savaDataAdapter()
     model.setNote(editTextNotes.getText().toString());
     model.setReminderDate(textViewReminder.getText().toString());
     model.setIsArchived(false);
+    model.setDeleted(false);
 
     Date date=new Date();
     SimpleDateFormat format=new SimpleDateFormat("MMMM dd,yyyy");

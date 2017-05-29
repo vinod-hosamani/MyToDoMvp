@@ -290,13 +290,13 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     @Override
     public void getNoteSuccess(List<TodoItemModel> noteList)
     {
-        List<TodoItemModel> nonArchvieList=new ArrayList<>();
+        List<TodoItemModel> nonTrashList=new ArrayList<>();
         for(TodoItemModel model:noteList)
-            if(!model.isArchieved())
+            if(model.isDeleted())
             {
-                nonArchvieList.add(model);
+                nonTrashList.add(model);
             }
-       todoItemAdapter.setTodoList(nonArchvieList);
+       todoItemAdapter.setTodoList(nonTrashList);
     }
 
     @Override
@@ -349,6 +349,31 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public void moveToArchiveSuccess(String message)
     {
      Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void moveToTrashFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void moveToTrashSuccess(String message)
+    {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void moveToReminderSuccess(String message)
+    {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void moveToReminderFailure(String message)
+    {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override

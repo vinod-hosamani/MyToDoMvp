@@ -106,7 +106,7 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
 
         for(TodoItemModel model: noteList)
         {
-            if(!model.getReminderDate().equals(currentDate)&& !model.isArchieved())
+            if(model.getReminderDate().equals(currentDate)&& model.isArchieved())
             {
                 reminderList.add(model);
             }
@@ -160,8 +160,6 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
             isList = true;
         }
     }
-
-
 
 
 

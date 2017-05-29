@@ -26,10 +26,19 @@ public interface HomeScreenPresenterInterface
     void moveToFailure(String message);
     void moveToSuccess(String message);
     void moveToNotes(TodoItemModel itemModel);
+    void moveToNotesFromTrash(TodoItemModel itemModel);
+
+    void moveToTrash(TodoItemModel itemModel);
+    void moveToTrashFailure(String message);
+    void moveToTrashSuccess(String message);
+    //void MoveToTrashNotes(TodoItemModel itemModel);
+
+    void moveToReminder(TodoItemModel itemModel);
+    void moveToReminderFailure(String message);
+    void moveToReminderSuccess(String message);
+
 
     void uploadProfilePic(String currentUserId, Uri selectedImage);
-
     void uploadSuccess(Uri selectedImage);
-
     void uploadFailure(String message);
 }

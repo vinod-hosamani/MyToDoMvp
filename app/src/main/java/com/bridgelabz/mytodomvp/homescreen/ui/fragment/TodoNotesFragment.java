@@ -100,7 +100,11 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         {
             if(!model.isArchieved())
             {
-                nonArchivedList.add(model);
+                if(!model.isDeleted())
+                {
+                    nonArchivedList.add(model);
+
+                }
             }
         }
         todoItemAdapter.setTodoList(nonArchivedList);

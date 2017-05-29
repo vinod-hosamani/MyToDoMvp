@@ -14,7 +14,14 @@ public interface HomeScreenInteractorInterface
 
     void getTodoNoteFromServer(String userId);
     void deleteTodoModel(List<TodoItemModel> tempList,TodoItemModel itemModel,int pos);
+
     void motoToArchive(TodoItemModel itemModel);
     void moveToNotes(TodoItemModel itemModel);
+
+
+    void moveToTrash(TodoItemModel itemModel);
+
+    void moveToReminder(TodoItemModel itemModel);
+
     void uploadProfilePic(String currentUserId, Uri selectedImage);
 }

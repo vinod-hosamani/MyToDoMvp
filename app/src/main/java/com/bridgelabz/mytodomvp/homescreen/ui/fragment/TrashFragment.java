@@ -99,14 +99,14 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface
     @Override
     public void getNoteListSuccess(List<TodoItemModel> noteList)
     {
-        List<TodoItemModel> archiveList=new ArrayList<>();
+        List<TodoItemModel> trashList=new ArrayList<>();
         for(TodoItemModel model:noteList)
         {
-            if(!model.isArchieved())
-                archiveList.add(model);
+            if(model.isDeleted())
+                trashList.add(model);
         }
-        trashItemModels=archiveList;
-        totoItemAdapter.setTodoList(archiveList);
+        trashItemModels=trashList;
+        totoItemAdapter.setTodoList(trashList);
     }
 
     @Override
