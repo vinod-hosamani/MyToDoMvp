@@ -16,8 +16,8 @@ import java.util.List;
 /**
  * Created by bridgeit on 11/5/17.
  */
-public class SwipeAction extends ItemTouchHelper.SimpleCallback {
-
+public class SwipeAction extends ItemTouchHelper.SimpleCallback
+{
     public static final int left = ItemTouchHelper.LEFT;
     public static  final int right=ItemTouchHelper.RIGHT;
     public static  int setReminder;
@@ -42,7 +42,8 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback {
     }
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+    {
      final int position=viewHolder.getAdapterPosition();
         switch (direction)
         {
@@ -78,8 +79,6 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback {
     {
         activity.presenter.moveToNotes(itemModel);
     }
-
-
 
     private void moveToAgainNotesFromTrash(TodoItemModel itemModel)
     {

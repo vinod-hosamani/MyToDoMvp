@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -44,6 +45,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.jrummyapps.android.colorpicker.ColorPickerDialogListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by bridgeit on 8/5/17.
  */
-public class HomeScreenActivity extends BaseActivity implements HomeScreenActivityInterface
+public class HomeScreenActivity extends BaseActivity implements HomeScreenActivityInterface,ColorPickerDialogListener
 {
     private static final int result_load_img=1;
     public FloatingActionButton addTodoFab;
@@ -67,6 +69,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public HomeScreenPresenter presenter;
     StaggeredGridLayoutManager mstaggeredGridLayoutManager;
     SessionManagement session;
+    AddToDoFragment addToDoFragment;
     public boolean isList;
  //   RecyclerView toDoItemRecycler;
     public Menu menu;
@@ -285,8 +288,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         }
         return super.onOptionsItemSelected(item);
     }
-
-
     @Override
     public void getNoteSuccess(List<TodoItemModel> noteList)
     {
@@ -342,9 +343,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-
-
     @Override
     public void moveToArchiveSuccess(String message)
     {
@@ -361,7 +359,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public void moveToTrashSuccess(String message)
     {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -546,7 +543,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
 
   public void addTodoTask()
   {
-      AddToDoFragment addToDoFragment=new AddToDoFragment(this);
+      addToDoFragment =new AddToDoFragment(this);
       getSupportFragmentManager().beginTransaction()
               .replace(R.id.frameContainer,addToDoFragment, "todoList")
               .addToBackStack(null)
@@ -602,5 +599,24 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 .replace(R.id.frameContainer, trashFragment,"Trash")
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onColorSelected(int dialogId, @ColorInt int color)
+    {
+        if(addToDoFragment!=null)
+        {
+            addToDoFragment.setColor(color);
+        }
+        else
+        {
+            todoNotesFragment.setColor(color);
+        }
+    }
+
+    @Override
+    public void onDialogDismissed(int dialogId)
+    {
+
     }
 }

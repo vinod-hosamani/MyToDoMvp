@@ -13,8 +13,9 @@ public class TodoItemModel
     private boolean isArchived;
     private boolean isDeleted;
     private boolean isReminder;
+    private String color;
 
-    public TodoItemModel(boolean isArchived,boolean isDeleted,boolean isReminder, String note, int noteId, String reminderDate, String startDate, String title) {
+    public TodoItemModel(boolean isArchived,boolean isDeleted,boolean isReminder, String note, int noteId, String reminderDate, String startDate, String title,String color) {
         this.isArchived = isArchived;
         this.isDeleted=isDeleted;
         this.isReminder=isReminder;
@@ -23,6 +24,7 @@ public class TodoItemModel
         this.reminderDate = reminderDate;
         this.startDate = startDate;
         this.title = title;
+        this.color=color;
     }
 
     public TodoItemModel()
@@ -106,5 +108,13 @@ public class TodoItemModel
     public void setReminder(boolean reminder)
     {
         isReminder = reminder;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

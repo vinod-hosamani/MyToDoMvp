@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.AddToDoFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ReminderFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TrashFragment;
@@ -28,6 +30,7 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     OnNoteClickListener noteClickListener;
     DatabaseHandler database;
     OnLongClickListener onLongClickListener;
+    AddToDoFragment fragmentListView;
 
     public TodoItemAdapter(Context context,OnNoteClickListener noteClickListener)
     {
@@ -59,6 +62,8 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
 
     public TodoItemAdapter(Context mContext, ReminderFragment reminderFragment)
     {
+
+
     }
 
     @Override
@@ -75,7 +80,10 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         final TodoItemModel todoItemModel = todoList.get(position);
         holder.title.setText(todoItemModel.getTitle());
         holder.note.setText(todoItemModel.getNote());
-
+        if(todoItemModel.getColor()!=null)
+        {
+            holder.linearLayout.setBackgroundColor(Integer.parseInt(todoItemModel.getColor()));
+        }
         if(!todoItemModel.getReminderDate().equals(""))
         {
             holder.reminderDate.setText(todoItemModel.getReminderDate());
@@ -154,16 +162,23 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         notifyDataSetChanged();
     }
 
+    public void setColor(int color)
+    {
+
+    }
+
 
     public class TaskViewHolder extends RecyclerView.ViewHolder
     {
         public AppCompatTextView title,note,reminderDate;
+        LinearLayout linearLayout;
         public TaskViewHolder(View view)
         {
             super(view);
             title = (AppCompatTextView) view.findViewById(R.id.todo_title);
             note = (AppCompatTextView) view.findViewById(R.id.todo_note);
             reminderDate = (AppCompatTextView) view.findViewById(R.id.todo_reminder);
+            linearLayout=(LinearLayout)view.findViewById(R.id.recyclerlinearlayout);
         }
     }
 
@@ -199,4 +214,9 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     {
         void onLongClick(TodoItemModel itemModel);
     }
+
+    /*public void setColor(int color)
+    {
+        fragmentListView.setcolor(color);
+    }*/
 }

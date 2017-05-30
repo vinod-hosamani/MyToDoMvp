@@ -49,6 +49,8 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
     StaggeredGridLayoutManager mstaggeredGridLayoutManager;
     SwipeAction swipeAction;
     ItemTouchHelper itemTouchHelper;
+    AddToDoFragment todoNoteaddFragment;
+    TodoItemAdapter recyclerAdapter;
 
     @Override
     public void onResume()
@@ -263,5 +265,10 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
             searchView.setIconifiedByDefault(false);
             searchView.setOnQueryTextListener(this);
             super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public void setColor(int color)
+    {
+        todoItemAdapter.setColor(color);
     }
 }

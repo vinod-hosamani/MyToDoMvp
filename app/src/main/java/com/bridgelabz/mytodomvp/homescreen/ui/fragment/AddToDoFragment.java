@@ -2,6 +2,7 @@ package com.bridgelabz.mytodomvp.homescreen.ui.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bridgelabz.mytodomvp.R;
@@ -22,6 +24,7 @@ import com.bridgelabz.mytodomvp.homescreen.presenter.AddTodoPresenter;
 import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
 import com.bridgelabz.mytodomvp.registration.model.UserModel;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
+import com.jrummyapps.android.colorpicker.ColorPickerDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,6 +50,9 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     public static boolean add=true;
     public static int editposition;
     TodoItemModel model;
+    private int DIALOG_ID=10;
+    private LinearLayout linearlayout;
+    String newcolor;
 
     public AddToDoFragment(HomeScreenActivity  context)
     {
@@ -62,6 +68,8 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         textViewReminder=(AppCompatTextView)view.findViewById(R.id.textViewReminder);
         buttonSave=(AppCompatButton)view.findViewById(R.id.btnsave);
         buttonSave.setOnClickListener(this);
+
+        linearlayout=(LinearLayout) view.findViewById(R.id.layout_update_color);
     }
 
     @Nullable
@@ -173,6 +181,7 @@ public void savaDataAdapter()
     model.setReminderDate(textViewReminder.getText().toString());
     model.setIsArchived(false);
     model.setDeleted(false);
+    model.setColor(newcolor);
 
     Date date=new Date();
     SimpleDateFormat format=new SimpleDateFormat("MMMM dd,yyyy");
@@ -205,17 +214,35 @@ public void savaDataAdapter()
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if(item.getItemId()==R.id.setReminder)
-        {
-            new DatePickerDialog(homeScreenActivity,date,myCalender.get(Calendar.YEAR)
-                    ,myCalender.get(Calendar.MONTH),
-            myCalender.get(Calendar.DAY_OF_MONTH)).show();
-            return  true;
-        }
-        else if(item.getItemId()==R.id.action_logout)
-        {
 
+        switch (item.getItemId())
+        {
+            case R.id.setReminder:
+                new DatePickerDialog(homeScreenActivity, date, myCalender.get(Calendar.YEAR)
+                        , myCalender.get(Calendar.MONTH),
+                        myCalender.get(Calendar.DAY_OF_MONTH)).show();
+                return true;
+            case R.id.ic_action_color_pick:
+                getColorPicker();
+            default:
+               return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+    private void getColorPicker()
+    {
+        ColorPickerDialog.newBuilder()
+                .setDialogType(ColorPickerDialog.TYPE_PRESETS)
+                .setAllowPresets(true)
+                .setDialogId(DIALOG_ID)
+                .setColor(Color.BLACK)
+                .setShowAlphaSlider(true)
+                .show(getActivity());
+    }
+
+
+    public void setColor(int color)
+    {
+        newcolor= String.valueOf(color);
+        linearlayout.setBackgroundColor(color);
     }
 }

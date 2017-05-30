@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/layout_update_color"
+    android:layout_height="match_parent"
+    android:background="#FFFF"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:weightSum="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        >
+        <android.support.v7.widget.AppCompatImageButton
+            android:layout_width="12dp"
+            android:layout_marginTop="3dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/back_button"
+            />
+    </LinearLayout>
+  <!--  <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="#cdbcde"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent">-->
 
     <android.support.v7.widget.AppCompatEditText
         android:layout_width="match_parent"
@@ -28,14 +50,15 @@
         android:hint="setDate"
         android:gravity="center"
         android:textSize="19dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
         android:focusable="false"/>
 
     <android.support.v7.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="save"
+        android:gravity="center"
         android:id="@+id/btnsave"
         android:textSize="22dp"
         android:layout_marginLeft="100dp"
