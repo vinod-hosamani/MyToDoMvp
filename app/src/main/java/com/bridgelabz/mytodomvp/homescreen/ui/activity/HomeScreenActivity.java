@@ -416,22 +416,20 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
       // Handle navigation view item clicks here.
       int id = item.getItemId();
 
-      switch (item.getItemId()){
-
+      switch (item.getItemId())
+      {
           case R.id.nav_notes :
-              addToDoFragment();
-              break;
-          case  R.id.nav_archieved :
-              addArchive();
-              break;
-          case  R.id.nav_reminder :
-                addReminder();
-              break;
+               addToDoFragment();
+               break;
+          case R.id.nav_archieved :
+               addArchive();
+               break;
+          case R.id.nav_reminder :
+               addReminder();
+               break;
           case R.id.nav_trash :
-              addTrash();
-              break;
-
-
+               addTrash();
+               break;
       }
       drawer.closeDrawer(GravityCompat.START);
       return true;
@@ -494,7 +492,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public void onItemClick(int pos)
 
     {
-
         addTodoFab.setVisibility(View.INVISIBLE);
         TodoItemModel model=todoItemAdapter.getItemModel(pos);
 
@@ -518,9 +515,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 .replace(R.id.frameContainer, fragment, "editTodo")
                 .addToBackStack(null)
                 .commit();
-
         todoItemAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -556,13 +551,12 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
               .replace(R.id.frameContainer,addToDoFragment, "todoList")
               .addToBackStack(null)
               .commit();
-
   }
 
     public void addToDoFragment()
      {
-      setTitle(Constant.note_title);
-      addTodoFab.setVisibility(View.VISIBLE);
+       setTitle(Constant.note_title);
+       addTodoFab.setVisibility(View.VISIBLE);
          if(todoNotesFragment == null)
         todoNotesFragment = new TodoNotesFragment(this);
 

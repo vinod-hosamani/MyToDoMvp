@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.bridgelabz.mytodomvp.R;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ReminderFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TrashFragment;
 import com.bridgelabz.mytodomvp.util.DatabaseHandler;
 
@@ -55,6 +56,11 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
 
 
     }
+
+    public TodoItemAdapter(Context mContext, ReminderFragment reminderFragment)
+    {
+    }
+
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {

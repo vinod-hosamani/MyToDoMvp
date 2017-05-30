@@ -33,15 +33,14 @@ public class ReminderInteractor implements ReminderInteractorInterface
         databaseReference= FirebaseDatabase.getInstance().getReference(Constant.key_firebase_todo);
     }
 
-
-
     @Override
     public void getTodayReminderList(String userId)
     {
         presenter.showProgressDilogu("loading");
         if(Connectivity.isNetworkConnected(context))
         {
-            databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
+            databaseReference.child(userId).addValueEventListener(new ValueEventListener()
+            {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot)
                 {

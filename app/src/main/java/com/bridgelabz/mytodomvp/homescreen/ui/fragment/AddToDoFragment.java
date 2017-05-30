@@ -55,7 +55,6 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         session = new SessionManagement(context);
     }
 
-
     public void  initView(View view)
     {
         editTextTitle=(AppCompatEditText)view.findViewById(R.id.editTextToDoTitle);
@@ -126,7 +125,6 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
       Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void updateFailure(String message)
     {
@@ -147,8 +145,6 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         }
 
     }
-
-
     public void editTodoItem(int position)
     {
         UserModel usermodel=session.getUserDetails();
@@ -199,11 +195,10 @@ public void savaDataAdapter()
         @Override
         public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth)
         {
-           myCalender.set(Calendar.YEAR,year);
+            myCalender.set(Calendar.YEAR,year);
             myCalender.set(Calendar.MONTH,monthOfYear);
             myCalender.set(Calendar.DAY_OF_MONTH,dayOfMonth);
             updateLabe();
-
         }
     };
 

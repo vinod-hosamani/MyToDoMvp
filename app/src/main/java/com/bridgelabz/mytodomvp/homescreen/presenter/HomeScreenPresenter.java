@@ -77,12 +77,14 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface
 
     @Override
     public void moveToArchive(TodoItemModel itemModel)
+
     {
         interactor.motoToArchive(itemModel);
     }
 
     @Override
     public void moveToTrash(TodoItemModel itemModel)
+
     {
         interactor.moveToTrash(itemModel);
     }
@@ -101,17 +103,20 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface
   }
 
     @Override
-    public void moveToReminder(TodoItemModel itemModel) {
+    public void moveToReminder(TodoItemModel itemModel)
+    {
         interactor.moveToReminder(itemModel);
     }
 
     @Override
-    public void moveToReminderFailure(String message) {
+    public void moveToReminderFailure(String message)
+    {
       viewInterface.moveToReminderFailure(message);
     }
 
     @Override
-    public void moveToReminderSuccess(String message) {
+    public void moveToReminderSuccess(String message)
+    {
      viewInterface.moveToReminderSuccess(message);
     }
 
@@ -140,7 +145,8 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface
     }
 
     @Override
-    public void moveToNotesFromTrash(TodoItemModel itemModel) {
+    public void moveToNotesFromTrash(TodoItemModel itemModel)
+    {
         interactor.moveToNotesFromTrash(itemModel);
     }
 

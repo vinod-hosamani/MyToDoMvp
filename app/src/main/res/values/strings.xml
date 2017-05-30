@@ -15,4 +15,5 @@
     <string name="moingToNotes">moingToNotes</string>
     <string name="askMoveToNoteMessage">askMoveToNoteMessage</string>
     <string name="date_format">dd MMM yyyy</string>
+    <string name="flag_false">false</string>
 </resources>

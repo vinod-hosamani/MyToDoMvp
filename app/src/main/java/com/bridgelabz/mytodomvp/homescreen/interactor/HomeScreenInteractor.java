@@ -164,7 +164,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         {
             presenter.moveToTrashFailure("no internet connetion");
         }
-        presenter.hideProgressDailogue();
+            presenter.hideProgressDailogue();
 
     }
     public void moveToReminder(TodoItemModel itemModel)
@@ -183,13 +183,13 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         {
             presenter.moveToReminderFailure("no internet connetion");
         }
-        presenter.hideProgressDailogue();
+            presenter.hideProgressDailogue();
     }
 
     @Override
     public void moveToNotes(TodoItemModel itemModel)
     {
-    presenter.showProgressDailogue("moving  to note");
+       presenter.showProgressDailogue("moving  to note");
         if(Connectivity.isNetworkConnected(context))
         {
             String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -203,7 +203,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         {
             presenter.moveToFailure("no internet connetion");
         }
-        presenter.hideProgressDailogue();
+            presenter.hideProgressDailogue();
     }
 
     public void moveToNotesFromTrash(TodoItemModel itemModel)
@@ -222,7 +222,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         {
             presenter.moveToTrashFailure("no internet connetion");
         }
-        presenter.hideProgressDailogue();
+            presenter.hideProgressDailogue();
     }
 
     @Override

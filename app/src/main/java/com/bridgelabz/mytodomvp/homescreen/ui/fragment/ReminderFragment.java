@@ -36,7 +36,7 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     public static final String TAG = "ReminderFragment";
 
     Context mContext;
-    RecyclerView archiveRecyclerView;
+    RecyclerView reminderRecyclerView;
     TodoItemAdapter todoItemAdapter;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     HomeScreenActivity homeScreenActivity;
@@ -59,12 +59,13 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
 
     private void initView(View view)
     {
-        archiveRecyclerView=(RecyclerView)view.findViewById(R.id.recycler_archvied_list);
+        reminderRecyclerView=(RecyclerView)view.findViewById(R.id.recycler_archvied_list);
         setHasOptionsMenu(true);
-        todoItemAdapter=new TodoItemAdapter(homeScreenActivity);
-        archiveRecyclerView.setAdapter(todoItemAdapter);
+        //totoItemAdapter=new TodoItemAdapter(mcontext,this);
+          todoItemAdapter=new TodoItemAdapter(mContext,this);
+        reminderRecyclerView.setAdapter(todoItemAdapter);
         staggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
-        archiveRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        reminderRecyclerView.setLayoutManager(staggeredGridLayoutManager);
     }
 
     @Nullable
@@ -100,13 +101,14 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     public void getTodayReminderSuccess(List<TodoItemModel> noteList)
     {
         List<TodoItemModel> reminderList=new ArrayList<>();
-        SimpleDateFormat format= new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat format= new SimpleDateFormat("MMM dd,yyyy");
 
         String currentDate=format.format(new Date().getTime());
 
         for(TodoItemModel model: noteList)
         {
-            if(model.getReminderDate().equals(currentDate)&& model.isArchieved())
+
+            if(model.getReminderDate().equals(currentDate))
             {
                 reminderList.add(model);
             }
@@ -160,7 +162,4 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
             isList = true;
         }
     }
-
-
-
 }
