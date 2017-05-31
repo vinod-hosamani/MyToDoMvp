@@ -51,6 +51,7 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
     ItemTouchHelper itemTouchHelper;
     AddToDoFragment todoNoteaddFragment;
     TodoItemAdapter recyclerAdapter;
+    AddToDoFragment fragment;
 
     @Override
     public void onResume()
@@ -180,12 +181,14 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         argument.putString(Constant.key_title,model.getTitle());
         argument.putString(Constant.key_note,model.getNote());
         argument.putString(Constant.key_reminder,model.getReminderDate());
-        argument.putString(Constant.key_note_id, String.valueOf(model.getNoteId()));
+        argument.putInt(Constant.key_note_id, model.getNoteId());
         argument.putString(Constant.key_startDate,model.getStartDate());
 
-        AddToDoFragment fragment=new AddToDoFragment(homeScreenActivity);
+
+         fragment=new AddToDoFragment(homeScreenActivity);
         AddToDoFragment.add=false;
         AddToDoFragment.editposition=pos;
+
         fragment.setArguments(argument);
 
         homeScreenActivity.getSupportFragmentManager().beginTransaction()
@@ -217,8 +220,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         todoItemAdapter.setFilter(noteList);
         return  true;
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -230,7 +231,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void toggle(MenuItem item)
     {
         MenuItem items = item;
@@ -249,7 +249,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
             isList = true;
         }
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
@@ -269,6 +268,8 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
 
     public void setColor(int color)
     {
-        todoItemAdapter.setColor(color);
+        fragment.setColor(color);
+
     }
+
 }

@@ -45,14 +45,16 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     AppCompatEditText editTextTitle;
     AppCompatEditText editTextNotes;
     AppCompatTextView textViewReminder;
+    int id;
     AppCompatButton buttonSave;
 
     public static boolean add=true;
     public static int editposition;
+
     TodoItemModel model;
     private int DIALOG_ID=10;
     private LinearLayout linearlayout;
-    String newcolor;
+    public String newcolor;
 
     public AddToDoFragment(HomeScreenActivity  context)
     {
@@ -67,6 +69,7 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         editTextNotes=(AppCompatEditText)view.findViewById(R.id.editTextToDoDescription);
         textViewReminder=(AppCompatTextView)view.findViewById(R.id.textViewReminder);
         buttonSave=(AppCompatButton)view.findViewById(R.id.btnsave);
+
         buttonSave.setOnClickListener(this);
 
         linearlayout=(LinearLayout) view.findViewById(R.id.layout_update_color);
@@ -87,6 +90,7 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
             editTextTitle.setText(arguments.getString(Constant.key_title));
             editTextNotes.setText(arguments.getString(Constant.key_note));
             textViewReminder.setText(arguments.getString(Constant.key_reminder));
+            id=arguments.getInt(Constant.key_note_id);
             buttonSave.setText("update");
         }
         return view;
@@ -157,10 +161,12 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     {
         UserModel usermodel=session.getUserDetails();
         model=new TodoItemModel();
+       // model.setNoteId(id);
         model.setTitle(editTextTitle.getText().toString());
         model.setNote(editTextNotes.getText().toString());
         model.setReminderDate(textViewReminder.getText().toString());
         model.setIsArchived(false);
+        model.setColor(newcolor);
 
         Bundle bundle=getArguments();
         model.setNoteId(bundle.getInt(Constant.key_note_id));

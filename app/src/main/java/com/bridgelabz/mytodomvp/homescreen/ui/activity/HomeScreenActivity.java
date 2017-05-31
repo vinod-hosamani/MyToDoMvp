@@ -98,7 +98,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
 
     DrawerLayout drawer;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -108,10 +107,8 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         presenter.getTodoNoteFromServer(session.getUserDetails().getId());
         allData=todoItemAdapter.getAllDataList();
          /*ddrawer part*/
-
         setTitle(Constant.note_title);
         addTodoFab.setVisibility(View.VISIBLE);
-
         addToDoFragment();
 
         if(session.isFbLoggedIn())
@@ -157,8 +154,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
             imageViewUserProfile.setOnClickListener(this);
 
         }
-
-
         //allData=todoItemAdapter.getAll
     }
     @Override
@@ -203,7 +198,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         imageViewUserProfile=(CircleImageView)header.findViewById(R.id.imageViewUserProfile);
 
         currentUserId=session.getUserDetails().getId();
-
     }
     @Override
     public void onBackPressed()
@@ -243,8 +237,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         return true;
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -255,8 +247,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
             showProgressDialogue("loading....");
             if (session.isGoogleLoggedIn())
             {
-                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-                        new ResultCallback<Status>()
+                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>()
                         {
                             @Override
                             public void onResult(@NonNull Status status)
@@ -293,10 +284,16 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     {
         List<TodoItemModel> nonTrashList=new ArrayList<>();
         for(TodoItemModel model:noteList)
-            if(model.isDeleted())
+        {
+            if(!model.isArchieved())
             {
-                nonTrashList.add(model);
+                if(!model.isDeleted())
+                {
+                    nonTrashList.add(model);
+
+                }
             }
+        }
        todoItemAdapter.setTodoList(nonTrashList);
     }
 
@@ -350,9 +347,9 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     }
 
     @Override
-    public void moveToTrashFailure(String message) {
+    public void moveToTrashFailure(String message)
+    {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -384,7 +381,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public void uploadFailure(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
     }
 
     private void toggle()
@@ -437,14 +433,13 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         switch (view.getId())
         {
             case R.id.fab_add_todo:
-                addTodoFab.setVisibility(View.INVISIBLE);
-                addTodoTask();
-                break;
-
+                 addTodoFab.setVisibility(View.INVISIBLE);
+                 addTodoTask();
+                 break;
             case R.id.imageViewUserProfile:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK
-                        , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, result_load_img);
+                 Intent galleryIntent = new Intent(Intent.ACTION_PICK
+                        ,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                 startActivityForResult(galleryIntent, result_load_img);
         }
     }
     @Override
@@ -607,10 +602,12 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         if(addToDoFragment!=null)
         {
             addToDoFragment.setColor(color);
+
         }
         else
         {
             todoNotesFragment.setColor(color);
+
         }
     }
 

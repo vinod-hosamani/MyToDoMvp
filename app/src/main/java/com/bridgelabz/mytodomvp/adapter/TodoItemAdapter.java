@@ -42,30 +42,22 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         this.noteClickListener=noteClickListener;
         this.context=context;
     }
-
-
     public TodoItemAdapter(Context context)
     {
         this.context=context;
     }
-
     public TodoItemAdapter(Context mcontext, ArchiveFragment archiveFragment)
     {
 
     }
-
     public TodoItemAdapter(Context mContext, TrashFragment trashFragment)
     {
 
-
     }
-
     public TodoItemAdapter(Context mContext, ReminderFragment reminderFragment)
     {
 
-
     }
-
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -73,13 +65,14 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
                 inflate(R.layout.recycler_todo_item_list,parent,false);
         return new TaskViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(TaskViewHolder holder, final int position)
     {
         final TodoItemModel todoItemModel = todoList.get(position);
         holder.title.setText(todoItemModel.getTitle());
         holder.note.setText(todoItemModel.getNote());
+
+
         if(todoItemModel.getColor()!=null)
         {
             holder.linearLayout.setBackgroundColor(Integer.parseInt(todoItemModel.getColor()));
@@ -125,7 +118,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     {
         return todoList.size();
     }
-
     public void setTodoList(List<TodoItemModel> noteList)
     {
         todoList.clear();
@@ -139,35 +131,28 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         todoList.addAll(noteList);
         notifyDataSetChanged();
     }
-
     public void addItem(TodoItemModel model)
     {
         todoList.add(model);
         notifyItemInserted(todoList.size());
     }
-
     public void removeItem(int pos)
     {
         model = todoList.get(pos);
         /*database.deleteTodo(model);*/
-
         todoList.remove(pos);
         notifyItemRemoved(pos);
         notifyItemRangeChanged(pos, todoList.size());
     }
-
     public void updateItem(int pos, TodoItemModel model)
     {
         todoList.set(pos, model);
         notifyDataSetChanged();
     }
-
     public void setColor(int color)
     {
 
     }
-
-
     public class TaskViewHolder extends RecyclerView.ViewHolder
     {
         public AppCompatTextView title,note,reminderDate;
@@ -181,13 +166,12 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
             linearLayout=(LinearLayout)view.findViewById(R.id.recyclerlinearlayout);
         }
     }
-
     public TodoItemModel getItemModel(int pos)
     {
         return todoList.get(pos);
     }
 
-   public TodoItemModel getItemModelByNoteId(int noteId)
+    public TodoItemModel getItemModelByNoteId(int noteId)
     {
         TodoItemModel model = null;
         for (TodoItemModel itemModel:todoList)
@@ -199,17 +183,14 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         }
         return model;
     }
- public List<TodoItemModel> getAllDataList()
- {
-     return todoList;
- }
-
+    public List<TodoItemModel> getAllDataList()
+    {
+        return todoList;
+    }
     public interface OnNoteClickListener
     {
-     void onItemClick(int pos);
+        void onItemClick(int pos);
     }
-
-
     public interface OnLongClickListener
     {
         void onLongClick(TodoItemModel itemModel);
