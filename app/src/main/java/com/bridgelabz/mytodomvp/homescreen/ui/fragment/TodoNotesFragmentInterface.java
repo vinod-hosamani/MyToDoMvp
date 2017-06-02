@@ -16,11 +16,13 @@ public interface TodoNotesFragmentInterface extends View.OnClickListener,
 {
     void getNoteSuccess(List<TodoItemModel> noteList);
     void getNoteFailure(String message);
+
     void progressDialog(String message);
     void hideProgressDialog();
 
     void deleteTodoModelFailure(String message);
     void delteTodoModelSuccess(String messsage);
+
     void moveToArchvieFailure(String message);
     void moveToArchvieSuccess(String message);
 }

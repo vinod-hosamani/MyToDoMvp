@@ -12,6 +12,8 @@ public interface TodoNotesInteractorInteraface
 
     void getTodoNoteFromServer(String userId);
     void deleteTodoModel(List<TodoItemModel> tempList,TodoItemModel itemModel,int pos);
+
+
     void movetToArchive(TodoItemModel itemModel);
     void moveToNotes(TodoItemModel itemModel);
 }

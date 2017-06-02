@@ -28,7 +28,7 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface
 
     }
     @Override
-    public void getTodoNoteFromServer(String userId)
+    public void  getTodoNoteFromServer(String userId)
     {
       interactor.getTodoNoteFromServer(userId);
     }
@@ -77,14 +77,12 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface
 
     @Override
     public void moveToArchive(TodoItemModel itemModel)
-
     {
         interactor.motoToArchive(itemModel);
     }
 
     @Override
     public void moveToTrash(TodoItemModel itemModel)
-
     {
         interactor.moveToTrash(itemModel);
     }

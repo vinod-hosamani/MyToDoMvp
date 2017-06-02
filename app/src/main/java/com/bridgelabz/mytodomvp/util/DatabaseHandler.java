@@ -19,7 +19,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String tbl_name = "tbl_todo";
     public static final String key_title = "title";
     public static final String key_note = "note";
-
     private static DatabaseHandler dbh;
 
     private DatabaseHandler(Context context)
@@ -44,7 +43,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int i, int i1)
+    {
 
         String drop_todo_tbl = "drop table if exist" +tbl_name;
         db.execSQL(drop_todo_tbl);

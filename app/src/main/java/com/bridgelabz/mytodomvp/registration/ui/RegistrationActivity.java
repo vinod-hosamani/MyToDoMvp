@@ -149,7 +149,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
 
             if (userModel.getEmail().matches(emailPattern))
             {
-                //Toast.makeText(getApplicationContext(),"valid email address",Toast.LENGTH_SHORT).show();
+
                 flag = flag && true;
             }
             if (toast)
@@ -165,9 +165,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
 
             if (userModel.getMobile().matches(mobilePattern))
             {
-                /*Toast.makeText(getApplicationContext(), "phone number is valid", Toast.LENGTH_SHORT).show();
-                Log.v("Mobile Number Display",mobileno.getText().toString());
-                Log.v("flag",b.toString());*/
+
                 flag = flag && true;
             }
 
@@ -175,8 +173,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
             {
                 if (!userModel.getMobile().matches(mobilePattern))
                 {
-                    //Log.v("flag",b.toString());
-                    //Log.v("Mobile Number Display",mobileno.getText().toString());
+
                     mobileEditText.requestFocus();
                     Toast.makeText(getApplicationContext(), "enter correct mobile  number", Toast.LENGTH_SHORT).show();
                     toast = false;

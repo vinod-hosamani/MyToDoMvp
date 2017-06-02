@@ -64,8 +64,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
     {
         this.homeScreenActivity=homeScreenActivity;
     }
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -91,6 +89,7 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
          mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
          toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
          toDoItemRecycler.setAdapter(todoItemAdapter);
+
          swipeAction=new SwipeAction(0,SwipeAction.left | SwipeAction.right,todoItemAdapter,homeScreenActivity);
          itemTouchHelper=new ItemTouchHelper(swipeAction);
          itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
@@ -198,13 +197,11 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         todoItemAdapter.notifyDataSetChanged();
 
     }
-
     @Override
     public boolean onQueryTextSubmit(String query)
     {
         return false;
     }
-
     @Override
     public boolean onQueryTextChange(String searchText)
     {
@@ -237,14 +234,14 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         if (isList)
         {
             mstaggeredGridLayoutManager.setSpanCount(2);
-            items.setIcon(R.drawable.ic_action_list);
+            items.setIcon(R.drawable.list_view);
             items.setTitle("Show as list");
             isList = false;
         }
         else
         {
             mstaggeredGridLayoutManager.setSpanCount(1);
-            items.setIcon(R.drawable.ic_action_grid);
+            items.setIcon(R.drawable.grid_view);
             items.setTitle("Show as grid");
             isList = true;
         }
@@ -265,11 +262,9 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
             searchView.setOnQueryTextListener(this);
             super.onCreateOptionsMenu(menu, inflater);
     }
-
     public void setColor(int color)
     {
-        fragment.setColor(color);
+            fragment.setColor(color);
 
     }
-
 }

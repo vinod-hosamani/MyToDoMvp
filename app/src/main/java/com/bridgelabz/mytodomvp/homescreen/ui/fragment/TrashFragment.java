@@ -38,7 +38,6 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     HomeScreenActivity homeScreenActivity;
     TrashPresenter presenter;
-    //List<TodoItemModel> trashItemModels=new ArrayList<>();
     Menu menu;
     ProgressDialog progressDialog;
     List<TodoItemModel> trashItemModels=new ArrayList<>();
@@ -126,12 +125,6 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        /*if(item.getItemId()==R.id.action_toggle);
-        {    toggle();
-            return true;
-        }
-
-      //  return super.onOptionsItemSelected(item);*/
         if(item.getItemId() == R.id.action_toggle)
         {
             Log.d("menu select","onOptionsItemSelected: toggle");
@@ -149,18 +142,16 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface
         if(isList)
         {
             staggeredGridLayoutManager.setSpanCount(2);
-            item.setIcon(R.drawable.ic_action_list);
+            item.setIcon(R.drawable.list_view);
             item.setTitle("show as list");
             isList=false;
         }
         else
         {
             staggeredGridLayoutManager.setSpanCount(1);
-            item.setIcon(R.drawable.ic_action_grid);
+            item.setIcon(R.drawable.grid_view);
             item.setTitle("isGrid");
             isList=true;
         }
-
     }
-
 }

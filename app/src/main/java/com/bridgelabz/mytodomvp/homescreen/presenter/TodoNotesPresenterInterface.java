@@ -10,17 +10,22 @@ import java.util.List;
 public interface TodoNotesPresenterInterface
 {
     void getTodoNoteFromServer(String userId);
+
     void getTodoNoteSuccess(List<TodoItemModel> noteList);
     void getNoteFailure(String message);
+
     void showProgressDialog(String message);
     void hideProgressDilogu();
 
     void deletoTodoModelFailure(String message);
     void deleteTodoModelSuccess(String message);
+
     void deleteTodoModel(List<TodoItemModel> tempList,TodoItemModel itemModel ,int pos);
     void moveToArchive(TodoItemModel itemModel);
+
     void moveFailure(String message);
     void moveSuccess(String message);
+
     void moveToNotes(TodoItemModel itemModel);
 
 

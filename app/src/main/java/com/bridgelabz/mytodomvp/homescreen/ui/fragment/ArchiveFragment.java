@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import com.bridgelabz.mytodomvp.adapter.TodoItemAdapter;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.ArchivePresenter;
 import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
+import com.bridgelabz.mytodomvp.util.SwipeArchive;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -35,14 +37,17 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
 {
 
     public static final String TAG ="ArchiveFragment";
+    ArchiveFragment archiveFragment;
     private final Context mcontext;
     RecyclerView archiveRecyclerView;
     TodoItemAdapter totoItemAdapter;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     HomeScreenActivity homeScreenActivity;
-    ArchivePresenter presenter;
+    public ArchivePresenter presenter;
     List<TodoItemModel> archiovedItemModels=new ArrayList<>();
     Menu menu;
+    ItemTouchHelper itemTouchHelper;
+    private SwipeArchive swipeArchive;
 
     @Override
     public void onResume()
@@ -77,6 +82,9 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
         staggeredGridLayoutManager=new StaggeredGridLayoutManager(1,staggeredGridLayoutManager.VERTICAL);
         archiveRecyclerView.setLayoutManager(staggeredGridLayoutManager);
 
+        swipeArchive=new SwipeArchive(0,SwipeArchive.left | SwipeArchive.right,totoItemAdapter,ArchiveFragment.this,getActivity());
+        itemTouchHelper=new ItemTouchHelper(swipeArchive);
+        itemTouchHelper.attachToRecyclerView(archiveRecyclerView);
     }
     @Override
     public void getNoteListSuccess(List<TodoItemModel> noteList)
@@ -85,17 +93,21 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
         for(TodoItemModel model:noteList)
         {
             if(model.isArchieved())
-                archiveList.add(model);
+                if(!model.isDeleted())
+                {
+                    archiveList.add(model);
+                }
         }
         archiovedItemModels=archiveList;
         totoItemAdapter.setTodoList(archiveList);
+
 
     }
 
     @Override
     public void getNoteListFailure(String message)
     {
-        Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
     }
 
     ProgressDialog progressDialog;
@@ -111,6 +123,59 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
     public void hideProgressDialogue()
     {
         progressDialog.dismiss();
+
+    }
+
+    @Override
+    public void goToTrashSuccess(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void goToTrashFailure(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    @Override
+    public void goToNotesSuccess(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void goToNotesFailure(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void notesAgainFromTrashSuccess(String message) {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void notesAgainFromTrashFailure(String message) {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void notesAgainFromNotesSuccess(String message) {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void notesAgainFromNotesFailure(String message) {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
 
     }
 

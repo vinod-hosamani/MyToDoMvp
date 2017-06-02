@@ -57,13 +57,13 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     CallbackManager callbackManager;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         //view initialization
-        initView();
-
+        // initView();
         callbackManager = CallbackManager.Factory.create();
 
        /* for google login*/

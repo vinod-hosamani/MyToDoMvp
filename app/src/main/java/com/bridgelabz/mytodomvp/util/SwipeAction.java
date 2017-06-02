@@ -10,9 +10,6 @@ import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by bridgeit on 11/5/17.
  */
@@ -20,12 +17,11 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
 {
     public static final int left = ItemTouchHelper.LEFT;
     public static  final int right=ItemTouchHelper.RIGHT;
-    public static  int setReminder;
 
     TodoItemAdapter todoAdapter;
     HomeScreenActivity activity;
+    //TodoNotesFragment activity;
     SessionManagement session;
-
 
     public SwipeAction(int dragDirs, int swipeDirs,TodoItemAdapter adapter,HomeScreenActivity activity)
     {
@@ -48,16 +44,16 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
         switch (direction)
         {
             case left:
-                moveToTrash(position);
-                break;
+                 moveToTrash(position);
+                 break;
             case right:
-                movoToArchieved(position);
-                break;
+                 movoToArchieved(position);
+                 break;
         }
     }
 
 
-    private void deleteItem(int pos)
+   /* private void deleteItem(int pos)
     {
         TodoItemModel itemModel=todoAdapter.getItemModel(pos);
         List<TodoItemModel> list=todoAdapter.getAllDataList();
@@ -74,7 +70,7 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
         activity.presenter.deleteTodoModel(tempList, itemModel ,pos);
         todoAdapter.removeItem(pos);
 
-    }
+    }*/
     private void moveToAgainNotes(TodoItemModel itemModel)
     {
         activity.presenter.moveToNotes(itemModel);
@@ -91,7 +87,8 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
         activity.presenter.moveToArchive(itemModel);
 
         Snackbar snackbar=Snackbar.make(activity.getCurrentFocus(),"note is arvhieved",Snackbar.LENGTH_LONG).setAction("unod",
-        new View.OnClickListener() {
+        new View.OnClickListener()
+        {
             @Override
             public void onClick(View view)
             {
@@ -109,9 +106,11 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
         activity.presenter.moveToTrash(itemModel);
 
         Snackbar snackbar=Snackbar.make(activity.getCurrentFocus(),"note is trashed",Snackbar.LENGTH_LONG).setAction("unco",
-                new View.OnClickListener() {
+                new View.OnClickListener()
+                {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View view)
+                    {
                         moveToAgainNotesFromTrash(itemModel);
                         Snackbar s=Snackbar.make(activity.getCurrentFocus(),"undodone",Snackbar.LENGTH_SHORT);
                         s.show();
@@ -119,10 +118,10 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
                 });
         snackbar.show();
     }
-    private  void moveToReminder(int pos)
+   /* private  void moveToReminder(int pos)
     {
         final TodoItemModel itemModel=todoAdapter.getItemModel(pos);
         activity.presenter.moveToReminder(itemModel);
-    }
+    }*/
 
 }

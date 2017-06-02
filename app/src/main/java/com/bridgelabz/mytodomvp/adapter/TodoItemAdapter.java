@@ -42,18 +42,22 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         this.noteClickListener=noteClickListener;
         this.context=context;
     }
+
     public TodoItemAdapter(Context context)
     {
         this.context=context;
     }
+
     public TodoItemAdapter(Context mcontext, ArchiveFragment archiveFragment)
     {
 
     }
+
     public TodoItemAdapter(Context mContext, TrashFragment trashFragment)
     {
 
     }
+
     public TodoItemAdapter(Context mContext, ReminderFragment reminderFragment)
     {
 
@@ -118,6 +122,7 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     {
         return todoList.size();
     }
+
     public void setTodoList(List<TodoItemModel> noteList)
     {
         todoList.clear();
@@ -125,17 +130,20 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         todoList.addAll(noteList);
         notifyDataSetChanged();
     }
+
     public void setFilter(List<TodoItemModel> noteList)
     {
         todoList=new ArrayList<>();
         todoList.addAll(noteList);
         notifyDataSetChanged();
     }
+
     public void addItem(TodoItemModel model)
     {
         todoList.add(model);
         notifyItemInserted(todoList.size());
     }
+
     public void removeItem(int pos)
     {
         model = todoList.get(pos);
@@ -144,15 +152,18 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         notifyItemRemoved(pos);
         notifyItemRangeChanged(pos, todoList.size());
     }
+
     public void updateItem(int pos, TodoItemModel model)
     {
         todoList.set(pos, model);
         notifyDataSetChanged();
     }
+
     public void setColor(int color)
     {
 
     }
+
     public class TaskViewHolder extends RecyclerView.ViewHolder
     {
         public AppCompatTextView title,note,reminderDate;
@@ -183,14 +194,17 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         }
         return model;
     }
+
     public List<TodoItemModel> getAllDataList()
     {
         return todoList;
     }
+
     public interface OnNoteClickListener
     {
         void onItemClick(int pos);
     }
+
     public interface OnLongClickListener
     {
         void onLongClick(TodoItemModel itemModel);

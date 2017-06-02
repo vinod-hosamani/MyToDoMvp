@@ -152,7 +152,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 imageViewUserProfile.setImageResource(R.drawable.images);
             }
             imageViewUserProfile.setOnClickListener(this);
-
         }
         //allData=todoItemAdapter.getAll
     }
@@ -389,14 +388,14 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         if (isList)
         {
             mstaggeredGridLayoutManager.setSpanCount(2);
-            item.setIcon(R.drawable.ic_action_list);
+            item.setIcon(R.drawable.list_view);
             item.setTitle("Show as list");
             isList = false;
         }
         else
         {
             mstaggeredGridLayoutManager.setSpanCount(1);
-            item.setIcon(R.drawable.ic_action_grid);
+            item.setIcon(R.drawable.grid_view);
             item.setTitle("Show as grid");
             isList = true;
         }
@@ -569,7 +568,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 .addToBackStack(null)
                 .commit();
     }
-
     public void addReminder()
     {
         setTitle(Constant.reminder_title);
@@ -595,22 +593,18 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 .addToBackStack(null)
                 .commit();
     }
-
     @Override
     public void onColorSelected(int dialogId, @ColorInt int color)
     {
         if(addToDoFragment!=null)
         {
             addToDoFragment.setColor(color);
-
         }
         else
         {
             todoNotesFragment.setColor(color);
-
         }
     }
-
     @Override
     public void onDialogDismissed(int dialogId)
     {

@@ -216,11 +216,9 @@ public void savaDataAdapter()
             updateLabe();
         }
     };
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-
         switch (item.getItemId())
         {
             case R.id.setReminder:
@@ -244,8 +242,6 @@ public void savaDataAdapter()
                 .setShowAlphaSlider(true)
                 .show(getActivity());
     }
-
-
     public void setColor(int color)
     {
         newcolor= String.valueOf(color);

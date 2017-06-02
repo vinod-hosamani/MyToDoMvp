@@ -8,6 +8,8 @@ import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 
 import com.bridgelabz.mytodomvp.constants.Constant;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TodoNotesFragment;
 import com.bridgelabz.mytodomvp.login.ui.LoginActivity;
 import com.bridgelabz.mytodomvp.registration.model.UserModel;
 import com.facebook.login.LoginManager;
@@ -31,6 +33,13 @@ public class SessionManagement
             userDataPref=this.context.getSharedPreferences(Constant.user_pref_name,MODE_PRIVATE);
             userEditor=userDataPref.edit();
         }
+    }
+
+    public SessionManagement(TodoNotesFragment activity) {
+    }
+
+    public SessionManagement(ArchiveFragment activity)
+    {
     }
 
     public void put(UserModel userModel,boolean fb_login,boolean isGoogleLogin)

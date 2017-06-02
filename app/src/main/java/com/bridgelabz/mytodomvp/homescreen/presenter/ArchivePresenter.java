@@ -53,4 +53,85 @@ public class ArchivePresenter implements ArchivePresenterInterface{
         viewInterface.hideProgressDialogue();
 
     }
+
+    @Override
+    public void moveFailure(String message) {
+        viewInterface.goToNotesFailure(message);
+    }
+
+    @Override
+    public void moveSuccess(String message)
+    {
+       viewInterface.goToNotesSuccess(message);
+    }
+
+    @Override
+    public void goToTrash(TodoItemModel itemModel)
+    {
+       interactor.goToTrash(itemModel);
+    }
+
+    @Override
+    public void goToNotes(TodoItemModel itemModel)
+    {
+        interactor.goToNotes(itemModel);
+    }
+
+
+
+    @Override
+    public void goToTrshSuccess(String message)
+    {
+        viewInterface.goToTrashSuccess(message);
+    }
+
+    @Override
+    public void goToTrashFailure(String message)
+    {
+          viewInterface.goToTrashFailure(message);
+    }
+
+    @Override
+    public void goToNotesSuccess(String message)
+    {
+        viewInterface.goToNotesSuccess(message);
+    }
+
+    @Override
+    public void goToNotesFailure(String message)
+    {
+       viewInterface.goToNotesFailure(message);
+    }
+
+    @Override
+    public void notesAgainFromTrash(TodoItemModel itemModel)
+    {
+       interactor.notesAgainFromTrash(itemModel);
+    }
+
+    @Override
+    public void notesAgainFromNotes(TodoItemModel itemModel)
+    {
+        interactor.notesAgainFromNotes(itemModel);
+    }
+
+    @Override
+    public void notesAgainFromTrashSuccess(String message) {
+         viewInterface.notesAgainFromTrashSuccess(message);
+    }
+
+    @Override
+    public void notesAgainFromTrashFailure(String message) {
+       viewInterface.notesAgainFromTrashFailure(message);
+    }
+
+    @Override
+    public void notesAgainFromNotesSuccess(String message) {
+ viewInterface.notesAgainFromNotesSuccess(message);
+    }
+
+    @Override
+    public void notesAgainFromNotesFailure(String message) {
+  viewInterface.notesAgainFromNotesFailure(message);
+    }
 }

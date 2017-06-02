@@ -101,7 +101,7 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     public void getTodayReminderSuccess(List<TodoItemModel> noteList)
     {
         List<TodoItemModel> reminderList=new ArrayList<>();
-        SimpleDateFormat format= new SimpleDateFormat("MMM dd,yyyy");
+        SimpleDateFormat format= new SimpleDateFormat("MMMM dd,yyyy");
 
         String currentDate=format.format(new Date().getTime());
 
@@ -150,14 +150,14 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
         if (isList)
         {
             staggeredGridLayoutManager.setSpanCount(2);
-            items.setIcon(R.drawable.ic_action_list);
+            items.setIcon(R.drawable.list_view);
             items.setTitle("Show as list");
             isList = false;
         }
         else
         {
             staggeredGridLayoutManager.setSpanCount(1);
-            items.setIcon(R.drawable.ic_action_grid);
+            items.setIcon(R.drawable.grid_view);
             items.setTitle("Show as grid");
             isList = true;
         }

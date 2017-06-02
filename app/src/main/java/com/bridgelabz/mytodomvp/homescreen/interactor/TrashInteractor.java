@@ -34,14 +34,14 @@ public class TrashInteractor implements TrashInteractorInterface
         toDoDataaReference= FirebaseDatabase.getInstance().getReference(Constant.key_firebase_todo);
     }
 
-
     @Override
     public void getNoteList(final String userId)
     {
         presenter.showProgressDialog("plese wait loading");
         if(Connectivity.isNetworkConnected(context))
         {
-            toDoDataaReference.addValueEventListener(new ValueEventListener() {
+            toDoDataaReference.addValueEventListener(new ValueEventListener()
+            {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     final List<TodoItemModel> noteList=new ArrayList<>();
@@ -61,7 +61,8 @@ public class TrashInteractor implements TrashInteractorInterface
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(DatabaseError databaseError)
+                {
                     presenter.getNoteListFailure("error");
                     presenter.hideProgressDialog();
                 }
@@ -72,6 +73,5 @@ public class TrashInteractor implements TrashInteractorInterface
             presenter.getNoteListFailure("no internet connection");
             presenter.hideProgressDialog();
         }
-
     }
 }

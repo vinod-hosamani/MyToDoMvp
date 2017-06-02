@@ -76,7 +76,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
                 @Override
                 public void onCancelled(DatabaseError databaseError)
                 {
-                presenter.getNoteFailure("some error");
+                    presenter.getNoteFailure("some error");
                     presenter.hideProgressDailogue();
                 }
             });
@@ -92,7 +92,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
     @Override
     public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
     {
-      presenter.showProgressDailogue("deleting plese wait");
+            presenter.showProgressDailogue("deleting plese wait");
         if(Connectivity.isNetworkConnected(context))
         {
             String useId= FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -122,14 +122,13 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             presenter.deleteTodoModelFailure(context.getString(R.string.no_internet));
         }
 
-        presenter.hideProgressDailogue();
+            presenter.hideProgressDailogue();
     }
-
 
     @Override
     public void motoToArchive(TodoItemModel itemModel)
     {
-             presenter.showProgressDailogue("moving to archive");
+                presenter.showProgressDailogue("moving to archive");
             if(Connectivity.isNetworkConnected(context))
             {
                 String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -143,13 +142,33 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             {
                 presenter.moveToFailure("no internet connetion");
             }
+                presenter.hideProgressDailogue();
+    }
+    @Override
+    public void moveToNotes(TodoItemModel itemModel)
+    {
+        presenter.showProgressDailogue("moving  to note");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("isArchived").setValue(false);
+            presenter.moveToSuccess("moved to notes successfuyll");
+            presenter.hideProgressDailogue();
+        }
+        else
+        {
+            presenter.moveToFailure("no internet connetion");
+        }
         presenter.hideProgressDailogue();
     }
+
 
     @Override
     public void moveToTrash(TodoItemModel itemModel)
     {
-        presenter.showProgressDailogue("moving to trash");
+            presenter.showProgressDailogue("moving to trash");
         if(Connectivity.isNetworkConnected(context))
         {
             itemModel.setDeleted(true);
@@ -166,44 +185,6 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         }
             presenter.hideProgressDailogue();
 
-    }
-    public void moveToReminder(TodoItemModel itemModel)
-    {
-        presenter.showProgressDailogue("moving to Reminder");
-        if(Connectivity.isNetworkConnected(context))
-        {
-            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-            todoDataReference.child(userId).child(itemModel.getStartDate())
-                    .child(String.valueOf(itemModel.getNoteId()))
-                    .child("isReminder").setValue(true);
-            presenter.moveToReminderSuccess("moved to reminder");
-            presenter.hideProgressDailogue();
-        }
-        else
-        {
-            presenter.moveToReminderFailure("no internet connetion");
-        }
-            presenter.hideProgressDailogue();
-    }
-
-    @Override
-    public void moveToNotes(TodoItemModel itemModel)
-    {
-       presenter.showProgressDailogue("moving  to note");
-        if(Connectivity.isNetworkConnected(context))
-        {
-            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-            todoDataReference.child(userId).child(itemModel.getStartDate())
-                    .child(String.valueOf(itemModel.getNoteId()))
-                    .child("isArchived").setValue(false);
-            presenter.moveToSuccess("moved to notes successfuyll");
-            presenter.hideProgressDailogue();
-        }
-        else
-        {
-            presenter.moveToFailure("no internet connetion");
-        }
-            presenter.hideProgressDailogue();
     }
 
     public void moveToNotesFromTrash(TodoItemModel itemModel)
@@ -222,6 +203,29 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         {
             presenter.moveToTrashFailure("no internet connetion");
         }
+        presenter.hideProgressDailogue();
+    }
+
+
+
+
+
+    public void moveToReminder(TodoItemModel itemModel)
+    {
+            presenter.showProgressDailogue("moving to Reminder");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("isReminder").setValue(true);
+            presenter.moveToReminderSuccess("moved to reminder");
+            presenter.hideProgressDailogue();
+        }
+        else
+        {
+            presenter.moveToReminderFailure("no internet connetion");
+        }
             presenter.hideProgressDailogue();
     }
 
@@ -233,7 +237,6 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         {
             UploadTask task = profilePicReference.child(currentUserId)
                     .child("profilePic.jpeg").putFile(selectedImage);
-
             task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
             {
                 @Override
@@ -250,7 +253,6 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
                     presenter.hideProgressDailogue();
                 }
             });
-
             task.addOnFailureListener(new OnFailureListener()
             {
                 @Override
