@@ -31,8 +31,6 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
     AppCompatButton registrationButton;
     AppCompatButton log;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -42,9 +40,7 @@ public class RegistrationActivity extends BaseActivity implements RegistrationAc
 
         mProgressDialog=new ProgressDialog(this);
         mProgressDialog.setCancelable(false);
-
     }
-
 
     @Override
     public void registrationSuccess(String message)

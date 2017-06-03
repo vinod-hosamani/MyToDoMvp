@@ -20,7 +20,8 @@ public class SplashScreenAcitivity extends AppCompatActivity
     public static final int TimeOUt=1111;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
@@ -41,7 +42,8 @@ public class SplashScreenAcitivity extends AppCompatActivity
 
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run()
+            {
                 Intent i = new Intent(SplashScreenAcitivity.this ,LoginActivity.class);
                 startActivity(i);
                 finish();

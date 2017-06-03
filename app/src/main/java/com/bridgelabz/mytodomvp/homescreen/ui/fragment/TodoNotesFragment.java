@@ -78,7 +78,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
 
     private void initView(View view)
      {
-
          isList=true;
          toDoItemRecycler=(RecyclerView)view.findViewById(R.id.recycler_todo_Item);
          todoItemAdapter=new TodoItemAdapter(homeScreenActivity,this);
@@ -105,7 +104,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
                 if(!model.isDeleted())
                 {
                     nonArchivedList.add(model);
-
                 }
             }
         }
@@ -264,7 +262,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
     }
     public void setColor(int color)
     {
-            fragment.setColor(color);
-
+        fragment.setColor(color);
     }
 }

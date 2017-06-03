@@ -26,7 +26,8 @@ public class SessionManagement
     static Editor userEditor;
     static Context context;
 
-    public SessionManagement(Context context){
+    public SessionManagement(Context context)
+    {
         this.context=context;
         if(userDataPref==null && userEditor==null)
         {
@@ -35,7 +36,8 @@ public class SessionManagement
         }
     }
 
-    public SessionManagement(TodoNotesFragment activity) {
+    public SessionManagement(TodoNotesFragment activity)
+    {
     }
 
     public SessionManagement(ArchiveFragment activity)
@@ -112,5 +114,6 @@ public class SessionManagement
         FirebaseAuth.getInstance().signOut();
 
         Intent i=new Intent(context, LoginActivity.class);
+
     }
 }

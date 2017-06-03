@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
         setContentView(R.layout.activity_login);
 
         //view initialization
-        // initView();
+        initView();
         callbackManager = CallbackManager.Factory.create();
 
        /* for google login*/
@@ -80,7 +80,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
     }
 
     @Override
-    public void initView() {
+    public void initView()
+    {
         session = new SessionManagement(this);
         presenter = new LoginPresenter(this, this);
         createAccount = (AppCompatTextView) findViewById(R.id.textViewLogCreateAccount);
@@ -145,8 +146,10 @@ public class LoginActivity extends BaseActivity implements LoginActivityInterfac
             isFbLogin = true;
             UserModel model = new UserModel();
 
-            if (jsonObject.has("email")) {
-                if (!jsonObject.getString("email").equals("")) {
+            if (jsonObject.has("email"))
+            {
+                if (!jsonObject.getString("email").equals(""))
+                {
                     model.setEmail(jsonObject.getString("email"));
                 }
                 Toast.makeText(this, jsonObject.getString("email"), Toast.LENGTH_SHORT).show();

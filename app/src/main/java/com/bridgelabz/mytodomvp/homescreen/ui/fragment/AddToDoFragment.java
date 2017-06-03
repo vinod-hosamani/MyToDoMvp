@@ -96,19 +96,16 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         return view;
 
     }
-
     @Override
     public void addTodoSuccess(String message)
     {
         Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void addTodoFailure(String message)
     {
         Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
-
     ProgressDialog progressDialog;
     @Override
     public void showProgressDailogue(String message)
@@ -119,9 +116,7 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
             progressDialog.setMessage(message);
             progressDialog.show();
         }
-
     }
-
     @Override
     public void hideProgressDialogue()
     {
@@ -155,7 +150,6 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
                     editTodoItem(editposition);
                 break;
         }
-
     }
     public void editTodoItem(int position)
     {
@@ -178,26 +172,25 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         homeScreenActivity.getSupportFragmentManager().popBackStackImmediate();
     }
 
-public void savaDataAdapter()
-{
-    UserModel userModel=session.getUserDetails();
-    model=new TodoItemModel();
-    model.setTitle(editTextTitle.getText().toString());
-    model.setNote(editTextNotes.getText().toString());
-    model.setReminderDate(textViewReminder.getText().toString());
-    model.setIsArchived(false);
-    model.setDeleted(false);
-    model.setColor(newcolor);
+    public void savaDataAdapter()
+    {
+        UserModel userModel=session.getUserDetails();
+        model=new TodoItemModel();
+        model.setTitle(editTextTitle.getText().toString());
+        model.setNote(editTextNotes.getText().toString());
+        model.setReminderDate(textViewReminder.getText().toString());
+        model.setIsArchived(false);
+        model.setDeleted(false);
+        model.setColor(newcolor);
 
-    Date date=new Date();
-    SimpleDateFormat format=new SimpleDateFormat("MMMM dd,yyyy");
-    String currentDate=format.format(date.getTime());
-    model.setStartDate(currentDate);
-    presenter.getResponseForAddTodoToServer(model,userModel.getId());
-    homeScreenActivity.addTodoFab.setVisibility(View.VISIBLE);
-    homeScreenActivity.getSupportFragmentManager().popBackStackImmediate();
+        Date date=new Date();
+        SimpleDateFormat format=new SimpleDateFormat("MMMM dd,yyyy");
+        String currentDate=format.format(date.getTime());
+        model.setStartDate(currentDate);
+        presenter.getResponseForAddTodoToServer(model,userModel.getId());
+        homeScreenActivity.addTodoFab.setVisibility(View.VISIBLE);
+        homeScreenActivity.getSupportFragmentManager().popBackStackImmediate();
 }
-
     Calendar myCalender= Calendar.getInstance();
     private void updateLabe()
     {
@@ -223,8 +216,8 @@ public void savaDataAdapter()
         {
             case R.id.setReminder:
                 new DatePickerDialog(homeScreenActivity, date, myCalender.get(Calendar.YEAR)
-                        , myCalender.get(Calendar.MONTH),
-                        myCalender.get(Calendar.DAY_OF_MONTH)).show();
+                         ,myCalender.get(Calendar.MONTH),
+                          myCalender.get(Calendar.DAY_OF_MONTH)).show();
                 return true;
             case R.id.ic_action_color_pick:
                 getColorPicker();
