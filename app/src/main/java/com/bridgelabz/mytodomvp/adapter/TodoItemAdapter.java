@@ -102,7 +102,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
                 }
             });
         }
-
         if(onLongClickListener != null)
         {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
@@ -116,13 +115,11 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
             });
         }
     }
-
     @Override
     public int getItemCount()
     {
         return todoList.size();
     }
-
     public void setTodoList(List<TodoItemModel> noteList)
     {
         todoList.clear();
@@ -130,20 +127,17 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         todoList.addAll(noteList);
         notifyDataSetChanged();
     }
-
     public void setFilter(List<TodoItemModel> noteList)
     {
         todoList=new ArrayList<>();
         todoList.addAll(noteList);
         notifyDataSetChanged();
     }
-
     public void addItem(TodoItemModel model)
     {
         todoList.add(model);
         notifyItemInserted(todoList.size());
     }
-
     public void removeItem(int pos)
     {
         model = todoList.get(pos);
@@ -152,7 +146,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         notifyItemRemoved(pos);
         notifyItemRangeChanged(pos, todoList.size());
     }
-
     public void updateItem(int pos, TodoItemModel model)
     {
         todoList.set(pos, model);
@@ -163,7 +156,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     {
 
     }
-
     public class TaskViewHolder extends RecyclerView.ViewHolder
     {
         public AppCompatTextView title,note,reminderDate;
@@ -181,7 +173,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     {
         return todoList.get(pos);
     }
-
     public TodoItemModel getItemModelByNoteId(int noteId)
     {
         TodoItemModel model = null;
@@ -194,7 +185,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
         }
         return model;
     }
-
     public List<TodoItemModel> getAllDataList()
     {
         return todoList;
@@ -204,7 +194,6 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
     {
         void onItemClick(int pos);
     }
-
     public interface OnLongClickListener
     {
         void onLongClick(TodoItemModel itemModel);

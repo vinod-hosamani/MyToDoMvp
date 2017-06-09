@@ -13,4 +13,7 @@ public interface ReminderFragmentInterface {
 
     void getTodayReminderSuccess(List<TodoItemModel> noteList);
     void getTodayReinderFailure(String message);
+
+    void moveToTrashSuccess(String message);
+    void moveToTrashFailure(String message);
 }

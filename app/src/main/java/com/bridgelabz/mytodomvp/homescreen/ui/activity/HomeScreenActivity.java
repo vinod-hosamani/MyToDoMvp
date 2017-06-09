@@ -174,7 +174,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
        // toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
         //toDoItemRecycler.setAdapter(todoItemAdapter);
-        swipeAction=new SwipeAction(0,SwipeAction.left |SwipeAction.right,todoItemAdapter,this);
+        swipeAction=new SwipeAction(SwipeAction.up|SwipeAction.down,SwipeAction.left |SwipeAction.right,todoItemAdapter,this);
         itemTouchHelper=new ItemTouchHelper(swipeAction);
        // itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
 
@@ -240,36 +240,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout)
-        {
-            showProgressDialogue("loading....");
-            if (session.isGoogleLoggedIn())
-            {
-                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>()
-                        {
-                            @Override
-                            public void onResult(@NonNull Status status)
-                            {
-                                if (status.isSuccess())
-                                {
-                                    Toast.makeText(HomeScreenActivity.this,
-                                            status.getStatusMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                                else
-                                {
-                                    Toast.makeText(HomeScreenActivity.this,
-                                            status.getStatusMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-                );
-            }
-            session.logoutUser();
-            hideProgressDialogu();
-            finish();
-            return true;
-        }
 
         if (id == R.id.action_toggle)
         {
@@ -282,18 +252,17 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public void getNoteSuccess(List<TodoItemModel> noteList)
     {
         List<TodoItemModel> nonTrashList=new ArrayList<>();
-        for(TodoItemModel model:noteList)
+     /*   for(TodoItemModel model:noteList)
         {
-            if(!model.isArchieved())
+            if(!model.isDeleted())
             {
-                if(!model.isDeleted())
+                if(!model.isArchieved())
                 {
                     nonTrashList.add(model);
-
                 }
             }
         }
-       todoItemAdapter.setTodoList(nonTrashList);
+       todoItemAdapter.setTodoList(nonTrashList);*/
     }
 
     @Override
@@ -322,7 +291,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     }
     }
 
-    @Override
+  /*  @Override
     public void deleteTodoModelFailure(String message)
     {
       Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
@@ -332,7 +301,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public void deleteTodoModelSuccess(String message)
     {
       Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
     @Override
     public void moveToArchiveFailure(String message)
@@ -422,6 +391,38 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
           case R.id.nav_trash :
                addTrash();
                break;
+          case R.id.action_logout:
+              if (id == R.id.action_logout)
+              {
+                  showProgressDialogue("loading....");
+                  if (session.isGoogleLoggedIn())
+                  {
+                      Auth.GoogleSignInApi.signOut(googleApiClient)
+                              .setResultCallback(new ResultCallback<Status>()
+                              {
+                                  @Override
+                                  public void onResult(@NonNull Status status)
+                                  {
+                                      if (status.isSuccess())
+                                      {
+                                          Toast.makeText(HomeScreenActivity.this,
+                                                  status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                      }
+                                      else
+                                      {
+                                          Toast.makeText(HomeScreenActivity.this,
+                                                  status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                      }
+                                  }
+                              }
+                      );
+                  }
+                  session.logoutUser();
+                  hideProgressDialogu();
+                  finish();
+                  return true;
+              }
+
       }
       drawer.closeDrawer(GravityCompat.START);
       return true;
@@ -478,7 +479,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         }
     }
 
-
     @Override
     public void onItemClick(int pos)
 
@@ -520,14 +520,14 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     {
         searchText=searchText.toLowerCase();
         List<TodoItemModel> noteList=new ArrayList<>();
-        for(TodoItemModel model:allData)
+      /*  for(TodoItemModel model:allData)
         {
             if(model.getTitle().toLowerCase().contains(searchText))
             {
                 noteList.add(model);
             }
         }
-        todoItemAdapter.setFilter(noteList);
+        todoItemAdapter.setFilter(noteList);*/
         return true;
     }
     public void updateAdapter(int pos, TodoItemModel model)
@@ -543,7 +543,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
               .addToBackStack(null)
               .commit();
   }
-
     public void addToDoFragment()
      {
        setTitle(Constant.note_title);
@@ -608,6 +607,5 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     @Override
     public void onDialogDismissed(int dialogId)
     {
-
     }
 }

@@ -16,4 +16,10 @@ public interface ReminderPresenterIterface
     void getTodayReminderFailure(String message);
 
     void getTodayReminderList(String userId);
+
+
+
+    void moveToTrash(TodoItemModel itemModel);
+    void moveToTrashSuccess(String message);
+    void moveToTrashFailure(String message);
 }

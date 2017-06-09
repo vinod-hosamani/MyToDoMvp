@@ -15,4 +15,14 @@ public interface TrashPresenterInterface {
     void getNoteListSuccess(List<TodoItemModel> noteList);
     void getNoteListFailure(String failure);
 
+    void permanentDelete(List<TodoItemModel> tempList,TodoItemModel itemModel,int pos);
+
+    void permanentDeleteSuccess(String message);
+    void permanentDeleteFailure(String message);
+
+
+    void moveToArchiveFromTrash(TodoItemModel itemModel);
+    void moveToArchiveFromTrashSuccess(String message);
+    void moveToArchvieFromTrashFailure(String message);
+
 }

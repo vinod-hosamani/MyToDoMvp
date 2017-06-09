@@ -10,6 +10,8 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,14 +72,14 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         textViewReminder=(AppCompatTextView)view.findViewById(R.id.textViewReminder);
         buttonSave=(AppCompatButton)view.findViewById(R.id.btnsave);
 
-        buttonSave.setOnClickListener(this);
+       // buttonSave.setOnClickListener(this);
 
         linearlayout=(LinearLayout) view.findViewById(R.id.layout_update_color);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,  @Nullable ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container, Bundle savedInstanceState)
     {
         super.onCreateView(inflater, container, savedInstanceState);
         setHasOptionsMenu(true);
@@ -91,7 +93,7 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
             editTextNotes.setText(arguments.getString(Constant.key_note));
             textViewReminder.setText(arguments.getString(Constant.key_reminder));
             id=arguments.getInt(Constant.key_note_id);
-            buttonSave.setText("update");
+//            buttonSave.setText("update");
         }
         return view;
 
@@ -131,24 +133,22 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
     {
       Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void updateFailure(String message)
     {
       Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void onClick(View view)
     {
         switch (view.getId())
         {
-            case R.id.btnsave:
+            /*case R.id.btnsave:
                 if(add)
                     savaDataAdapter();
                 else
                     editTodoItem(editposition);
-                break;
+                break;*/
         }
     }
     public void editTodoItem(int position)
@@ -192,6 +192,7 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         homeScreenActivity.getSupportFragmentManager().popBackStackImmediate();
 }
     Calendar myCalender= Calendar.getInstance();
+
     private void updateLabe()
     {
         String myFormat="MMMM dd,yyyy";
@@ -209,6 +210,16 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
             updateLabe();
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+       // super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.addtodofragmentmenu,menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -216,13 +227,22 @@ public class AddToDoFragment extends Fragment implements AddToDoFragmentInterfac
         {
             case R.id.setReminder:
                 new DatePickerDialog(homeScreenActivity, date, myCalender.get(Calendar.YEAR)
-                         ,myCalender.get(Calendar.MONTH),
-                          myCalender.get(Calendar.DAY_OF_MONTH)).show();
+                        , myCalender.get(Calendar.MONTH),
+                        myCalender.get(Calendar.DAY_OF_MONTH)).show();
                 return true;
             case R.id.ic_action_color_pick:
                 getColorPicker();
+                return true;
+
+            case R.id.btnsave:
+                if (add)
+                    savaDataAdapter();
+                else
+                    editTodoItem(editposition);
+                return  true;
+
             default:
-               return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
     }
     private void getColorPicker()

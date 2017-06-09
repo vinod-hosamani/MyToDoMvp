@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/search"
+    <item
+        android:id="@+id/search"
         android:title="search by title"
         android:icon="@drawable/search"
         app:showAsAction="collapseActionView|ifRoom"
@@ -14,22 +14,19 @@
         android:title="show as grid"
         android:icon="@drawable/grid_view"
         app:showAsAction="always"/>
-    <item
+  <!--  <item
         android:id="@+id/setReminder"
         android:title="show as grid"
         android:icon="@drawable/bell_ring_alarm"
         app:showAsAction="always"/>
-   <item
-        android:id="@+id/action_logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_exit_to_app_black_24dp"
-        app:showAsAction="always"/>
-
     <item
         android:id="@+id/ic_action_color_pick"
         android:title="ic_action_color_pick"
-        android:icon="@drawable/ic_action_color_pick"
-        app:showAsAction="always"/>
-
-
+        android:icon="@drawable/paintboardandbrush"
+        app:showAsAction="always"/>-->
+    <!--<item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"
+        app:showAsAction="always"/>-->
 </menu>

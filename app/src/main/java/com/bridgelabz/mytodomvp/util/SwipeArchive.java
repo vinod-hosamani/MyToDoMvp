@@ -18,6 +18,8 @@ public class SwipeArchive  extends ItemTouchHelper.SimpleCallback
 {
     public static final int left = ItemTouchHelper.LEFT;
     public static  final int right=ItemTouchHelper.RIGHT;
+    public static final int up=ItemTouchHelper.UP;
+    public static final int down=ItemTouchHelper.DOWN;
 
     TodoItemAdapter todoAdapter;
     ArchiveFragment activity;
@@ -32,14 +34,12 @@ public class SwipeArchive  extends ItemTouchHelper.SimpleCallback
         this.contex=context;
         session=new SessionManagement(activity);
     }
-
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-                          RecyclerView.ViewHolder target)
+    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,RecyclerView.ViewHolder target)
     {
-        return false;
+        todoAdapter.notifyItemMoved(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+        return true;
     }
-
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
     {
@@ -54,7 +54,6 @@ public class SwipeArchive  extends ItemTouchHelper.SimpleCallback
                  break;
         }
     }
-
     private  void notesAgainFromTrash(TodoItemModel itemModel)
     {
         activity.presenter.notesAgainFromTrash(itemModel);

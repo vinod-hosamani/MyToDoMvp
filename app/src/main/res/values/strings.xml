@@ -10,7 +10,7 @@
     <string name="navigationClose">navigationclose</string>
     <string name="image_pick_error">imagePickError</string>
     <string name="no_internet" >not internet conntion</string>
-    <string name="delete_todo_item_success">delete to item success</string>
+    <string name="delete_todo_item_success">delete to item success vinod</string>
     <string name="moveing">moving to notes</string>
     <string name="moingToNotes">moingToNotes</string>
     <string name="askMoveToNoteMessage">askMoveToNoteMessage</string>

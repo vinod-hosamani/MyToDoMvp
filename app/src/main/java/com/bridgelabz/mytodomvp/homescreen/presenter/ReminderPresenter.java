@@ -53,4 +53,20 @@ public class ReminderPresenter implements ReminderPresenterIterface
     {
          interactor.getTodayReminderList(userId);
     }
+
+    @Override
+    public void moveToTrash(TodoItemModel itemModel)
+    {
+        interactor.moveToTrash(itemModel);
+    }
+
+    @Override
+    public void moveToTrashSuccess(String message) {
+      viewInterface.moveToTrashSuccess(message);
+    }
+
+    @Override
+    public void moveToTrashFailure(String message) {
+        viewInterface.moveToTrashFailure(message);
+    }
 }

@@ -6,7 +6,6 @@ import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.TodoNotesPresenterInterface;
 import com.bridgelabz.mytodomvp.util.Connectivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,6 +14,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,6 +55,7 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface
                         li=obj.getValue(t);
                         noteList.addAll(li);
                     }
+                    noteList.removeAll(Collections.singleton(null));
                     presenter.getTodoNoteSuccess(noteList);
                     presenter.hideProgressDilogu();
                 }
@@ -76,10 +77,11 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface
 
     }
 
-    @Override
+
+    /*@Override
     public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
-    {
-     presenter.showProgressDialog("deleting ...");
+    {*/
+     /*presenter.showProgressDialog("deleting ...");
         if(Connectivity.isNetworkConnected(context))
         {
             String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -110,13 +112,13 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface
         {
             presenter.deletoTodoModelFailure("no intenet connection");
         }
-         presenter.hideProgressDilogu();
-    }
+         presenter.hideProgressDilogu();*/
+   // }
 
-    @Override
+   /* @Override
     public void movetToArchive(TodoItemModel itemModel)
-    {
-       presenter.showProgressDialog("moving to archive");
+    {*/
+      /* presenter.showProgressDialog("moving to archive");
         if(Connectivity.isNetworkConnected(context))
         {
             String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -130,13 +132,13 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface
         {
             presenter.moveFailure("no internet connection");
         }
-        presenter.hideProgressDilogu();
-    }
+        presenter.hideProgressDilogu();*/
+   // }
 
-    @Override
+  /*  @Override
     public void moveToNotes(TodoItemModel itemModel)
-    {
-      presenter.showProgressDialog("moving to the notes");
+    {*/
+    /*  presenter.showProgressDialog("moving to the notes");
         if(Connectivity.isNetworkConnected(context))
         {
             String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -149,6 +151,6 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface
         {
             presenter.moveFailure("no intentet connction");
         }
-        presenter.hideProgressDilogu();
-    }
+        presenter.hideProgressDilogu();*/
+    //}
 }

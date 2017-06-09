@@ -57,4 +57,36 @@ public class TrashPresenter implements TrashPresenterInterface
     {
       viewInterface.getNoteListFailure(failure);
     }
+
+    @Override
+    public void permanentDelete(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
+    {
+        interactor.permanetDelete(tempList,itemModel,pos);
+    }
+
+    @Override
+    public void permanentDeleteSuccess(String message)
+    {
+        viewInterface.permanentDeleteSuccess(message);
+    }
+
+    @Override
+    public void permanentDeleteFailure(String message) {
+     viewInterface.permanentDaleteFailure(message);
+    }
+
+    @Override
+    public void moveToArchiveFromTrash(TodoItemModel itemModel) {
+        interactor.moveToArchiveFromTrash(itemModel);
+    }
+
+    @Override
+    public void moveToArchiveFromTrashSuccess(String message) {
+        viewInterface.moveToArchiveFromTrashSuccess(message);
+    }
+
+    @Override
+    public void moveToArchvieFromTrashFailure(String message) {
+        viewInterface.moveToArchiveFromTrashFailure(message);
+    }
 }

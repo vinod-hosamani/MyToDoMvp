@@ -22,8 +22,8 @@ public interface HomeScreenActivityInterface extends NavigationView.OnNavigation
     void showProgressDialogue(String message);
     void hideProgressDialogu();
 
-    void deleteTodoModelFailure(String message);
-    void deleteTodoModelSuccess(String message);
+  //  void deleteTodoModelFailure(String message);
+   // void deleteTodoModelSuccess(String message);
 
     void moveToArchiveFailure(String message);
     void moveToArchiveSuccess(String message);

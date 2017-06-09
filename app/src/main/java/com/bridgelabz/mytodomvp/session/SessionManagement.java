@@ -9,7 +9,9 @@ import android.net.Uri;
 
 import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ArchiveFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ReminderFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TodoNotesFragment;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TrashFragment;
 import com.bridgelabz.mytodomvp.login.ui.LoginActivity;
 import com.bridgelabz.mytodomvp.registration.model.UserModel;
 import com.facebook.login.LoginManager;
@@ -40,8 +42,14 @@ public class SessionManagement
     {
     }
 
-    public SessionManagement(ArchiveFragment activity)
-    {
+    public SessionManagement(ArchiveFragment activity) {
+
+    }
+
+    public SessionManagement(TrashFragment activity) {
+    }
+
+    public SessionManagement(ReminderFragment activity) {
     }
 
     public void put(UserModel userModel,boolean fb_login,boolean isGoogleLogin)

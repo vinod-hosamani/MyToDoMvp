@@ -53,7 +53,7 @@ public class TodoNotesPresenter implements TodoNotesPresenterInterface
       viewInterface.hideProgressDialog();
     }
 
-    @Override
+  /*  @Override
     public void deletoTodoModelFailure(String message)
     {
     viewInterface.deleteTodoModelFailure(message);
@@ -63,9 +63,9 @@ public class TodoNotesPresenter implements TodoNotesPresenterInterface
     public void deleteTodoModelSuccess(String message)
     {
     viewInterface.delteTodoModelSuccess(message);
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
     {
      interactor.deleteTodoModel(tempList,itemModel,pos);
@@ -76,7 +76,8 @@ public class TodoNotesPresenter implements TodoNotesPresenterInterface
     {
      interactor.movetToArchive(itemModel);
     }
-
+*/
+/*
     @Override
     public void moveFailure(String message)
     {
@@ -88,10 +89,11 @@ public class TodoNotesPresenter implements TodoNotesPresenterInterface
     {
        viewInterface.moveToArchvieSuccess(message);
     }
+*/
 
-    @Override
+   /* @Override
     public void moveToNotes(TodoItemModel itemModel)
     {
         interactor.moveToNotes(itemModel);
-    }
+    }*/
 }

@@ -29,7 +29,6 @@ public class TodoItemModel
 
     public TodoItemModel()
     {
-
     }
 
     public boolean getIsArchived()

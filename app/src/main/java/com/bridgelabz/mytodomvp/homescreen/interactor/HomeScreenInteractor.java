@@ -24,6 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -69,9 +70,18 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
                         li = obj.getValue(t);
                         noteList.addAll(li);
                     }
+                    noteList.removeAll(Collections.singleton(null));
                     presenter.getNoteSuccess(noteList);
                     presenter.hideProgressDailogue();
                 }
+
+
+             /*   public void onDataChange(DataSnapshot dataSnapshot) {
+                    List<Friends> list = new ArrayList<Friends>();
+                    for (DataSnapshot child: dataSnapshot.getChildren()) {
+                        list.add(child.getValue(Friends.class));
+                    }
+                }*/
 
                 @Override
                 public void onCancelled(DatabaseError databaseError)
@@ -92,7 +102,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
     @Override
     public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
     {
-            presenter.showProgressDailogue("deleting plese wait");
+           /* presenter.showProgressDailogue("deleting plese wait");
         if(Connectivity.isNetworkConnected(context))
         {
             String useId= FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -122,7 +132,7 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             presenter.deleteTodoModelFailure(context.getString(R.string.no_internet));
         }
 
-            presenter.hideProgressDailogue();
+            presenter.hideProgressDailogue();*/
     }
 
     @Override
@@ -144,31 +154,11 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             }
                 presenter.hideProgressDailogue();
     }
-    @Override
-    public void moveToNotes(TodoItemModel itemModel)
-    {
-        presenter.showProgressDailogue("moving  to note");
-        if(Connectivity.isNetworkConnected(context))
-        {
-            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-            todoDataReference.child(userId).child(itemModel.getStartDate())
-                    .child(String.valueOf(itemModel.getNoteId()))
-                    .child("isArchived").setValue(false);
-            presenter.moveToSuccess("moved to notes successfuyll");
-            presenter.hideProgressDailogue();
-        }
-        else
-        {
-            presenter.moveToFailure("no internet connetion");
-        }
-        presenter.hideProgressDailogue();
-    }
-
 
     @Override
     public void moveToTrash(TodoItemModel itemModel)
     {
-            presenter.showProgressDailogue("moving to trash");
+        presenter.showProgressDailogue("moving to trash");
         if(Connectivity.isNetworkConnected(context))
         {
             itemModel.setDeleted(true);
@@ -183,9 +173,29 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         {
             presenter.moveToTrashFailure("no internet connetion");
         }
-            presenter.hideProgressDailogue();
-
+        presenter.hideProgressDailogue();
     }
+    @Override
+    public void moveToNotes(TodoItemModel itemModel)
+    {
+           presenter.showProgressDailogue("moving  to note");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("isArchived").setValue(false);
+            presenter.moveToSuccess("moved to notes successfully");
+            presenter.hideProgressDailogue();
+        }
+        else
+        {
+            presenter.moveToFailure("no internet connetion");
+        }
+            presenter.hideProgressDailogue();
+    }
+
+
 
     public void moveToNotesFromTrash(TodoItemModel itemModel)
     {
@@ -203,12 +213,8 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
         {
             presenter.moveToTrashFailure("no internet connetion");
         }
-        presenter.hideProgressDailogue();
+            presenter.hideProgressDailogue();
     }
-
-
-
-
 
     public void moveToReminder(TodoItemModel itemModel)
     {

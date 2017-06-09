@@ -57,7 +57,7 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface
        viewInterface.hideProgressDialogu();
     }
 
-    @Override
+ /*   @Override
     public void deleteTodoModelFailure(String message)
     {
       viewInterface.deleteTodoModelFailure(message);
@@ -74,7 +74,7 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface
     {
       interactor.deleteTodoModel(tempList,itemModel,pos);
     }
-
+*/
     @Override
     public void moveToArchive(TodoItemModel itemModel)
     {
@@ -100,11 +100,11 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface
     viewInterface.moveToTrashSuccess(message);
   }
 
-    @Override
+   /* @Override
     public void moveToReminder(TodoItemModel itemModel)
     {
         interactor.moveToReminder(itemModel);
-    }
+    }*/
 
     @Override
     public void moveToReminderFailure(String message)

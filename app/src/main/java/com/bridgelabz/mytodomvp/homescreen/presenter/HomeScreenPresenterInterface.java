@@ -17,10 +17,10 @@ public interface HomeScreenPresenterInterface
     void showProgressDailogue(String message);
     void hideProgressDailogue();
 
-    void deleteTodoModelFailure(String message);
-    void deleteTodoModelSuccess(String message);
+    //void deleteTodoModelFailure(String message);
+    //void deleteTodoModelSuccess(String message);
 
-    void deleteTodoModel(List<TodoItemModel> tempList,TodoItemModel itemModel,int pos);
+    //void deleteTodoModel(List<TodoItemModel> tempList,TodoItemModel itemModel,int pos);
 
     void moveToArchive(TodoItemModel itemModel);
     void moveToFailure(String message);
@@ -33,7 +33,7 @@ public interface HomeScreenPresenterInterface
     void moveToTrashSuccess(String message);
     //void MoveToTrashNotes(TodoItemModel itemModel);
 
-    void moveToReminder(TodoItemModel itemModel);
+    //void moveToReminder(TodoItemModel itemModel);
     void moveToReminderFailure(String message);
     void moveToReminderSuccess(String message);
 

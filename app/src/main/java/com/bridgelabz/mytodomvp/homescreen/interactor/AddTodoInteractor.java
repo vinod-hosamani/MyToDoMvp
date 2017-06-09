@@ -24,7 +24,6 @@ public class AddTodoInteractor implements AddTodoInteractorInterface
     Context context;
     AddTodoPresenterInterface presenterInterface;
     TodoItemModel itemModel;
-
     FirebaseUser firebaseUser;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
@@ -100,6 +99,6 @@ public class AddTodoInteractor implements AddTodoInteractorInterface
         {
             presenterInterface.updateFailure("notes failed to update");
         }
-        presenterInterface.hideProgressDialogue();
+            presenterInterface.hideProgressDialogue();
     }
 }

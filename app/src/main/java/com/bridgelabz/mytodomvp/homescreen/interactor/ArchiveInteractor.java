@@ -60,7 +60,6 @@ public class ArchiveInteractor implements ArchiveInteractorInterfacce
                     presenter.getNoteListSuccess(noteList);
                     presenter.hidePregressDialogu();
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError)
                 {
@@ -75,6 +74,7 @@ public class ArchiveInteractor implements ArchiveInteractorInterfacce
             presenter.hidePregressDialogu();
         }
     }
+
     @Override
     public void goToTrash(TodoItemModel itemModel)
     {
@@ -86,13 +86,12 @@ public class ArchiveInteractor implements ArchiveInteractorInterfacce
                     .child(String.valueOf(itemModel.getNoteId()))
                     .child("deleted").setValue(true);
             presenter.goToTrshSuccess("moved to trash");
-
         }
         else
         {
             presenter.goToTrashFailure("no internet connection");
         }
-        presenter.hidePregressDialogu();
+            presenter.hidePregressDialogu();
     }
 
     @Override
@@ -124,7 +123,6 @@ public class ArchiveInteractor implements ArchiveInteractorInterfacce
             toDoDataaReference.child(userId).child(itemModel.getStartDate())
                     .child(String.valueOf(itemModel.getNoteId()))
                     .child("deleted").setValue(false);
-
             presenter.notesAgainFromTrashSuccess(" returned  successfully ");
             presenter.hidePregressDialogu();
         }

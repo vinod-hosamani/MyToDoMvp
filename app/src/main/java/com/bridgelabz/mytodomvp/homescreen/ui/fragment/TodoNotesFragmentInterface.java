@@ -20,9 +20,19 @@ public interface TodoNotesFragmentInterface extends View.OnClickListener,
     void progressDialog(String message);
     void hideProgressDialog();
 
-    void deleteTodoModelFailure(String message);
-    void delteTodoModelSuccess(String messsage);
+    //void deleteTodoModelFailure(String message);
+   // void delteTodoModelSuccess(String messsage);
 
-    void moveToArchvieFailure(String message);
-    void moveToArchvieSuccess(String message);
+   // void moveToArchvieFailure(String message);
+   // void moveToArchvieSuccess(String message);
+
+
+   // void moveToArchiveFailure(String message);
+    //void moveToArchiveSuccess(String message);
+
+   // void moveToTrashFailure(String message);
+    //void moveToTrashSuccess(String message);
+
+
+
 }

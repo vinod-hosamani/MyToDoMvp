@@ -17,6 +17,8 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
 {
     public static final int left = ItemTouchHelper.LEFT;
     public static  final int right=ItemTouchHelper.RIGHT;
+    public static final int up=ItemTouchHelper.UP;
+    public static final int down=ItemTouchHelper.DOWN;
 
     TodoItemAdapter todoAdapter;
     HomeScreenActivity activity;
@@ -34,7 +36,8 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
     {
-        return false;
+        todoAdapter.notifyItemMoved(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+        return true;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
     }
 
 
-   /* private void deleteItem(int pos)
+  /*  private void deleteItem(int pos)
     {
         TodoItemModel itemModel=todoAdapter.getItemModel(pos);
         List<TodoItemModel> list=todoAdapter.getAllDataList();

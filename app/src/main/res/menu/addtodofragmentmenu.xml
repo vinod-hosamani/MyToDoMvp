@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/setReminder"
+        android:title="show as grid"
+        android:icon="@drawable/bell_ring_alarm"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/ic_action_color_pick"
+        android:title="ic_action_color_pick"
+        android:icon="@drawable/paintbrushsec"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/btnsave"
+        android:title="ic_action_color_pick"
+        android:icon="@drawable/save"
+        app:showAsAction="always"/>
+
+</menu>

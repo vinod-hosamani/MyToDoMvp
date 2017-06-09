@@ -7,6 +7,7 @@ import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.ReminderPresenter;
 import com.bridgelabz.mytodomvp.homescreen.presenter.ReminderPresenterIterface;
 import com.bridgelabz.mytodomvp.util.Connectivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,6 +70,26 @@ public class ReminderInteractor implements ReminderInteractorInterface
         else
         {
             presenter.getTodayReminderFailure("no internet connection");
+        }
+        presenter.hideProgressDialgu();
+    }
+
+    @Override
+    public void moveToTrash(TodoItemModel itemModel)
+    {
+
+        presenter.showProgressDilogu("moving to trash");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+            databaseReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("deleted").setValue(true);
+            presenter.moveToTrashSuccess("moved to trash");
+        }
+        else
+        {
+            presenter.moveToTrashFailure("no internet connection");
         }
         presenter.hideProgressDialgu();
     }
