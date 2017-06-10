@@ -123,9 +123,6 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface, S
         trashItemModels=trashList;
         totoItemAdapter.setTodoList(trashList);
     }
-
-
-
     @Override
     public void getNoteListFailure(String message)
     {
@@ -230,12 +227,11 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface, S
             isList=true;
         }
     }
-
     @Override
-    public boolean onQueryTextSubmit(String query) {
+    public boolean onQueryTextSubmit(String query)
+    {
         return false;
     }
-
     @Override
     public boolean onQueryTextChange(String searchText) {
         searchText=searchText.toLowerCase();

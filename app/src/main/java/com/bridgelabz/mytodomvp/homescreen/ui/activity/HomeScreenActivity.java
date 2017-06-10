@@ -52,12 +52,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 //import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TodoNotesFragment;
-
 //import com.bridgelabz.mytodomvp.homescreen.ui.fragment.AddToDoFragment;
-
-
 /**
  * Created by bridgeit on 8/5/17.
  */
@@ -235,12 +231,10 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
 
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
-
         if (id == R.id.action_toggle)
         {
             toggle();
@@ -285,10 +279,10 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     @Override
     public void hideProgressDialogu()
     {
-    if(!isFinishing() && progressDialog!=null)
-    {
-        progressDialog.dismiss();
-    }
+     if(!isFinishing() && progressDialog!=null)
+      {
+         progressDialog.dismiss();
+      }
     }
 
   /*  @Override
@@ -313,44 +307,37 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     {
      Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void moveToTrashFailure(String message)
     {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void moveToTrashSuccess(String message)
     {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void moveToReminderSuccess(String message)
     {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void moveToReminderFailure(String message)
     {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void uploadSuccess(Uri downloadUrl)
     {
         Glide.with(this).load(downloadUrl).into(imageViewUserProfile);
         session.setProfilePic(downloadUrl);
     }
-
     @Override
     public void uploadFailure(String message)
     {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
     private void toggle()
     {
         MenuItem item = menu.findItem(R.id.action_toggle);
@@ -539,7 +526,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
   {
       addToDoFragment =new AddToDoFragment(this);
       getSupportFragmentManager().beginTransaction()
-              .replace(R.id.frameContainer,addToDoFragment, "todoList")
+              .replace(R.id.frameContainer,addToDoFragment,"todoList")
               .addToBackStack(null)
               .commit();
   }
@@ -607,5 +594,6 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     @Override
     public void onDialogDismissed(int dialogId)
     {
+
     }
 }
