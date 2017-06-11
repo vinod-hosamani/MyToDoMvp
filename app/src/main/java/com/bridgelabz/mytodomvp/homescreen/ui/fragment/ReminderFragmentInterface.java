@@ -16,4 +16,7 @@ public interface ReminderFragmentInterface {
 
     void moveToTrashSuccess(String message);
     void moveToTrashFailure(String message);
+
+    void moveToReminderFailure(String message);
+    void moveToReminderSuccess(String message);
 }

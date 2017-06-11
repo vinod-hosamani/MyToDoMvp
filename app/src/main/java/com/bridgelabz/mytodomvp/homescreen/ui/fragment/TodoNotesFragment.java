@@ -25,10 +25,9 @@ import com.bridgelabz.mytodomvp.adapter.TodoItemAdapter;
 import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.TodoNotesPresenter;
-import com.bridgelabz.mytodomvp.homescreen.presenter.TodoNotesPresenterInterface;
 import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
-import com.bridgelabz.mytodomvp.util.SwipeAction;
+import com.bridgelabz.mytodomvp.util.SwipeNotes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,19 +40,22 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
 
     public static final String TAG = "TodoNotesFragment";
 
+    RecyclerView notesRecyclerview;
+    Context mcontext;
     HomeScreenActivity homeScreenActivity;
-    TodoNotesPresenterInterface presenter;
+    //TodoNotesPresenterInterface presenter;
     SessionManagement session;
     List<TodoItemModel> allData;
     TodoItemAdapter todoItemAdapter;
     boolean isList;
     RecyclerView toDoItemRecycler;
     StaggeredGridLayoutManager mstaggeredGridLayoutManager;
-    SwipeAction swipeAction;
+    SwipeNotes swipeNotes;
     ItemTouchHelper itemTouchHelper;
     AddToDoFragment todoNoteaddFragment;
     TodoItemAdapter recyclerAdapter;
     AddToDoFragment fragment;
+    public TodoNotesPresenter presenter;
 
     @Override
     public void onResume()
@@ -64,6 +66,8 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
 
     public TodoNotesFragment(HomeScreenActivity homeScreenActivity)
     {
+        /*this.mcontext=context;
+        presenter=new TodoNotesPresenter(mcontext,this);*/
         this.homeScreenActivity=homeScreenActivity;
     }
     @Nullable
@@ -82,17 +86,21 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
      {
          isList=true;
          toDoItemRecycler=(RecyclerView)view.findViewById(R.id.recycler_todo_Item);
-         todoItemAdapter=new TodoItemAdapter(homeScreenActivity,this);
+         todoItemAdapter=new TodoItemAdapter(getActivity(),this);
+
+        /* session=new SessionManagement(homeScreenActivity);
+         presenter=new TodoNotesPresenter(getActivity(),this);*/
 
          session=new SessionManagement(homeScreenActivity);
          presenter=new TodoNotesPresenter(homeScreenActivity,this);
+
 
          mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
          toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
          toDoItemRecycler.setAdapter(todoItemAdapter);
 
-         swipeAction=new SwipeAction(SwipeAction.up|SwipeAction.down|SwipeAction.left |SwipeAction.right,SwipeAction.left |SwipeAction.right,todoItemAdapter,homeScreenActivity);
-         itemTouchHelper=new ItemTouchHelper(swipeAction);
+         swipeNotes=new SwipeNotes(SwipeNotes.up| SwipeNotes.down| SwipeNotes.left | SwipeNotes.right, SwipeNotes.left | SwipeNotes.right,todoItemAdapter,TodoNotesFragment.this,getActivity());
+         itemTouchHelper=new ItemTouchHelper(swipeNotes);
          itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
      }
     @Override
@@ -115,76 +123,68 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
     @Override
     public void getNoteFailure( String message)
     {
-        Toast.makeText(homeScreenActivity,message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),message, Toast.LENGTH_SHORT).show();
     }
 
     ProgressDialog progressDialog;
     @Override
     public void progressDialog(String message)
     {
-        if(!homeScreenActivity.isFinishing())
-        {
-            progressDialog=new ProgressDialog(homeScreenActivity);
+       /* if(!homeScreenActivity.isFinishing())
+        {*/
+          progressDialog=new ProgressDialog(getActivity());
             progressDialog.setMessage(message);
             progressDialog.show();
-        }
+        //}
     }
     @Override
     public void hideProgressDialog()
     {
-      if(!homeScreenActivity.isFinishing() && progressDialog!=null)
-      {
-          progressDialog.dismiss();
-      }
-    }
-
-   /* @Override
-    public void moveToArchiveFailure(String message) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
 
     }
 
     @Override
-    public void moveToArchiveSuccess(String message) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
-
+    public void moveToArchiveFailure(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
     }
-
     @Override
-    public void moveToTrashFailure(String message) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
-
+    public void moveToArchiveSuccess(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
     }
-
     @Override
-    public void moveToTrashSuccess(String message) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
-
-    }*/
-   /* @Override
-    public void deleteTodoModelFailure(String message)
+    public void moveToTrashFailure(String message)
     {
-        Toast.makeText(homeScreenActivity,message, Toast.LENGTH_SHORT).show();
-    }*/
-
-  /*  @Override
-    public void delteTodoModelSuccess(String messsage)
-    {
-        Toast.makeText(homeScreenActivity,messsage,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
     }
-*/
-   /* @Override
-    public void moveToArchvieFailure(String message)
+    @Override
+    public void moveToTrashSuccess(String message)
     {
-        Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
     }
-*/
-  /*  @Override
-    public void moveToArchvieSuccess(String message)
+    @Override
+    public void moveToNotesSuccess(String message)
     {
-        Toast.makeText(homeScreenActivity,message,Toast.LENGTH_SHORT).show();
-    }*/
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
 
+    }
+    @Override
+    public void moveToNotesFailure(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void moveToNotesFromTrashSuccess(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void moveToNotesFromTrashFailure(String message)
+    {
+        Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onClick(View view)
     {
@@ -236,19 +236,7 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         todoItemAdapter.setFilter(noteList);
         return  true;
     }
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-        if (id == R.id.action_toggle)
-        {
-            toggle(item);
-            return false;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
-*/
 
 
     @Override
@@ -257,10 +245,6 @@ public class TodoNotesFragment extends Fragment implements TodoNotesFragmentInte
         menu.clear();
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_toolbar,menu);
-        /*menu.clear();
-        inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_toolbar,menu);*/
-        // this.menu=menu;
 
         SearchManager searchManager=(SearchManager)getActivity().getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView=(SearchView)menu.findItem(R.id.search).getActionView();

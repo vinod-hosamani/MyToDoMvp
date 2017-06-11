@@ -69,4 +69,19 @@ public class ReminderPresenter implements ReminderPresenterIterface
     public void moveToTrashFailure(String message) {
         viewInterface.moveToTrashFailure(message);
     }
+
+    @Override
+    public void moveToReminder(TodoItemModel itemModel) {
+        interactor.moveToReminder(itemModel);
+    }
+
+    @Override
+    public void moveToReminderFailure(String message) {
+      viewInterface.moveToReminderFailure(message);
+    }
+
+    @Override
+    public void moveToReminderSuccess(String message) {
+      viewInterface.moveToReminderSuccess(message);
+    }
 }

@@ -22,4 +22,8 @@ public interface ReminderPresenterIterface
     void moveToTrash(TodoItemModel itemModel);
     void moveToTrashSuccess(String message);
     void moveToTrashFailure(String message);
+
+    void moveToReminder(TodoItemModel itemModel);
+    void moveToReminderFailure(String message);
+    void moveToReminderSuccess(String message);
 }

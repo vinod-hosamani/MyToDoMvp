@@ -12,7 +12,6 @@ import com.bridgelabz.mytodomvp.homescreen.presenter.HomeScreenPresenterInterfac
 import com.bridgelabz.mytodomvp.util.Connectivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,15 +73,6 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
                     presenter.getNoteSuccess(noteList);
                     presenter.hideProgressDailogue();
                 }
-
-
-             /*   public void onDataChange(DataSnapshot dataSnapshot) {
-                    List<Friends> list = new ArrayList<Friends>();
-                    for (DataSnapshot child: dataSnapshot.getChildren()) {
-                        list.add(child.getValue(Friends.class));
-                    }
-                }*/
-
                 @Override
                 public void onCancelled(DatabaseError databaseError)
                 {
@@ -96,143 +86,6 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             presenter.getNoteFailure(context.getString(R.string.no_internet));
             presenter.hideProgressDailogue();
         }
-
-    }
-
-    @Override
-    public void deleteTodoModel(List<TodoItemModel> tempList, TodoItemModel itemModel, int pos)
-    {
-           /* presenter.showProgressDailogue("deleting plese wait");
-        if(Connectivity.isNetworkConnected(context))
-        {
-            String useId= FirebaseAuth.getInstance().getCurrentUser().getUid();
-            int delete=0;
-            for(TodoItemModel model:tempList)
-            {
-                todoDataReference.child(useId).child(model.getStartDate())
-                        .child(String.valueOf(model.getNoteId())).setValue(model);
-                delete=model.getNoteId()+1;
-            }
-            if(delete!=0)
-            {
-                todoDataReference.child(useId).child(itemModel.getStartDate())
-                        .child(String.valueOf(delete))
-                .removeValue();
-            }
-            else
-            {
-                todoDataReference.child(useId).child(itemModel.getStartDate())
-                        .child(String.valueOf(itemModel.getNoteId()))
-                        .removeValue();
-            }
-            presenter.deleteTodoModelSuccess(context.getString(R.string.delete_todo_item_success));
-        }
-        else
-        {
-            presenter.deleteTodoModelFailure(context.getString(R.string.no_internet));
-        }
-
-            presenter.hideProgressDailogue();*/
-    }
-
-    @Override
-    public void motoToArchive(TodoItemModel itemModel)
-    {
-                presenter.showProgressDailogue("moving to archive");
-            if(Connectivity.isNetworkConnected(context))
-            {
-                String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-                todoDataReference.child(userId).child(itemModel.getStartDate())
-                        .child(String.valueOf(itemModel.getNoteId()))
-                        .child("isArchived").setValue(true);
-                presenter.moveToSuccess("moved to archive");
-                presenter.hideProgressDailogue();
-            }
-        else
-            {
-                presenter.moveToFailure("no internet connetion");
-            }
-                presenter.hideProgressDailogue();
-    }
-
-    @Override
-    public void moveToTrash(TodoItemModel itemModel)
-    {
-        presenter.showProgressDailogue("moving to trash");
-        if(Connectivity.isNetworkConnected(context))
-        {
-            itemModel.setDeleted(true);
-            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-            todoDataReference.child(userId).child(itemModel.getStartDate())
-                    .child(String.valueOf(itemModel.getNoteId()))
-                    .setValue(itemModel);
-            presenter.moveToTrashSuccess("moved to trash");
-            presenter.hideProgressDailogue();
-        }
-        else
-        {
-            presenter.moveToTrashFailure("no internet connetion");
-        }
-        presenter.hideProgressDailogue();
-    }
-    @Override
-    public void moveToNotes(TodoItemModel itemModel)
-    {
-           presenter.showProgressDailogue("moving  to note");
-        if(Connectivity.isNetworkConnected(context))
-        {
-            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-            todoDataReference.child(userId).child(itemModel.getStartDate())
-                    .child(String.valueOf(itemModel.getNoteId()))
-                    .child("isArchived").setValue(false);
-            presenter.moveToSuccess("moved to notes successfully");
-            presenter.hideProgressDailogue();
-        }
-        else
-        {
-            presenter.moveToFailure("no internet connetion");
-        }
-            presenter.hideProgressDailogue();
-    }
-
-
-
-    public void moveToNotesFromTrash(TodoItemModel itemModel)
-    {
-        presenter.showProgressDailogue("moving  to note");
-        if(Connectivity.isNetworkConnected(context))
-        {
-            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-            todoDataReference.child(userId).child(itemModel.getStartDate())
-                    .child(String.valueOf(itemModel.getNoteId()))
-                    .child("deleted").setValue(false);
-            presenter.moveToTrashSuccess("moved to notes successfuyll");
-            presenter.hideProgressDailogue();
-        }
-        else
-        {
-            presenter.moveToTrashFailure("no internet connetion");
-        }
-            presenter.hideProgressDailogue();
-    }
-
-    public void moveToReminder(TodoItemModel itemModel)
-    {
-            presenter.showProgressDailogue("moving to Reminder");
-        if(Connectivity.isNetworkConnected(context))
-        {
-            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
-            todoDataReference.child(userId).child(itemModel.getStartDate())
-                    .child(String.valueOf(itemModel.getNoteId()))
-                    .child("isReminder").setValue(true);
-            presenter.moveToReminderSuccess("moved to reminder");
-            presenter.hideProgressDailogue();
-        }
-        else
-        {
-            presenter.moveToReminderFailure("no internet connetion");
-        }
-            presenter.hideProgressDailogue();
     }
 
     @Override
@@ -274,6 +127,5 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             presenter.uploadFailure(context.getString(R.string.no_internet));
             presenter.hideProgressDailogue();
         }
-
     }
 }

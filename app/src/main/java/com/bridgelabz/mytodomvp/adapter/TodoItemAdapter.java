@@ -97,7 +97,7 @@ public class TodoItemAdapter extends RecyclerView.Adapter<TodoItemAdapter.TaskVi
                 @Override
                 public void onClick(View view)
                 {
-                    if (noteClickListener != null)
+                   if (noteClickListener != null)
                         noteClickListener.onItemClick(position);
                 }
             });

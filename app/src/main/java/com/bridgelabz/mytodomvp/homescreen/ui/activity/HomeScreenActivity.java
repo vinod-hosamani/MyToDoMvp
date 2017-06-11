@@ -38,7 +38,7 @@ import com.bridgelabz.mytodomvp.homescreen.ui.fragment.ReminderFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TodoNotesFragment;
 import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TrashFragment;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
-import com.bridgelabz.mytodomvp.util.SwipeAction;
+import com.bridgelabz.mytodomvp.util.SwipeNotes;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -70,7 +70,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
  //   RecyclerView toDoItemRecycler;
     public Menu menu;
    // public swipeAction;
-    SwipeAction swipeAction;
+    SwipeNotes swipeAction;
     ItemTouchHelper itemTouchHelper;
     ArchiveFragment archievedFragment;
    // ArchiveFragment archiveFragment;
@@ -170,8 +170,10 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
         mstaggeredGridLayoutManager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
        // toDoItemRecycler.setLayoutManager(mstaggeredGridLayoutManager);
         //toDoItemRecycler.setAdapter(todoItemAdapter);
-        swipeAction=new SwipeAction(SwipeAction.up|SwipeAction.down,SwipeAction.left |SwipeAction.right,todoItemAdapter,this);
-        itemTouchHelper=new ItemTouchHelper(swipeAction);
+
+
+        //swipeAction=new SwipeNotes(SwipeNotes.up| SwipeNotes.down, SwipeNotes.left | SwipeNotes.right,todoItemAdapter,this);
+        //itemTouchHelper=new ItemTouchHelper(swipeAction);
        // itemTouchHelper.attachToRecyclerView(toDoItemRecycler);
 
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
@@ -246,7 +248,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
     public void getNoteSuccess(List<TodoItemModel> noteList)
     {
         List<TodoItemModel> nonTrashList=new ArrayList<>();
-     /*   for(TodoItemModel model:noteList)
+        for(TodoItemModel model:noteList)
         {
             if(!model.isDeleted())
             {
@@ -256,7 +258,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
                 }
             }
         }
-       todoItemAdapter.setTodoList(nonTrashList);*/
+       todoItemAdapter.setTodoList(nonTrashList);
     }
 
     @Override
@@ -285,48 +287,7 @@ public class HomeScreenActivity extends BaseActivity implements HomeScreenActivi
       }
     }
 
-  /*  @Override
-    public void deleteTodoModelFailure(String message)
-    {
-      Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void deleteTodoModelSuccess(String message)
-    {
-      Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }*/
-
-    @Override
-    public void moveToArchiveFailure(String message)
-    {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void moveToArchiveSuccess(String message)
-    {
-     Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void moveToTrashFailure(String message)
-    {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void moveToTrashSuccess(String message)
-    {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void moveToReminderSuccess(String message)
-    {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void moveToReminderFailure(String message)
-    {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
     @Override
     public void uploadSuccess(Uri downloadUrl)
     {

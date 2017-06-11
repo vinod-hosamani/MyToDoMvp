@@ -40,9 +40,6 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface, S
     RecyclerView trashRecyclerview;
     TodoItemAdapter totoItemAdapter;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
-    //HomeScreenActivity homeScreenActivity;
-   // TrashPresenter presenter;
-    //Menu menu;
     ProgressDialog progressDialog;
     List<TodoItemModel> trashItemModels=new ArrayList<>();
     ItemTouchHelper itemTouchHelper;
@@ -152,15 +149,6 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface, S
     {
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
-
-   /* @Override
-    public void onPrepareOptionsMenu(Menu menu)
-    {
-        menu.findItem(R.id.search).setVisible(false);
-        this.menu=menu;
-        super.onPrepareOptionsMenu(menu);
-    }*/
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
@@ -188,26 +176,6 @@ public class TrashFragment extends Fragment implements TrashFragmentInterface, S
         return super.onOptionsItemSelected(item);
     }
 
-   /* @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        menu.clear();
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.archivemenu,menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.action_toggle)
-        {
-            Log.d("menu select","onOptionsItemSelected: toggle");
-            toggle(item);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    */
     private boolean isList=true;
 
     private void toggle(MenuItem item)

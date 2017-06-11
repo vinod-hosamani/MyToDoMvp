@@ -4,11 +4,9 @@ package com.bridgelabz.mytodomvp.homescreen.ui.fragment;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -39,16 +37,13 @@ import java.util.List;
 public class ArchiveFragment extends Fragment implements ArchiveFragmentInterface, SearchView.OnQueryTextListener {
 
     public static final String TAG ="ArchiveFragment";
-    ArchiveFragment archiveFragment;
     private final Context mcontext;
     List<TodoItemModel> allData;
     RecyclerView archiveRecyclerView;
     TodoItemAdapter totoItemAdapter;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
-    HomeScreenActivity homeScreenActivity;
     public ArchivePresenter presenter;
     List<TodoItemModel> archiovedItemModels=new ArrayList<>();
-    Menu menu;
     ItemTouchHelper itemTouchHelper;
     private SwipeArchive swipeArchive;
 
@@ -165,43 +160,11 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
         Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
     }
     @Override
-    public void onLongClick( final  TodoItemModel itemModel)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(homeScreenActivity);
-        builder.setTitle(homeScreenActivity.getString(R.string.moingToNotes));
-        builder.setMessage(homeScreenActivity.getString(R.string.askMoveToNoteMessage));
-        builder.setPositiveButton(homeScreenActivity.getString(R.string.okButton),
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-               homeScreenActivity.presenter.moveToNotes(itemModel);
-            }
-        });
-        builder.setNegativeButton(homeScreenActivity.getString(R.string.cancleButton),
-                new DialogInterface.OnClickListener()
-                {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-                   Toast.makeText(homeScreenActivity,homeScreenActivity.getString(R.string.cancel_message),
-                   Toast.LENGTH_SHORT).show();
-            }
-        });
-
-     builder.show();
-    }
-
-
-
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         menu.clear();
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.archivemenu,menu);
-
 
         SearchManager searchManager=(SearchManager)getActivity().getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView=(SearchView)menu.findItem(R.id.search).getActionView();
@@ -263,5 +226,11 @@ public class ArchiveFragment extends Fragment implements ArchiveFragmentInterfac
         }
         totoItemAdapter.setFilter(noteList);
         return  true;
+    }
+
+    @Override
+    public void onLongClick(TodoItemModel itemModel)
+    {
+
     }
 }

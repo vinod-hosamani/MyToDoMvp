@@ -8,5 +8,6 @@ import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 public interface ReminderInteractorInterface
 {
     void getTodayReminderList(String userId);
+    void moveToReminder(TodoItemModel itemModel);
     void moveToTrash(TodoItemModel itemModel);
 }

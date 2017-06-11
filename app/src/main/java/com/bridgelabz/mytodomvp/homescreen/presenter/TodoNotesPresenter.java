@@ -48,11 +48,69 @@ public class TodoNotesPresenter implements TodoNotesPresenterInterface
     }
 
     @Override
-    public void hideProgressDilogu()
-    {
-      viewInterface.hideProgressDialog();
+    public void hideProgressDilogu() {
+        viewInterface.hideProgressDialog();
     }
 
+    @Override
+    public void moveToArchive(TodoItemModel itemModel) {
+        interactor.motoToArchive(itemModel);
+    }
+
+    @Override
+    public void moveToArchiveFailure(String message) {
+        viewInterface.moveToArchiveFailure(message);
+    }
+
+    @Override
+    public void moveToArchiveSuccess(String message) {
+      viewInterface.moveToArchiveSuccess(message);
+    }
+
+    @Override
+    public void moveToTrash(TodoItemModel itemModel) {
+        interactor.moveToTrash(itemModel);
+    }
+
+    @Override
+    public void moveToTrashFailure(String message) {
+      viewInterface.moveToTrashFailure(message);
+    }
+
+    @Override
+    public void moveToTrashSuccess(String message) {
+      viewInterface.moveToTrashSuccess(message);
+    }
+
+    @Override
+    public void moveToNotes(TodoItemModel itemModel) {
+        interactor.moveToNotes(itemModel);
+    }
+
+    @Override
+    public void moveToNotesSuccess(String message) {
+     viewInterface.moveToNotesSuccess(message);
+    }
+
+    @Override
+    public void moveToNotesFailure(String message) {
+      viewInterface.moveToNotesFailure(message);
+    }
+
+    @Override
+    public void moveToNotesFromTrash(TodoItemModel itemModel) {
+interactor.moveToNotesFromTrash(itemModel);
+    }
+
+    @Override
+    public void moveToNotesFromTrashSuccess(String message) {
+   viewInterface.moveToNotesFromTrashSuccess(message);
+    }
+
+    @Override
+    public void moveToNotesFromTrashFailure(String message) {
+    viewInterface.moveToNotesFromTrashFailure(message);
+    }
   /*  @Override
     public void deletoTodoModelFailure(String message)
     {

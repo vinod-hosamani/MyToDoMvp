@@ -147,6 +147,20 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
 
     }
 
+
+
+    @Override
+    public void moveToReminderFailure(String message) {
+        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void moveToReminderSuccess(String message) {
+        Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
+
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {

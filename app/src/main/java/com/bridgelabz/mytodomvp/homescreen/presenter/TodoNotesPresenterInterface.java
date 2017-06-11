@@ -17,6 +17,26 @@ public interface TodoNotesPresenterInterface
     void showProgressDialog(String message);
     void hideProgressDilogu();
 
+
+    void moveToArchive(TodoItemModel itemModel);
+    void moveToArchiveFailure(String message);
+    void moveToArchiveSuccess(String message);
+
+
+    void moveToTrash(TodoItemModel itemModel);
+    void moveToTrashFailure(String message);
+    void moveToTrashSuccess(String message);
+
+
+    void moveToNotes(TodoItemModel itemModel);
+    void moveToNotesSuccess(String message);
+    void moveToNotesFailure(String message);
+
+    void moveToNotesFromTrash(TodoItemModel itemModel);
+    void moveToNotesFromTrashSuccess(String message);
+    void moveToNotesFromTrashFailure(String message);
+
+
     //void deletoTodoModelFailure(String message);
     //void deleteTodoModelSuccess(String message);
 

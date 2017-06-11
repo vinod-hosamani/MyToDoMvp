@@ -1,5 +1,6 @@
 package com.bridgelabz.mytodomvp.util;
 
+import android.app.Activity;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -7,13 +8,13 @@ import android.view.View;
 
 import com.bridgelabz.mytodomvp.adapter.TodoItemAdapter;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
-import com.bridgelabz.mytodomvp.homescreen.ui.activity.HomeScreenActivity;
+import com.bridgelabz.mytodomvp.homescreen.ui.fragment.TodoNotesFragment;
 import com.bridgelabz.mytodomvp.session.SessionManagement;
 
 /**
  * Created by bridgeit on 11/5/17.
  */
-public class SwipeAction extends ItemTouchHelper.SimpleCallback
+public class SwipeNotes extends ItemTouchHelper.SimpleCallback
 {
     public static final int left = ItemTouchHelper.LEFT;
     public static  final int right=ItemTouchHelper.RIGHT;
@@ -21,15 +22,17 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
     public static final int down=ItemTouchHelper.DOWN;
 
     TodoItemAdapter todoAdapter;
-    HomeScreenActivity activity;
+    TodoNotesFragment activity;
     //TodoNotesFragment activity;
+    Activity context;
     SessionManagement session;
 
-    public SwipeAction(int dragDirs, int swipeDirs,TodoItemAdapter adapter,HomeScreenActivity activity)
+    public SwipeNotes(int dragDirs, int swipeDirs, TodoItemAdapter adapter, TodoNotesFragment activity, Activity context)
     {
         super(dragDirs, swipeDirs);
         todoAdapter=adapter;
         this.activity=activity;
+        this.context=context;
         session=new SessionManagement(activity);
     }
 
@@ -47,10 +50,10 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
         switch (direction)
         {
             case left:
-                 moveToTrash(position);
+                moveToTrash(position);
                  break;
             case right:
-                 movoToArchieved(position);
+                movoToArchieved(position);
                  break;
         }
     }
@@ -87,16 +90,16 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
     private void movoToArchieved(int pos)
     {
         final TodoItemModel itemModel=  todoAdapter.getItemModel(pos);
+        //activity.presenter.moveToArchive(itemModel);
         activity.presenter.moveToArchive(itemModel);
-
-        Snackbar snackbar=Snackbar.make(activity.getCurrentFocus(),"note is arvhieved",Snackbar.LENGTH_LONG).setAction("unod",
+        Snackbar snackbar=Snackbar.make(context.getCurrentFocus(),"note is arvhieved",Snackbar.LENGTH_LONG).setAction("unod",
         new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 moveToAgainNotes(itemModel);
-                Snackbar s=Snackbar.make(activity.getCurrentFocus(),"undodone",Snackbar.LENGTH_SHORT);
+                Snackbar s=Snackbar.make(context.getCurrentFocus(),"undodone",Snackbar.LENGTH_SHORT);
                 s.show();
             }
         });
@@ -108,14 +111,14 @@ public class SwipeAction extends ItemTouchHelper.SimpleCallback
         final  TodoItemModel itemModel=todoAdapter.getItemModel(pos);
         activity.presenter.moveToTrash(itemModel);
 
-        Snackbar snackbar=Snackbar.make(activity.getCurrentFocus(),"note is trashed",Snackbar.LENGTH_LONG).setAction("unco",
+        Snackbar snackbar=Snackbar.make(context.getCurrentFocus(),"note is trashed",Snackbar.LENGTH_LONG).setAction("unco",
                 new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view)
                     {
                         moveToAgainNotesFromTrash(itemModel);
-                        Snackbar s=Snackbar.make(activity.getCurrentFocus(),"undodone",Snackbar.LENGTH_SHORT);
+                        Snackbar s=Snackbar.make(context.getCurrentFocus(),"undodone",Snackbar.LENGTH_SHORT);
                         s.show();
                     }
                 });

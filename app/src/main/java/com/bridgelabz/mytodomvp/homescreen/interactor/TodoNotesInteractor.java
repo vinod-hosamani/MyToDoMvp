@@ -6,6 +6,7 @@ import com.bridgelabz.mytodomvp.constants.Constant;
 import com.bridgelabz.mytodomvp.homescreen.model.TodoItemModel;
 import com.bridgelabz.mytodomvp.homescreen.presenter.TodoNotesPresenterInterface;
 import com.bridgelabz.mytodomvp.util.Connectivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,6 +76,87 @@ public class TodoNotesInteractor implements TodoNotesInteractorInteraface
         }
 
 
+    }
+
+    @Override
+    public void motoToArchive(TodoItemModel itemModel)
+    {
+        presenter.showProgressDialog("moving to archive");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("isArchived").setValue(true);
+            presenter.moveToArchiveSuccess("moved to archive");
+            presenter.hideProgressDilogu();
+        }
+        else
+        {
+            presenter.moveToArchiveFailure("no internet connetion");
+        }
+        presenter.hideProgressDilogu();
+    }
+
+    @Override
+    public void moveToTrash(TodoItemModel itemModel)
+    {
+        presenter.showProgressDialog("moving to trash");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            itemModel.setDeleted(true);
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .setValue(itemModel);
+            presenter.moveToTrashSuccess("moved to trash");
+            presenter.hideProgressDilogu();
+        }
+        else
+        {
+            presenter.moveToTrashFailure("no internet connetion");
+        }
+        presenter.hideProgressDilogu();
+    }
+
+    @Override
+    public void moveToNotes(TodoItemModel itemModel)
+    {
+        presenter.showProgressDialog("moving  to note");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("isArchived").setValue(false);
+            presenter.moveToNotesSuccess("moved to notes successfully");
+            presenter.hideProgressDilogu();
+        }
+        else
+        {
+            presenter.moveToNotesFailure("no internet connetion");
+        }
+        presenter.hideProgressDilogu();
+    }
+
+    @Override
+    public void moveToNotesFromTrash(TodoItemModel itemModel)
+    {
+        presenter.showProgressDialog("moving  to note");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            todoDataReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("deleted").setValue(false);
+            presenter.moveToNotesFromTrashSuccess("moved to notes successfuyll");
+            presenter.hideProgressDilogu();
+        }
+        else
+        {
+            presenter.moveToNotesFromTrashFailure("no internet connetion");
+        }
+        presenter.hideProgressDilogu();
     }
 
 

@@ -75,6 +75,26 @@ public class ReminderInteractor implements ReminderInteractorInterface
     }
 
     @Override
+    public void moveToReminder(TodoItemModel itemModel)
+    {
+        presenter.showProgressDilogu("moving to Reminder");
+        if(Connectivity.isNetworkConnected(context))
+        {
+            String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+            databaseReference.child(userId).child(itemModel.getStartDate())
+                    .child(String.valueOf(itemModel.getNoteId()))
+                    .child("isReminder").setValue(true);
+            presenter.moveToReminderSuccess("moved to reminder");
+            presenter.hideProgressDialgu();
+        }
+        else
+        {
+            presenter.moveToReminderFailure("no internet connetion");
+        }
+        presenter.hideProgressDialgu();
+    }
+
+    @Override
     public void moveToTrash(TodoItemModel itemModel)
     {
 
