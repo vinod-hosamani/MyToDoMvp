@@ -34,8 +34,8 @@ import java.util.List;
 /**
  * Created by bridgeit on 11/5/17.
  */
-public class ArchiveFragment extends Fragment implements ArchiveFragmentInterface, SearchView.OnQueryTextListener {
-
+public class ArchiveFragment extends Fragment implements ArchiveFragmentInterface, SearchView.OnQueryTextListener
+{
     public static final String TAG ="ArchiveFragment";
     private final Context mcontext;
     List<TodoItemModel> allData;

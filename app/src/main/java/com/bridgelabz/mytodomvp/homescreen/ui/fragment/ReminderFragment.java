@@ -49,6 +49,8 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     ItemTouchHelper itemTouchHelper;
     public ReminderPresenter presenter;
 
+    List<TodoItemModel> remiderItemModels=new ArrayList<>();
+
 
 
     @Override
@@ -122,11 +124,14 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
 
             if(model.getReminderDate().equals(currentDate))
             {
+                if(!model.isDeleted())
                 reminderList.add(model);
             }
         }
         allData=reminderList;
+        //remiderItemModels=reminderList;
         todoItemAdapter.setTodoList(reminderList);
+
     }
 
     @Override
@@ -136,31 +141,30 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     }
 
     @Override
-    public void moveToTrashSuccess(String message) {
+    public void moveToTrashSuccess(String message)
+    {
         Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public void moveToTrashFailure(String message) {
+    public void moveToTrashFailure(String message)
+    {
         Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
 
     }
-
-
-
     @Override
-    public void moveToReminderFailure(String message) {
+    public void moveToReminderFailure(String message)
+    {
         Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
 
     }
-
     @Override
-    public void moveToReminderSuccess(String message) {
+    public void moveToReminderSuccess(String message)
+    {
         Toast.makeText(getContext(),message,Toast.LENGTH_SHORT).show();
 
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
@@ -212,17 +216,19 @@ public class ReminderFragment extends Fragment implements ReminderFragmentInterf
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
+    public boolean onQueryTextSubmit(String query)
+    {
         return false;
     }
-
     @Override
-    public boolean onQueryTextChange(String searchText) {
+    public boolean onQueryTextChange(String searchText)
+    {
         searchText=searchText.toLowerCase();
         List<TodoItemModel> noteList=new ArrayList<>();
         for(TodoItemModel model: allData)
         {
-            if (model.getTitle().toLowerCase().contains(searchText)) {
+            if (model.getTitle().toLowerCase().contains(searchText))
+            {
                 noteList.add(model);
             }
 

@@ -87,7 +87,6 @@ public class HomeScreenInteractor implements HomeScreenInteractorInterface
             presenter.hideProgressDailogue();
         }
     }
-
     @Override
     public void uploadProfilePic(final String currentUserId, Uri selectedImage)
     {

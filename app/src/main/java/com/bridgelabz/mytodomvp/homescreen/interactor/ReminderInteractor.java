@@ -83,7 +83,7 @@ public class ReminderInteractor implements ReminderInteractorInterface
             String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
             databaseReference.child(userId).child(itemModel.getStartDate())
                     .child(String.valueOf(itemModel.getNoteId()))
-                    .child("isReminder").setValue(true);
+                    .child("reminder").setValue(true);
             presenter.moveToReminderSuccess("moved to reminder");
             presenter.hideProgressDialgu();
         }
